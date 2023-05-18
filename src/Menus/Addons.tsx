@@ -70,6 +70,7 @@ const Addons = () => {
       >
         {addons.map((addon) => (
           <Box
+            key={addon.id}
             sx={{
               display: "flex",
               justifyContent: "space-between",
