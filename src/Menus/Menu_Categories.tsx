@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { MenuCategories } from "../Types/Types";
 import { config } from "../config/config";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const Menu_Categories = () => {
   const { menuCategories, fetchData } = useContext(MenuContent);
@@ -73,9 +73,8 @@ const Menu_Categories = () => {
           spacing={1}
         >
           {menuCategories.map((item) => (
-            <Link to={`/menu_categories/${item.id}`}>
+            <Link key={item.id} href={`/menu_categories/${item.id}`}>
               <Chip
-                key={item.id}
                 sx={{ cursor: "pointer" }}
                 label={item.category}
                 // onClick={}

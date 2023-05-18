@@ -12,8 +12,8 @@ import Layout from "../Components/Layout";
 import { useContext, useEffect, useState } from "react";
 import { MenuContent } from "../Contents/Menu_Contents";
 import { Company, Locations } from "../Types/Types";
-import { useNavigate } from "react-router-dom";
 import { config } from "../config/config";
+import { useRouter } from "next/router";
 
 const Setting = () => {
   const { locations, company } = useContext(MenuContent);
@@ -24,11 +24,14 @@ const Setting = () => {
     name: "",
     address: "",
   });
-  const navigate = useNavigate();
+  const route = useRouter();
   const accessToken = window.localStorage.getItem("accessToken");
 
   useEffect(() => {
-    if (!accessToken) return navigate("login");
+    if (!accessToken) {
+      route.push("login");
+      return;
+    }
     if (locations.length) {
       const selectedLocationId = localStorage.getItem("locationId");
       if (!selectedLocationId) {

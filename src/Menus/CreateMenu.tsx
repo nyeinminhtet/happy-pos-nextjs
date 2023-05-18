@@ -17,8 +17,8 @@ import Layout from "../Components/Layout";
 import FileDropZone from "./FileDropZone";
 import { config } from "../config/config";
 import { LoadingButton } from "@mui/lab";
-import { useNavigate } from "react-router-dom";
 import { MenuContent } from "../Contents/Menu_Contents";
+import { useRouter } from "next/router";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -41,7 +41,7 @@ const CreateMenu = () => {
     locationIds: [],
   });
   const [selectedLocationIds, setSelectedLocationIds] = useState<number[]>([]);
-  const navigate = useNavigate();
+  const route = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const isDisable =
@@ -77,7 +77,7 @@ const CreateMenu = () => {
       });
       setIsLoading(false);
       if (response.ok) {
-        navigate("/menus");
+        route.push("/menus");
       }
     } catch (err) {
       setIsLoading(false);

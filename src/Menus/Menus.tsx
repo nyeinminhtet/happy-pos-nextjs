@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import { Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
 import Layout from "../Components/Layout";
 import { MenuContent } from "../Contents/Menu_Contents";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import AddIcon from "@mui/icons-material/Add";
 
 const Menus = () => {
@@ -33,7 +33,7 @@ const Menus = () => {
         }}
       >
         <Link
-          to={"/menus/create"}
+          href={"/menus/create"}
           style={{ textDecoration: "none", color: "black" }}
         >
           <Box
@@ -58,7 +58,7 @@ const Menus = () => {
         {filterMenu.map((item) => (
           <Link
             key={item.id}
-            to={`/menus/${item.id}`}
+            href={`/menus/${item.id}`}
             style={{
               textDecoration: "none",
               marginRight: "15px",

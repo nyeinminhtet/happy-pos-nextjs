@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import Layout from "../Components/Layout";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { useState } from "react";
 import { config } from "../config/config";
 
@@ -109,7 +109,7 @@ const Register = () => {
           <Button variant="contained" onClick={register}>
             Register
           </Button>
-          <Link to="/login" style={{ textDecoration: "none" }}>
+          <Link href="/login" style={{ textDecoration: "none" }}>
             <Typography sx={{ mt: 2, cursor: "pointer" }}>Sign in</Typography>
           </Link>
         </Box>

@@ -7,14 +7,15 @@ import {
   Typography,
 } from "@mui/material";
 import Layout from "../Components/Layout";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import Link from "next/link";
 import { useContext, useState } from "react";
 import { config } from "../config/config";
 import { MenuContent } from "../Contents/Menu_Contents";
+import { useRouter } from "next/router";
 
 const Loggin = () => {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
+  const route = useRouter();
   const [user, setUser] = useState({ email: "", password: "" });
   const { updateData, ...data } = useContext(MenuContent);
   const accessToken = window.localStorage.getItem("acessToken");
@@ -33,7 +34,7 @@ const Loggin = () => {
         const responseData = await response.json();
         //  updateData({ ...data, accessToken: responseData.accessToken });
         window.localStorage.setItem("accessToken", responseData.accessToken);
-        navigate("/");
+        route.push("/");
       }
       setOpen(true);
     } catch (err) {
@@ -121,7 +122,7 @@ const Loggin = () => {
           <Button variant="contained" onClick={singIn}>
             Sign in
           </Button>
-          <Link to="/register" style={{ textDecoration: "none" }}>
+          <Link href="/register" style={{ textDecoration: "none" }}>
             <Typography sx={{ mt: 2, cursor: "pointer" }}>Register</Typography>
           </Link>
         </Box>

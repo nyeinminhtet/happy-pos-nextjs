@@ -14,7 +14,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -85,7 +85,7 @@ const MenuAppBar = ({ title }: Props) => {
           </Box>
           <h2 style={{ margin: "0 auto" }}>{title ? title : "အဝ စားမယ် "}</h2>
           <Link
-            to={accessToken ? "/logout" : "/login"}
+            href={accessToken ? "/logout" : "/login"}
             style={{ textDecoration: "none" }}
           >
             <Button variant="outlined" sx={{ color: "white" }}>
@@ -104,7 +104,7 @@ const MenuAppBar = ({ title }: Props) => {
           {sidebarMenuItems.slice(0, 6).map((item) => (
             <Link
               key={item.id}
-              to={item.route}
+              href={item.route}
               style={{ textDecoration: "none", color: "#313131" }}
             >
               <ListItem disablePadding>
@@ -121,7 +121,7 @@ const MenuAppBar = ({ title }: Props) => {
           {sidebarMenuItems.slice(-1).map((item) => (
             <Link
               key={item.id}
-              to={item.route}
+              href={item.route}
               style={{ textDecoration: "none", color: "#313131" }}
             >
               <ListItem disablePadding>
