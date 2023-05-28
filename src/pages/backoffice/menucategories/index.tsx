@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
-import Layout from "../Components/Layout";
-import { MenuContent } from "../Contents/Menu_Contents";
+
 import {
   Box,
   TextField,
@@ -11,31 +10,40 @@ import {
   TableRow,
   TableCell,
 } from "@mui/material";
-import { MenuCategories } from "../Types/Types";
-import { config } from "../config/config";
+
 import Link from "next/link";
+import { MenuCategories } from "@/Types/Types";
+import { config } from "@/config/config";
+import Layout from "@/Components/Layout";
+import { BackofficeContent } from "@/Contents/BackofficeContent";
 
 const Menu_Categories = () => {
-  const { menuCategories, fetchData } = useContext(MenuContent);
+  const { menuCategories, fetchData } = useContext(BackofficeContent);
   const [menuCat, setMenuCat] = useState<MenuCategories | null>(null);
 
   //create category
 
   const createMenuCategory = async () => {
     if (!menuCat?.category) return;
-    const response = await fetch(`${config.apiBaseUrl}/menu_categories`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(menuCat),
-    });
+    const response = await fetch(
+      `${config.apiBackofficeBaseUrl}/menu_categories`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(menuCat),
+      }
+    );
     fetchData();
   };
 
   //delete
   const handleDelete = async (id: any) => {
-    const response = await fetch(`${config.apiBaseUrl}/menu_categories/${id}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `${config.apiBackofficeBaseUrl}/menu_categories/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
     fetchData();
   };
 

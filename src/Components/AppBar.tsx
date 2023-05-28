@@ -13,6 +13,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from "@mui/material";
 import Link from "next/link";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
@@ -20,33 +21,50 @@ import LocalDiningIcon from "@mui/icons-material/LocalDining";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ClassIcon from "@mui/icons-material/Class";
 import CategoryIcon from "@mui/icons-material/Category";
-import { MenuContent } from "../Contents/Menu_Contents";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { getAccessToken, getLocationId } from "@/utils";
+import { signOut, useSession } from "next-auth/react";
+import { BackofficeContent } from "@/Contents/BackofficeContent";
 
 const sidebarMenuItems = [
   { id: 1, label: "Orders", icon: <FastfoodIcon />, route: "/orders" },
-  { id: 2, label: "Menus", icon: <LocalDiningIcon />, route: "/menus" },
+  {
+    id: 2,
+    label: "Menus",
+    icon: <LocalDiningIcon />,
+    route: "/backoffice/menus",
+  },
   {
     id: 3,
     label: "Menu Categories",
     icon: <CategoryIcon />,
-    route: "/menu_categories",
+    route: "/backoffice/menucategories",
   },
-  { id: 4, label: "Addons", icon: <LunchDiningIcon />, route: "/addons" },
+  {
+    id: 4,
+    label: "Addons",
+    icon: <LunchDiningIcon />,
+    route: "/backoffice/addons",
+  },
   {
     id: 5,
     label: "Addon Categories",
     icon: <ClassIcon />,
-    route: "/addon_categories",
+    route: "/backoffice/addoncategories",
   },
   {
     id: 6,
     label: "Locations",
     icon: <LocationOnIcon />,
-    route: "/locations",
+    route: "/backoffice/locations",
   },
-  { id: 7, label: "Settings", icon: <SettingsIcon />, route: "/settings" },
+  {
+    id: 7,
+    label: "Settings",
+    icon: <SettingsIcon />,
+    route: "/backoffice/settings",
+  },
 ];
 
 interface Props {
@@ -55,12 +73,17 @@ interface Props {
 
 const MenuAppBar = ({ title }: Props) => {
   const [showNavigation, setShowNavigation] = useState(false);
-  const { locations } = useContext(MenuContent);
-  const accessToken = window.localStorage.getItem("accessToken");
-  const selectedLocationId = localStorage.getItem("locationId");
-  const selectedLocation = locations.find(
-    (location) => String(location.id) === selectedLocationId
-  );
+  const { locations } = useContext(BackofficeContent);
+  const { data } = useSession();
+  const [routerInfo, setRouterInfo] = useState({
+    name: "login",
+    route: "/login",
+  });
+  const selectedLocationId = getLocationId();
+  const selectedLocation =
+    locations &&
+    Array.isArray(locations) &&
+    locations.find((location) => String(location.id) === selectedLocationId);
   return (
     <Box>
       <AppBar position="static">
@@ -84,14 +107,16 @@ const MenuAppBar = ({ title }: Props) => {
             </h2>
           </Box>
           <h2 style={{ margin: "0 auto" }}>{title ? title : "အဝ စားမယ် "}</h2>
-          <Link
-            href={accessToken ? "/logout" : "/login"}
-            style={{ textDecoration: "none" }}
-          >
-            <Button variant="outlined" sx={{ color: "white" }}>
-              {accessToken ? "Log out" : "Login"}
-            </Button>
-          </Link>
+          {data ? (
+            <Typography
+              onClick={() => signOut({ callbackUrl: "/backoffice" })}
+              sx={{ cursor: "pointer" }}
+            >
+              SignOut
+            </Typography>
+          ) : (
+            <span></span>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer

@@ -1,16 +1,16 @@
 import { useContext, useState } from "react";
-import Layout from "../Components/Layout";
-import { MenuContent } from "../Contents/Menu_Contents";
 import { Box, Button, Chip, Stack, TextField } from "@mui/material";
-import { Addons as AddonsType } from "../Types/Types";
-import { config } from "../config/config";
+import Layout from "@/Components/Layout";
+import { config } from "@/config/config";
+import { Addons as AddonsType } from "@/Types/Types";
+import { BackofficeContent } from "@/Contents/BackofficeContent";
 
 const Addons = () => {
-  const { fetchData, addons } = useContext(MenuContent);
+  const { fetchData, addons } = useContext(BackofficeContent);
   const [newAddon, setNewAddon] = useState<AddonsType | null>(null);
 
   const createAddon = async () => {
-    const response = await fetch(`${config.apiBaseUrl}/addons`, {
+    const response = await fetch(`${config.apiBackofficeBaseUrl}/addons`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newAddon),

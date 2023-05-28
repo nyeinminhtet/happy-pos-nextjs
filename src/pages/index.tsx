@@ -1,5 +1,5 @@
 const HappyPos = () => {
-  return <h1>Hello world</h1>;
+  return <h1>Hello HappyPos</h1>;
 };
 
 export default HappyPos;

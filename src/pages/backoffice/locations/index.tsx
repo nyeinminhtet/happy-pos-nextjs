@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import { MenuContent } from "../Contents/Menu_Contents";
-import Layout from "../Components/Layout";
-import { Locations } from "../Types/Types";
+
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { config } from "../config/config";
+
+import { getAccessToken } from "@/utils";
+import { Locations } from "@/Types/Types";
+import { config } from "@/config/config";
+import Layout from "@/Components/Layout";
+import { BackofficeContent } from "@/Contents/BackofficeContent";
 
 const LocationsComp = () => {
-  const accessToken = window.localStorage.getItem("accessToken");
-  const { locations, fetchData, company } = useContext(MenuContent);
+  const accessToken = getAccessToken();
+  const { locations, fetchData, company } = useContext(BackofficeContent);
   const [newLocation, setNewLocation] = useState<Locations>({
     name: "",
     address: "",
@@ -25,7 +28,7 @@ const LocationsComp = () => {
     if (!isValid) return alert("Name and address are required");
     newLocation.companyId = company?.id;
     try {
-      const response = await fetch(`${config.apiBaseUrl}/locations`, {
+      const response = await fetch(`${config.apiBackofficeBaseUrl}/locations`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +54,7 @@ const LocationsComp = () => {
       oldLocation?.name !== newLocation?.name ||
       oldLocation?.address !== newLocation?.address
     ) {
-      await fetch(`${config.apiBaseUrl}/locations/${location.id}`, {
+      await fetch(`${config.apiBackofficeBaseUrl}/locations/${location.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +69,7 @@ const LocationsComp = () => {
   //delete location
   const deleteLocation = async (location: Locations) => {
     const response = await fetch(
-      `${config.apiBaseUrl}/locations/${location.id}`,
+      `${config.apiBackofficeBaseUrl}/locations/${location.id}`,
       {
         method: "DELETE",
         headers: {

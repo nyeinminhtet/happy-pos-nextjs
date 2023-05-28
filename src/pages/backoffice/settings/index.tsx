@@ -8,15 +8,18 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import Layout from "../Components/Layout";
 import { useContext, useEffect, useState } from "react";
-import { MenuContent } from "../Contents/Menu_Contents";
-import { Company, Locations } from "../Types/Types";
-import { config } from "../config/config";
+
 import { useRouter } from "next/router";
+import { getAccessToken, getLocationId } from "@/utils";
+import { Company, Locations } from "@/Types/Types";
+import { config } from "@/config/config";
+import Layout from "@/Components/Layout";
+import { BackofficeContent } from "@/Contents/BackofficeContent";
 
 const Setting = () => {
-  const { locations, company } = useContext(MenuContent);
+  const { locations, company } = useContext(BackofficeContent);
+  console.log(locations);
   const [selectedLocation, setSelectedLocation] = useState<
     Locations | undefined
   >();
@@ -25,15 +28,11 @@ const Setting = () => {
     address: "",
   });
   const route = useRouter();
-  const accessToken = window.localStorage.getItem("accessToken");
+  const accessToken = getAccessToken();
 
   useEffect(() => {
-    if (!accessToken) {
-      route.push("login");
-      return;
-    }
     if (locations.length) {
-      const selectedLocationId = localStorage.getItem("locationId");
+      const selectedLocationId = getLocationId();
       if (!selectedLocationId) {
         localStorage.setItem("locationId", String(locations[0].id));
         setSelectedLocation(locations[0]);
@@ -59,7 +58,7 @@ const Setting = () => {
   const updateCompany = async () => {
     try {
       const response = await fetch(
-        `${config.apiBaseUrl}/setting/companies/${companyInfo.id}`,
+        `${config.apiBackofficeBaseUrl}/setting/companies/${companyInfo.id}`,
         {
           method: "PUT",
           headers: {
@@ -117,13 +116,15 @@ const Setting = () => {
             value={selectedLocation ? selectedLocation.id : ""}
             onChange={handleOnChange}
           >
-            {locations.map((location) => {
-              return (
-                <MenuItem key={location.id} value={location.id}>
-                  {location.name}
-                </MenuItem>
-              );
-            })}
+            {locations &&
+              Array.isArray(locations) &&
+              locations.map((location) => {
+                return (
+                  <MenuItem key={location.id} value={location.id}>
+                    {location.name}
+                  </MenuItem>
+                );
+              })}
           </Select>
         </FormControl>
         <Button

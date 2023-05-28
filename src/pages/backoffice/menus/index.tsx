@@ -1,16 +1,17 @@
 import React, { useContext } from "react";
 import Box from "@mui/material/Box";
 import { Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
-import Layout from "../Components/Layout";
-import { MenuContent } from "../Contents/Menu_Contents";
+
 import Link from "next/link";
 import AddIcon from "@mui/icons-material/Add";
+import { getLocationId } from "@/utils";
+import Layout from "@/Components/Layout";
+import { BackofficeContent } from "@/Contents/BackofficeContent";
 
 const Menus = () => {
-  const { menuLocations } = useContext(MenuContent);
-  const { menus } = useContext(MenuContent);
+  const { menuLocations, menus } = useContext(BackofficeContent);
 
-  const locationId = localStorage.getItem("locationId");
+  const locationId = getLocationId();
 
   //loop for menuLocations
   const validMenuLocation = menuLocations

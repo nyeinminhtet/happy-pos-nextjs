@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model addon_categories {
+  id                Int            @id @default(autoincrement())
+  category_of_addon String
+  addons            addons[]
+  addons_menus      addons_menus[]
+}
+
+model addons {
+  id                Int               @id @default(autoincrement())
+  name              String
+  price             Int?
+  addon_category_id Int?
+  addon_categories  addon_categories? @relation(fields: [addon_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model addons_menus {
+  id                Int               @id @default(autoincrement())
+  menu_id           Int?
+  addon_category_id Int?
+  addon_categories  addon_categories? @relation(fields: [addon_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menus             menus?            @relation(fields: [menu_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model companies {
+  id        Int         @id(map: "company_pkey") @default(autoincrement())
+  name      String
+  address   String?
+  locations locations[]
+  users     users[]
+}
+
+model locations {
+  id             Int              @id @default(autoincrement())
+  name           String?
+  address        String?
+  companies_id   Int?
+  companies      companies?       @relation(fields: [companies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menu_locations menu_locations[]
+}
+
+model menu_categories {
+  id                    Int                     @id @default(autoincrement())
+  category              String
+  menus_menucategrories menus_menucategrories[]
+}
+
+model menu_locations {
+  id           Int        @id @default(autoincrement())
+  menu_id      Int?
+  location_id  Int?
+  is_available Boolean?   @default(true)
+  locations    locations? @relation(fields: [location_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menus        menus?     @relation(fields: [menu_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model menus {
+  id                    Int                     @id @default(autoincrement())
+  name                  String
+  price                 Int
+  acess_url             String?
+  description           String?
+  addons_menus          addons_menus[]
+  menu_locations        menu_locations[]
+  menus_menucategrories menus_menucategrories[]
+}
+
+model menus_menucategrories {
+  id                 Int              @id @default(autoincrement())
+  menu_id            Int?
+  menu_categories_id Int?
+  menu_categories    menu_categories? @relation(fields: [menu_categories_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menus              menus?           @relation(fields: [menu_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users {
+  id           Int        @id @default(autoincrement())
+  name         String
+  email        String
+  password     String
+  companies_id Int?
+  companies    companies? @relation(fields: [companies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  role         Role        @default(admin)
+}
+
+enum Role {
+  admin
+  manager
+}

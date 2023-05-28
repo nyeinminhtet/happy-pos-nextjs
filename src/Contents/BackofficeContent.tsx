@@ -9,6 +9,7 @@ import {
   MenuLocations,
 } from "../Types/Types";
 import { config } from "../config/config";
+import { useSession } from "next-auth/react";
 
 interface MenuType {
   menus: Menu[];
@@ -21,7 +22,7 @@ interface MenuType {
   updateData: (value: any) => void;
   fetchData: () => void;
 }
-export const defaultMenu = {
+export const defaultBackofficeMenu = {
   menus: [],
   menuCategories: [],
   addons: [],
@@ -32,25 +33,21 @@ export const defaultMenu = {
   updateData: () => {},
   fetchData: () => {},
 };
-export const MenuContent = createContext<MenuType>(defaultMenu);
+export const BackofficeContent = createContext<MenuType>(defaultBackofficeMenu);
 
-const MenuProvider = (props: any) => {
-  const [data, updateData] = useState(defaultMenu);
-  const accessToken = window.localStorage.getItem("accessToken");
+const BackofficeProvider = (props: any) => {
+  const [data, updateData] = useState(defaultBackofficeMenu);
+  const { data: session } = useSession();
 
   useEffect(() => {
-    if (accessToken) {
+    if (session) {
       fetchData();
     }
-  }, [accessToken]);
+  }, [session]);
 
   //get all menus
   const fetchData = async () => {
-    const response = await fetch(`${config.apiBaseUrl}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await fetch(`${config.apiBackofficeBaseUrl}`);
     const responseJson = await response.json();
     const {
       menus,
@@ -71,14 +68,14 @@ const MenuProvider = (props: any) => {
       menuLocations,
       company,
     });
-    console.log("all data", responseJson);
+    console.log("backoffice data", responseJson);
   };
 
   return (
-    <MenuContent.Provider value={{ ...data, updateData, fetchData }}>
+    <BackofficeContent.Provider value={{ ...data, updateData, fetchData }}>
       {props.children}
-    </MenuContent.Provider>
+    </BackofficeContent.Provider>
   );
 };
 
-export default MenuProvider;
+export default BackofficeProvider;
