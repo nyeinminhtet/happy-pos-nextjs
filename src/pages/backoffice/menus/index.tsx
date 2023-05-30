@@ -9,14 +9,18 @@ import Layout from "@/Components/Layout";
 import { BackofficeContent } from "@/Contents/BackofficeContent";
 
 const Menus = () => {
-  const { menuLocations, menus } = useContext(BackofficeContent);
-
+  const { menus, fetchData, menu_menuCategories_locations } =
+    useContext(BackofficeContent);
+  console.log("menu", menus);
+  console.log("menuMenucategorieslocations", menu_menuCategories_locations);
   const locationId = getLocationId();
 
   //loop for menuLocations
-  const validMenuLocation = menuLocations
-    .filter((menulocation) => String(menulocation.location_id) === locationId)
-    .map((menuId) => menuId.menu_id);
+  const validMenuLocation =
+    menu_menuCategories_locations &&
+    menu_menuCategories_locations
+      .filter((menulocation) => String(menulocation.location_id) === locationId)
+      .map((menuId) => menuId.menu_id);
 
   const filterMenu = menus.filter((menu) =>
     validMenuLocation.includes(menu.id as number)

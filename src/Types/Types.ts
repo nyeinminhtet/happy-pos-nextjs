@@ -28,15 +28,17 @@ export interface Locations {
   address?: string;
   companyId?: string;
 }
-export interface MenuLocations {
+export interface MenuMenuCategoriesLocations {
   id?: number;
   menu_id: number;
   location_id: number;
+  menu_categories_id: number;
   is_available?: boolean;
 }
 export interface MenuCategories {
   id?: number;
   category: string;
+  locationId: number;
 }
 
 export interface Company {
@@ -45,6 +47,21 @@ export interface Company {
   address: string;
 }
 
+export enum OrderLineStatus {
+  PENDING = "PENDING",
+  PREPARING = "PREPARING",
+  COMPLETE = "COMPLETE",
+}
+export interface OrderLine {
+  menu: Menu;
+  addon?: Addons[];
+  quantity: number;
+  status: OrderLineStatus;
+}
+
 export interface Order {
-  order: [{ menuId: number[]; addonId: number[] }];
+  id?: number;
+  isPaid: boolean;
+  tableId: number;
+  orderLines: OrderLine[];
 }
