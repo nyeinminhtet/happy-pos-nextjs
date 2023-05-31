@@ -6,7 +6,7 @@ import {
   Locations,
   Menu,
   MenuCategories,
-  MenuLocations,
+  MenuMenuCategoriesLocations,
 } from "../Types/Types";
 import { config } from "../config/config";
 import { useSession } from "next-auth/react";
@@ -17,8 +17,8 @@ interface MenuType {
   addons: Addons[];
   addonCategories: AddonCategories[];
   locations: Locations[];
+  menu_menuCategories_locations: MenuMenuCategoriesLocations[];
   company: Company | null;
-  menuLocations: MenuLocations[];
   updateData: (value: any) => void;
   fetchData: () => void;
 }
@@ -27,8 +27,8 @@ export const defaultBackofficeMenu = {
   menuCategories: [],
   addons: [],
   addonCategories: [],
+  menu_menuCategories_locations: [],
   locations: [],
-  menuLocations: [],
   company: null,
   updateData: () => {},
   fetchData: () => {},
@@ -55,8 +55,8 @@ const BackofficeProvider = (props: any) => {
       addons,
       addonCategories,
       locations,
-      menuLocations,
       company,
+      menu_menuCategories_locations,
     } = responseJson;
     updateData({
       ...data,
@@ -65,8 +65,8 @@ const BackofficeProvider = (props: any) => {
       addons,
       addonCategories,
       locations,
-      menuLocations,
       company,
+      menu_menuCategories_locations,
     });
     console.log("backoffice data", responseJson);
   };

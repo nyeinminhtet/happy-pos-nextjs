@@ -17,17 +17,17 @@ model addon_categories {
 model addons {
   id                Int               @id @default(autoincrement())
   name              String
-  price             Int?
-  addon_category_id Int?
-  addon_categories  addon_categories? @relation(fields: [addon_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  price             Int
+  addon_category_id Int
+  addon_categories  addon_categories @relation(fields: [addon_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model addons_menus {
   id                Int               @id @default(autoincrement())
-  menu_id           Int?
-  addon_category_id Int?
-  addon_categories  addon_categories? @relation(fields: [addon_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  menus             menus?            @relation(fields: [menu_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menu_id           Int
+  addon_category_id Int
+  addon_categories  addon_categories @relation(fields: [addon_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menus             menus            @relation(fields: [menu_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model companies {
@@ -40,26 +40,28 @@ model companies {
 
 model locations {
   id             Int              @id @default(autoincrement())
-  name           String?
+  name           String
   address        String?
-  companies_id   Int?
-  companies      companies?       @relation(fields: [companies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  menu_locations menu_locations[]
+  companies_id   Int
+  companies      companies       @relation(fields: [companies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menu_menu_categories_locations menu_menu_categories_locations[]
 }
 
 model menu_categories {
   id                    Int                     @id @default(autoincrement())
   category              String
-  menus_menucategrories menus_menucategrories[]
+  menu_menu_categories_locations menu_menu_categories_locations[]
 }
 
-model menu_locations {
+model menu_menu_categories_locations {
   id           Int        @id @default(autoincrement())
   menu_id      Int?
-  location_id  Int?
+  menu_categories_id Int
+  location_id  Int
   is_available Boolean?   @default(true)
-  locations    locations? @relation(fields: [location_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  locations    locations @relation(fields: [location_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   menus        menus?     @relation(fields: [menu_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menu_categories menu_categories @relation(fields: [menu_categories_id],references: [id],onDelete: NoAction,onUpdate: NoAction)
 }
 
 model menus {
@@ -69,25 +71,17 @@ model menus {
   acess_url             String?
   description           String?
   addons_menus          addons_menus[]
-  menu_locations        menu_locations[]
-  menus_menucategrories menus_menucategrories[]
+  menu_menu_categories_locations  menu_menu_categories_locations[]
 }
 
-model menus_menucategrories {
-  id                 Int              @id @default(autoincrement())
-  menu_id            Int?
-  menu_categories_id Int?
-  menu_categories    menu_categories? @relation(fields: [menu_categories_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  menus              menus?           @relation(fields: [menu_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
 
 model users {
   id           Int        @id @default(autoincrement())
   name         String
   email        String
   password     String
-  companies_id Int?
-  companies    companies? @relation(fields: [companies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  companies_id Int
+  companies    companies @relation(fields: [companies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   role         Role        @default(admin)
 }
 

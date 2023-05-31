@@ -13,13 +13,20 @@ export default async function handler(
       id: locationId,
     },
   });
-  const menuLocations = await prisma.menu_locations.findMany({
-    where: {
-      location_id: locationId,
-    },
-  });
+  const menusMenuCategoriesLocations =
+    await prisma.menu_menu_categories_locations.findMany({
+      where: {
+        location_id: locationId,
+      },
+    });
 
-  const menuIds = menuLocations.map((menuId) => menuId.menu_id) as number[];
+  const menuIds = menusMenuCategoriesLocations.map(
+    (item) => item.menu_id
+  ) as number[];
+  const menuCategoriesIds = menusMenuCategoriesLocations.map(
+    (item) => item.menu_categories_id
+  ) as number[];
+
   const menus = await prisma.menus.findMany({
     where: {
       id: {
@@ -27,18 +34,6 @@ export default async function handler(
       },
     },
   });
-
-  const menuMenuCategories = await prisma.menus_menucategrories.findMany({
-    where: {
-      menu_id: {
-        in: menuIds,
-      },
-    },
-  });
-
-  const menuCategoriesIds = menuMenuCategories.map(
-    (menuCat) => menuCat.menu_categories_id
-  ) as number[];
   const menuCategories = await prisma.menu_categories.findMany({
     where: {
       id: {
@@ -72,5 +67,12 @@ export default async function handler(
       },
     },
   });
-  res.send({ location, menus, menuCategories, addons, addonCats });
+  res.send({
+    location,
+    menus,
+    menuCategories,
+    addons,
+    addonCats,
+    menusMenuCategoriesLocations,
+  });
 }

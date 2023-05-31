@@ -18,7 +18,7 @@ interface MenuType {
   locations: Locations[];
   updateData: (value: any) => void;
   fetchData: () => void;
-  cart: Order[];
+  cart: Order[] | null;
 }
 export const defaultOrderMenu = {
   menus: [],
@@ -28,7 +28,7 @@ export const defaultOrderMenu = {
   locations: [],
   updateData: () => {},
   fetchData: () => {},
-  cart: [],
+  cart: null,
 };
 export const OrderContent = createContext<MenuType>(defaultOrderMenu);
 
