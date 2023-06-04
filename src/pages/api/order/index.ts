@@ -20,9 +20,9 @@ export default async function handler(
       },
     });
 
-  const menuIds = menusMenuCategoriesLocations.map(
-    (item) => item.menu_id
-  ) as number[];
+  const menuIds = menusMenuCategoriesLocations
+    .map((item) => item.menu_id)
+    .filter((item) => item !== null) as number[];
   const menuCategoriesIds = menusMenuCategoriesLocations.map(
     (item) => item.menu_categories_id
   ) as number[];

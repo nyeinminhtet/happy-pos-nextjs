@@ -1,12 +1,12 @@
 import { createContext, useEffect, useState } from "react";
+import { Order } from "../Types/Types";
 import {
-  AddonCategories,
-  Addons,
-  Locations,
-  Menu,
-  MenuCategories,
-  Order,
-} from "../Types/Types";
+  menus as Menu,
+  addons as Addons,
+  menu_categories as MenuCategories,
+  locations as Locations,
+  addon_categories as AddonCategories,
+} from "@prisma/client";
 import { config } from "../config/config";
 import { useSession } from "next-auth/react";
 

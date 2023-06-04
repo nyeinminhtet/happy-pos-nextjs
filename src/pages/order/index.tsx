@@ -1,4 +1,4 @@
-import { OrderContent } from "@/Contents/OrderContent";
+import { OrderContent } from "@/Contents/OrderContext";
 import { Menu, MenuCategories } from "@/Types/Types";
 import { Box, Button } from "@mui/material";
 import { useContext, useEffect, useState } from "react";

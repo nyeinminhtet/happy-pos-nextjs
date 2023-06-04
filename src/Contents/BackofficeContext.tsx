@@ -1,13 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import {
-  AddonCategories,
-  Addons,
-  Company,
-  Locations,
-  Menu,
-  MenuCategories,
-  MenuMenuCategoriesLocations,
-} from "../Types/Types";
+  menus as Menu,
+  addons as Addons,
+  menu_categories as MenuCategories,
+  locations as Locations,
+  addon_categories as AddonCategories,
+  menu_menu_categories_locations as MenuMenuCategoriesLocations,
+  companies as Company,
+} from "@prisma/client";
 import { config } from "../config/config";
 import { useSession } from "next-auth/react";
 
@@ -17,7 +17,7 @@ interface MenuType {
   addons: Addons[];
   addonCategories: AddonCategories[];
   locations: Locations[];
-  menu_menuCategories_locations: MenuMenuCategoriesLocations[];
+  menuMenuCategoriesLocations: MenuMenuCategoriesLocations[];
   company: Company | null;
   updateData: (value: any) => void;
   fetchData: () => void;
@@ -27,13 +27,13 @@ export const defaultBackofficeMenu = {
   menuCategories: [],
   addons: [],
   addonCategories: [],
-  menu_menuCategories_locations: [],
+  menuMenuCategoriesLocations: [],
   locations: [],
   company: null,
   updateData: () => {},
   fetchData: () => {},
 };
-export const BackofficeContent = createContext<MenuType>(defaultBackofficeMenu);
+export const BackofficeContext = createContext<MenuType>(defaultBackofficeMenu);
 
 const BackofficeProvider = (props: any) => {
   const [data, updateData] = useState(defaultBackofficeMenu);
@@ -56,8 +56,9 @@ const BackofficeProvider = (props: any) => {
       addonCategories,
       locations,
       company,
-      menu_menuCategories_locations,
+      menuMenuCategoriesLocations,
     } = responseJson;
+    console.log("responseJson", responseJson);
     updateData({
       ...data,
       menus,
@@ -66,15 +67,15 @@ const BackofficeProvider = (props: any) => {
       addonCategories,
       locations,
       company,
-      menu_menuCategories_locations,
+      menuMenuCategoriesLocations,
     });
-    console.log("backoffice data", responseJson);
+    // console.log("backoffice data", responseJson);
   };
 
   return (
-    <BackofficeContent.Provider value={{ ...data, updateData, fetchData }}>
+    <BackofficeContext.Provider value={{ ...data, updateData, fetchData }}>
       {props.children}
-    </BackofficeContent.Provider>
+    </BackofficeContext.Provider>
   );
 };
 

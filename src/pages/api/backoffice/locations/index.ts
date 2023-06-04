@@ -16,6 +16,16 @@ export default async function handler(
         companies_id: companyId,
       },
     });
+  } else if (req.method === "PUT") {
+    const { name, address, id } = req.body;
+    const isValid = name && address && id;
+    if (!isValid) return res.send(400);
+    await prisma.locations.update({
+      where: {
+        id: parseInt(id, 10),
+      },
+      data: { name, address },
+    });
     res.send(200);
   } else {
     res.send(500);

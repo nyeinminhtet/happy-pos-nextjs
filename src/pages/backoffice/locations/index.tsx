@@ -3,17 +3,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 
 import { getAccessToken } from "@/utils";
-import { Locations } from "@/Types/Types";
+import { locations as Locations } from "@prisma/client";
 import { config } from "@/config/config";
 import Layout from "@/Components/Layout";
-import { BackofficeContent } from "@/Contents/BackofficeContent";
+import { BackofficeContext } from "@/Contents/BackofficeContext";
 
 const LocationsComp = () => {
   const accessToken = getAccessToken();
-  const { locations, fetchData, company } = useContext(BackofficeContent);
-  const [newLocation, setNewLocation] = useState<Locations>({
+  const { locations, fetchData, company } = useContext(BackofficeContext);
+  const [newLocation, setNewLocation] = useState({
     name: "",
     address: "",
+    companyId: company?.id,
   });
   const [updateLocations, setUpdateLocations] =
     useState<Locations[]>(locations);
@@ -37,7 +38,7 @@ const LocationsComp = () => {
         body: JSON.stringify(newLocation),
       });
       fetchData();
-      setNewLocation({ name: "", address: "" });
+      setNewLocation({ name: "", address: "", companyId: company?.id });
     } catch (err) {
       console.log(err);
     }
@@ -54,7 +55,7 @@ const LocationsComp = () => {
       oldLocation?.name !== newLocation?.name ||
       oldLocation?.address !== newLocation?.address
     ) {
-      await fetch(`${config.apiBackofficeBaseUrl}/locations/${location.id}`, {
+      await fetch(`${config.apiBackofficeBaseUrl}/locations`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

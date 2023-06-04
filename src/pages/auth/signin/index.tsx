@@ -1,27 +1,35 @@
-import Layout from "@/Components/Layout";
+import MenuAppBar from "@/Components/AppBar";
 import { Box, Button } from "@mui/material";
 import { signIn } from "next-auth/react";
-import React from "react";
 
 const SignIn = () => {
   return (
-    <Layout title="Sign-In">
+    <Box>
+      <Box sx={{ position: "relative", zIndex: 999 }}>
+        <MenuAppBar />
+      </Box>
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          mt: 10,
+          backgroundColor: "#E8F6EF",
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          position: "absolute",
+          zIndex: 1,
         }}
       >
         <Button
           variant="contained"
           onClick={() => signIn("google", { callbackUrl: "/backoffice" })}
         >
-          Sign in with google
+          Sign in with Google
         </Button>
       </Box>
-    </Layout>
+    </Box>
   );
 };
 

@@ -12,18 +12,18 @@ import { useContext, useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import { getAccessToken, getLocationId } from "@/utils";
-import { Company, Locations } from "@/Types/Types";
+import { companies as Company, locations as Locations } from "@prisma/client";
 import { config } from "@/config/config";
 import Layout from "@/Components/Layout";
-import { BackofficeContent } from "@/Contents/BackofficeContent";
+import { BackofficeContext } from "@/Contents/BackofficeContext";
 
 const Setting = () => {
-  const { locations, company } = useContext(BackofficeContent);
+  const { locations, company } = useContext(BackofficeContext);
   console.log(locations);
   const [selectedLocation, setSelectedLocation] = useState<
     Locations | undefined
   >();
-  const [companyInfo, setCompanyInfo] = useState<Company>({
+  const [companyInfo, setCompanyInfo] = useState({
     name: "",
     address: "",
   });
@@ -58,7 +58,7 @@ const Setting = () => {
   const updateCompany = async () => {
     try {
       const response = await fetch(
-        `${config.apiBackofficeBaseUrl}/setting/companies/${companyInfo.id}`,
+        `${config.apiBackofficeBaseUrl}/setting/companies`,
         {
           method: "PUT",
           headers: {

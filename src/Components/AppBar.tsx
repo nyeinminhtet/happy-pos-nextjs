@@ -3,18 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import {
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 import Link from "next/link";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
@@ -23,12 +12,17 @@ import ClassIcon from "@mui/icons-material/Class";
 import CategoryIcon from "@mui/icons-material/Category";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { getAccessToken, getLocationId } from "@/utils";
 import { signOut, useSession } from "next-auth/react";
-import { BackofficeContent } from "@/Contents/BackofficeContent";
+import { getLocationId } from "@/utils";
+import { BackofficeContext } from "@/Contents/BackofficeContext";
 
-const sidebarMenuItems = [
-  { id: 1, label: "Orders", icon: <FastfoodIcon />, route: "/orders" },
+export const sidebarMenuItems = [
+  {
+    id: 1,
+    label: "Orders",
+    icon: <FastfoodIcon />,
+    route: "/backoffice/orders",
+  },
   {
     id: 2,
     label: "Menus",
@@ -72,18 +66,13 @@ interface Props {
 }
 
 const MenuAppBar = ({ title }: Props) => {
-  const [showNavigation, setShowNavigation] = useState(false);
-  const { locations } = useContext(BackofficeContent);
   const { data } = useSession();
-  const [routerInfo, setRouterInfo] = useState({
-    name: "login",
-    route: "/login",
-  });
-  const selectedLocationId = getLocationId();
-  const selectedLocation =
-    locations &&
-    Array.isArray(locations) &&
-    locations.find((location) => String(location.id) === selectedLocationId);
+  const locationId = getLocationId() as string;
+  const { locations } = useContext(BackofficeContext);
+  const selectedLocation = locations.find(
+    (location) => location.id === Number(locationId)
+  );
+
   return (
     <Box>
       <AppBar position="static">
@@ -91,74 +80,50 @@ const MenuAppBar = ({ title }: Props) => {
           sx={{
             display: "flex",
             alignItems: "center",
+            background: "#820000",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
-              size="large"
-              edge="start"
-              aria-label="menu"
-              onClick={() => setShowNavigation((prev) => !prev)}
-            >
-              <MenuIcon htmlColor="white" fontSize="large" />
-            </IconButton>
-            <h2 style={{ fontSize: "1.2rem", marginLeft: "10px" }}>
-              {selectedLocation ? selectedLocation.name : ""}
-            </h2>
-          </Box>
-          <h2 style={{ margin: "0 auto" }}>{title ? title : "အဝ စားမယ် "}</h2>
           {data ? (
-            <Typography
-              onClick={() => signOut({ callbackUrl: "/backoffice" })}
-              sx={{ cursor: "pointer" }}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
+              }}
             >
-              SignOut
-            </Typography>
+              <h2 style={{ fontSize: "1.2rem", marginLeft: "10px" }}>
+                {selectedLocation ? selectedLocation.name : ""}
+              </h2>
+
+              <Box>
+                <Typography
+                  variant="h6"
+                  component="div"
+                  sx={{ flexGrow: 1, textAlign: "center" }}
+                >
+                  Sarr-Mall
+                </Typography>
+              </Box>
+              <Button
+                variant="text"
+                onClick={() => signOut()}
+                sx={{ color: "#E8F6EF" }}
+              >
+                Sign out
+              </Button>
+            </Box>
           ) : (
-            <span></span>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, textAlign: "center" }}
+            >
+              Sarr-Mall
+            </Typography>
           )}
         </Toolbar>
       </AppBar>
-      <Drawer
-        anchor="left"
-        open={showNavigation}
-        onClose={() => setShowNavigation(false)}
-        disablePortal
-      >
-        <List>
-          {sidebarMenuItems.slice(0, 6).map((item) => (
-            <Link
-              key={item.id}
-              href={item.route}
-              style={{ textDecoration: "none", color: "#313131" }}
-            >
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.label} />
-                </ListItemButton>
-              </ListItem>
-            </Link>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {sidebarMenuItems.slice(-1).map((item) => (
-            <Link
-              key={item.id}
-              href={item.route}
-              style={{ textDecoration: "none", color: "#313131" }}
-            >
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.label} />
-                </ListItemButton>
-              </ListItem>
-            </Link>
-          ))}
-        </List>
-      </Drawer>
     </Box>
   );
 };

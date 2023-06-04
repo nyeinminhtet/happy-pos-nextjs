@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Menu } from "../Types/Types";
+
 import {
   Box,
   TextField,
@@ -13,12 +13,14 @@ import {
   Select,
   Chip,
 } from "@mui/material";
-import Layout from "../Components/Layout";
-import FileDropZone from "./FileDropZone";
-import { config } from "../config/config";
-import { LoadingButton } from "@mui/lab";
-import { MenuContent } from "../Contents/Menu_Contents";
 import { useRouter } from "next/router";
+import { BackofficeContext } from "@/Contents/BackofficeContext";
+import { Locations, Menu } from "@/Types/Types";
+import { config } from "@/config/config";
+import Layout from "@/Components/Layout";
+import FileDropZone from "../filedropzone";
+import { LoadingButton } from "@mui/lab";
+import { getLocationId } from "@/utils";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -33,23 +35,38 @@ const MenuProps = {
 
 const CreateMenu = () => {
   const [menuImg, setMenuImg] = useState<File>();
-  const { locations } = useContext(MenuContent);
+  const [selectedMenucategoryIds, setSelectedMenucategoryIds] = useState<
+    number[]
+  >([]);
+  const { menuMenuCategoriesLocations, menuCategories } =
+    useContext(BackofficeContext);
+  const selectedLocationId = getLocationId() as string;
   const [menu, setMenu] = useState<Menu>({
     name: "",
     price: 0,
     description: "",
-    locationIds: [],
+    locationIds: [parseInt(selectedLocationId, 10)],
+    menuCategoryIds: selectedMenucategoryIds,
   });
-  const [selectedLocationIds, setSelectedLocationIds] = useState<number[]>([]);
   const route = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const isDisable =
-    !menu.name || !menu.price || !menu.description || !menu.locationIds.length;
+  const validMenuCategoryIds = menuMenuCategoriesLocations
+    .filter((item) => {
+      item.menu_categories_id &&
+        item.location_id === parseInt(selectedLocationId, 10);
+    })
+    .map((item) => item.menu_categories_id);
 
-  useEffect(() => {
-    // console.log("menu", menu);
-  }, [menu]);
+  const validMenuCategories = menuCategories.filter((item) => {
+    item.id && validMenuCategoryIds.includes(item.id);
+  });
+
+  const isDisable =
+    !menu.name ||
+    !menu.price ||
+    !menu.description ||
+    !menu.menuCategoryIds.length;
 
   const onFileSelected = (files: File[]) => {
     setMenuImg(files[0]);
@@ -61,7 +78,7 @@ const CreateMenu = () => {
       if (menuImg) {
         const formData = new FormData();
         formData.append("files", menuImg as Blob);
-        const response = await fetch(`${config.apiBaseUrl}/assets`, {
+        const response = await fetch(`${config.apiBackofficeBaseUrl}/assets`, {
           method: "POST",
           body: formData,
         });
@@ -70,14 +87,14 @@ const CreateMenu = () => {
         menu.assetUrl = assetUrl;
         console.log(responseData.assetUrl);
       }
-      const response = await fetch(`${config.apiBaseUrl}/menus`, {
+      const response = await fetch(`${config.apiBackofficeBaseUrl}/menus`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(menu),
       });
       setIsLoading(false);
       if (response.ok) {
-        route.push("/menus");
+        route.back();
       }
     } catch (err) {
       setIsLoading(false);
@@ -86,9 +103,12 @@ const CreateMenu = () => {
   };
   const deleteMenu = async (menuId?: number) => {
     if (!menuId) return;
-    const response = await fetch(`${config.apiBaseUrl}/menus/${menuId}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `${config.apiBackofficeBaseUrl}/menus/${menuId}`,
+      {
+        method: "DELETE",
+      }
+    );
   };
 
   return (
@@ -127,51 +147,49 @@ const CreateMenu = () => {
             }
           />
           <FormControl sx={{ m: 1, width: 300 }}>
-            <InputLabel id="demo-multiple-checkbox-label">locations</InputLabel>
+            <InputLabel id="demo-multiple-checkbox-label">
+              Menu-Categories
+            </InputLabel>
             <Select
               labelId="demo-multiple-checkbox-label"
               id="demo-multiple-checkbox"
               multiple
-              value={selectedLocationIds}
+              value={selectedMenucategoryIds}
               onChange={(evt) => {
                 const values = evt.target.value as number[];
-                setSelectedLocationIds(values);
+                setSelectedMenucategoryIds(values);
                 console.log("values", values);
-                setMenu({ ...menu, locationIds: values });
+                setMenu({ ...menu, menuCategoryIds: values });
               }}
-              input={<OutlinedInput label="locations" />}
+              input={<OutlinedInput label="menu-categories" />}
               renderValue={(values) => {
-                const selectedLocations = selectedLocationIds
-                  .map((selectedLocationId) => {
-                    return locations.find(
-                      (location) => location.id === selectedLocationId
+                const selectedMenuCategories = selectedMenucategoryIds
+                  .map((selectedMenuCategoryId) => {
+                    return menuCategories.find(
+                      (menucategory) =>
+                        menucategory.id === selectedMenuCategoryId
                     );
                   })
                   .map(
-                    (selectedLocation) =>
-                      selectedLocation && selectedLocation.name
+                    (selectedMenucategory) =>
+                      selectedMenucategory && selectedMenucategory.category
                   )
                   .join(", ");
-                return selectedLocations;
-                // return selectedLocations
-                //   .map(
-                //     (selectedLocation) =>
-                //       selectedLocation && selectedLocation.name
-                //   )
-                //   .join(", ");
+                return selectedMenuCategories;
               }}
               MenuProps={MenuProps}
             >
-              {locations.map((location) => (
-                <MenuItem key={location.id} value={location.id}>
+              {menuCategories.map((menucategory) => (
+                <MenuItem key={menucategory.id} value={menucategory.id}>
                   <Checkbox
                     checked={
-                      location.id && selectedLocationIds.includes(location.id)
+                      menucategory.id &&
+                      selectedMenucategoryIds.includes(menucategory.id)
                         ? true
                         : false
                     }
                   />
-                  <ListItemText primary={location.name} />
+                  <ListItemText primary={menucategory.category} />
                 </MenuItem>
               ))}
             </Select>

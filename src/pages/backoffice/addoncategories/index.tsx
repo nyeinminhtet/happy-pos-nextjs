@@ -4,10 +4,10 @@ import { Box, Button, Chip, Link, Stack, TextField } from "@mui/material";
 import { config } from "@/config/config";
 import Layout from "@/Components/Layout";
 import { AddonCategories } from "@/Types/Types";
-import { BackofficeContent } from "@/Contents/BackofficeContent";
+import { BackofficeContext } from "@/Contents/BackofficeContext";
 
 const Addons_Categories = () => {
-  const { addonCategories, fetchData } = useContext(BackofficeContent);
+  const { addonCategories, fetchData } = useContext(BackofficeContext);
   const [newAddonCat, setNewAddonCat] = useState<AddonCategories | null>(null);
 
   const createCat = async () => {
