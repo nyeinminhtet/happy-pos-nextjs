@@ -11,6 +11,7 @@ interface Config {
   databaseHost: string;
   clientId: string;
   clientSecret: string;
+  orderAppUrl: string;
 }
 
 export const config: Config = {
@@ -26,4 +27,5 @@ export const config: Config = {
   databaseName: process.env.DATABASE_NAME || "",
   clientId: process.env.GOOGLE_CLIENT_ID || "",
   clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+  orderAppUrl: process.env.NEXT_PUBLIC_ORDER_APP_URL || "",
 };

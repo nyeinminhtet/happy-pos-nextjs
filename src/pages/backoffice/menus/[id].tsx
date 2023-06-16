@@ -5,26 +5,40 @@ import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { useRouter } from "next/router";
 import Layout from "@/Components/Layout";
 import { config } from "@/config/config";
-import { getLocationId } from "@/utils";
+import {
+  getAddonCategoryByMenuId,
+  getLocationId,
+  getMenuCategoryIdByLocationId,
+} from "@/utils";
+
+interface AutocompleteProps {
+  id: number;
+  label: string;
+}
 
 const MenuDetails = () => {
-  const { menus, menuCategories, menuMenuCategoriesLocations, fetchData } =
-    useContext(BackofficeContext);
+  const {
+    menus,
+    menuCategories,
+    menuMenuCategoriesLocations,
+    fetchData,
+    addonCategories,
+    menuAddons,
+  } = useContext(BackofficeContext);
   const router = useRouter();
-
   const menuId = router.query.id as string;
   const selectedLocationId = getLocationId() as string;
 
-  const validMenuCategoryIds = menuMenuCategoriesLocations
-    .filter((item) => item.location_id === parseInt(selectedLocationId, 10))
-    .map((item) => item.menu_categories_id);
+  const validMenuCategory = getMenuCategoryIdByLocationId(
+    menuCategories,
+    selectedLocationId,
+    menuMenuCategoriesLocations
+  ).map((item) => ({ id: item.id, label: item.category }));
 
-  const mappedMenuCategories = menuCategories
-    .filter((item) => item.id && validMenuCategoryIds.includes(item.id))
-    .map((menuCategory) => ({
-      id: menuCategory.id,
-      label: menuCategory.category,
-    }));
+  const mappedAddonCategories = addonCategories.map((item) => ({
+    id: item.id,
+    label: item.name,
+  }));
 
   const menuCategoryIds = menuMenuCategoriesLocations
     .filter((item) => item.menu_id === Number(menuId))
@@ -37,18 +51,23 @@ const MenuDetails = () => {
     price: menu?.price,
     menuCategoryIds,
     locationId: selectedLocationId,
+    addonCategoryIds: [] as number[],
   });
 
   const selectedMenuCategories = menuCategories
     .filter((item) => menuCategoryIds.includes(item.id))
     .map((item) => ({ id: item.id, label: item.category }));
 
-  const [selected, setSelected] = useState(selectedMenuCategories);
-  // useEffect(() => {
-  //   if (menu) {
-  //     setNewMenu({ name: menu.name, price: menu.price });
-  //   }
-  // }, [menu]);
+  const validAddonCategory = getAddonCategoryByMenuId(
+    addonCategories,
+    menuId,
+    menuAddons
+  ).map((item) => ({ id: item.id, label: item.name }));
+
+  const [connectedMenuCategories, setConnectedMenuCategories] =
+    useState<AutocompleteProps[]>();
+  const [connectedAddonCategories, setConnectedAddonCategories] =
+    useState<AutocompleteProps[]>();
 
   //update
   const updateMenu = async () => {
@@ -57,7 +76,7 @@ const MenuDetails = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newMenu),
     });
-    console.log(await response.json());
+    router.back();
     fetchData();
   };
 
@@ -66,32 +85,20 @@ const MenuDetails = () => {
   return (
     <Layout title="Menu-Details">
       {menu ? (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-          }}
-          mt={5}
-        >
+        <Box sx={{ p: 3, display: "flex", flexDirection: "column" }}>
           <TextField
-            sx={{ minWidth: "400px", mb: 4 }}
-            id="filled-basic"
+            sx={{ mb: 2, width: "50%" }}
             label="Name"
-            variant="filled"
             defaultValue={menu.name}
             onChange={(evt) =>
               setNewMenu({ ...newMenu, name: evt.target.value })
             }
           />
           <TextField
-            sx={{ minWidth: "400px", mb: 3 }}
-            id="filled-basic"
+            sx={{ mb: 2, width: "50%" }}
             label="Price"
             defaultValue={menu.price}
             type="number"
-            variant="filled"
             onChange={(evt) =>
               setNewMenu({ ...newMenu, price: parseInt(evt.target.value, 10) })
             }
@@ -100,21 +107,41 @@ const MenuDetails = () => {
             disablePortal
             multiple
             id="combo-box-demo"
-            value={selected}
-            options={mappedMenuCategories}
+            value={selectedMenuCategories}
+            options={validMenuCategory}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             onChange={(e, v) => {
-              const menuCategories = v.map((item) => item.id);
-              setNewMenu({ ...newMenu, menuCategoryIds: menuCategories });
-              setSelected(v);
+              const menuCategoryIds = v.map((item) => item.id);
+              setNewMenu({ ...newMenu, menuCategoryIds });
+              setConnectedMenuCategories(v);
             }}
-            sx={{ width: 300, mb: 3 }}
+            sx={{ width: 500, mb: 3 }}
             renderInput={(params) => (
               <TextField {...params} label="Menu-Categories" />
             )}
           />
-          <Button variant="contained" onClick={updateMenu}>
-            UPDATE
+          <Autocomplete
+            disablePortal
+            multiple
+            options={mappedAddonCategories}
+            value={validAddonCategory}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            onChange={(e, v) => {
+              const addonCategoryIds = v.map((item) => item.id);
+              setNewMenu({ ...newMenu, addonCategoryIds });
+              setConnectedAddonCategories(v);
+            }}
+            sx={{ width: 500, mb: 3 }}
+            renderInput={(params) => (
+              <TextField {...params} label="Addon-Categories" />
+            )}
+          />
+          <Button
+            variant="contained"
+            onClick={updateMenu}
+            sx={{ width: "fit-content", mt: 3 }}
+          >
+            Update
           </Button>
         </Box>
       ) : (

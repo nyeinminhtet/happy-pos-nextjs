@@ -8,22 +8,24 @@ datasource db {
 }
 
 model addon_categories {
-  id                Int            @id @default(autoincrement())
-  category_of_addon String
-  addons            addons[]
-  addons_menus      addons_menus[]
+  id           Int            @id @default(autoincrement())
+  name         String
+  is_require   Boolean?       @default(false)
+  addons       addons[]
+  addons_menus addons_menus[]
 }
 
 model addons {
-  id                Int               @id @default(autoincrement())
+  id                Int              @id @default(autoincrement())
   name              String
   price             Int
   addon_category_id Int
+  is_available      Boolean?         @default(true)
   addon_categories  addon_categories @relation(fields: [addon_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model addons_menus {
-  id                Int               @id @default(autoincrement())
+  id                Int              @id @default(autoincrement())
   menu_id           Int
   addon_category_id Int
   addon_categories  addon_categories @relation(fields: [addon_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -39,50 +41,58 @@ model companies {
 }
 
 model locations {
-  id             Int              @id @default(autoincrement())
-  name           String
-  address        String?
-  companies_id   Int
-  companies      companies       @relation(fields: [companies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                             Int                              @id @default(autoincrement())
+  name                           String
+  address                        String?
+  companies_id                   Int
+  companies                      companies                        @relation(fields: [companies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   menu_menu_categories_locations menu_menu_categories_locations[]
+  tables                         tables[]
 }
 
 model menu_categories {
-  id                    Int                     @id @default(autoincrement())
-  category              String
+  id                             Int                              @id @default(autoincrement())
+  category                       String
   menu_menu_categories_locations menu_menu_categories_locations[]
 }
 
 model menu_menu_categories_locations {
-  id           Int        @id @default(autoincrement())
-  menu_id      Int?
+  id                 Int              @id @default(autoincrement())
+  menu_id            Int?
   menu_categories_id Int
-  location_id  Int
-  is_available Boolean?   @default(true)
-  locations    locations @relation(fields: [location_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  menus        menus?     @relation(fields: [menu_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  menu_categories menu_categories @relation(fields: [menu_categories_id],references: [id],onDelete: NoAction,onUpdate: NoAction)
+  location_id        Int?
+  is_available       Boolean?         @default(true)
+  locations          locations?       @relation(fields: [location_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menu_categories    menu_categories? @relation(fields: [menu_categories_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menus              menus?           @relation(fields: [menu_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model tables {
+  id          Int       @id @default(autoincrement())
+  table_name  String
+  location_id Int
+  asset_url   String?
+  locations   locations @relation(fields: [location_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model menus {
-  id                    Int                     @id @default(autoincrement())
-  name                  String
-  price                 Int
-  acess_url             String?
-  description           String?
-  addons_menus          addons_menus[]
-  menu_menu_categories_locations  menu_menu_categories_locations[]
+  id                             Int                              @id @default(autoincrement())
+  name                           String
+  price                          Int
+  acess_url                      String?
+  description                    String?
+  addons_menus                   addons_menus[]
+  menu_menu_categories_locations menu_menu_categories_locations[]
 }
 
-
 model users {
-  id           Int        @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   name         String
   email        String
   password     String
   companies_id Int
+  role         Role      @default(admin)
   companies    companies @relation(fields: [companies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  role         Role        @default(admin)
 }
 
 enum Role {

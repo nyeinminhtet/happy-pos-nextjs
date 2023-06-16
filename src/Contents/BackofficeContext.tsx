@@ -7,6 +7,8 @@ import {
   addon_categories as AddonCategories,
   menu_menu_categories_locations as MenuMenuCategoriesLocations,
   companies as Company,
+  addons_menus as MenuAddon,
+  tables as Table,
 } from "@prisma/client";
 import { config } from "../config/config";
 import { useSession } from "next-auth/react";
@@ -15,10 +17,13 @@ interface MenuType {
   menus: Menu[];
   menuCategories: MenuCategories[];
   addons: Addons[];
+  menuAddons: MenuAddon[];
   addonCategories: AddonCategories[];
   locations: Locations[];
   menuMenuCategoriesLocations: MenuMenuCategoriesLocations[];
   company: Company | null;
+  tables: Table[];
+  isLoading: Boolean;
   updateData: (value: any) => void;
   fetchData: () => void;
 }
@@ -27,9 +32,12 @@ export const defaultBackofficeMenu = {
   menuCategories: [],
   addons: [],
   addonCategories: [],
+  menuAddons: [],
   menuMenuCategoriesLocations: [],
   locations: [],
   company: null,
+  tables: [],
+  isLoading: true,
   updateData: () => {},
   fetchData: () => {},
 };
@@ -56,6 +64,8 @@ const BackofficeProvider = (props: any) => {
       addonCategories,
       locations,
       company,
+      menuAddons,
+      tables,
       menuMenuCategoriesLocations,
     } = responseJson;
     console.log("responseJson", responseJson);
@@ -67,7 +77,10 @@ const BackofficeProvider = (props: any) => {
       addonCategories,
       locations,
       company,
+      menuAddons,
+      tables,
       menuMenuCategoriesLocations,
+      isLoading: false,
     });
     // console.log("backoffice data", responseJson);
   };

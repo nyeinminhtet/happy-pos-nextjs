@@ -1,4 +1,4 @@
-import MenuAppBar from "@/Components/AppBar";
+import TopBar from "@/Components/TopBar";
 import { Box, Button } from "@mui/material";
 import { signIn } from "next-auth/react";
 
@@ -6,7 +6,7 @@ const SignIn = () => {
   return (
     <Box>
       <Box sx={{ position: "relative", zIndex: 999 }}>
-        <MenuAppBar />
+        <TopBar />
       </Box>
       <Box
         sx={{

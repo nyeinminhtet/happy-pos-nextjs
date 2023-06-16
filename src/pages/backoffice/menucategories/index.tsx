@@ -24,10 +24,11 @@ import {
   menu_categories as MenuCategories,
   locations as Locations,
 } from "@prisma/client";
+import AddIcon from "@mui/icons-material/Add";
 import { config } from "@/config/config";
 import Layout from "@/Components/Layout";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
-import { getLocationId } from "@/utils";
+import { getLocationId, getMenuCategoryIdByLocationId } from "@/utils";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -51,17 +52,18 @@ const Menu_Categories = () => {
     locationIds: [] as number[],
   });
 
-  const validMenuCategoryIds = menuMenuCategoriesLocations
-    .filter((item) => item.location_id === parseInt(selectedLocationId, 10))
-    .map((item) => item.menu_categories_id);
-  const filteredMenuCategories = menuCategories.filter(
-    (item) => item.id && validMenuCategoryIds.includes(item.id)
+  const validMenuCategoryIds = getMenuCategoryIdByLocationId(
+    menuCategories,
+    selectedLocationId,
+    menuMenuCategoriesLocations
   );
-
   const getMenuCount = (menuCategoryId?: number) => {
     if (!menuCategoryId) return 0;
     return menuMenuCategoriesLocations.filter(
-      (item) => item.menu_categories_id === menuCategoryId && item.menu_id
+      (item) =>
+        item.menu_categories_id === menuCategoryId &&
+        item.menu_id &&
+        item.location_id === Number(selectedLocationId)
     ).length;
   };
 
@@ -71,7 +73,7 @@ const Menu_Categories = () => {
     if (!newMenuCategory?.category || !newMenuCategory.locationIds.length)
       return alert("pls fill completely!");
     const response = await fetch(
-      `${config.apiBackofficeBaseUrl}/menu-categories`,
+      `${config.apiBackofficeBaseUrl}/menucategories`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -80,12 +82,13 @@ const Menu_Categories = () => {
     );
     fetchData();
     setOpen(false);
+    setNewMenuCat({ category: "", locationIds: [] });
   };
 
   //delete
   const handleDelete = async (id: any) => {
     const response = await fetch(
-      `${config.apiBackofficeBaseUrl}/menu-categories/${id}`,
+      `${config.apiBackofficeBaseUrl}/menucategories/${id}`,
       {
         method: "DELETE",
       }
@@ -96,25 +99,33 @@ const Menu_Categories = () => {
   return (
     <Layout title="Menu-Categories">
       <Box>
-        <Box sx={{ display: "flex" }}>
-          <Box
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Button
             onClick={() => setOpen(true)}
+            variant="contained"
+            startIcon={<AddIcon />}
             sx={{
-              width: "170px",
-              height: "170px",
-              borderRadius: 2,
-              border: "2px solid #EBEBEB",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              cursor: "pointer",
-              textAlign: "center",
-              mr: 4,
+              backgroundColor: "#4E6C50",
+              width: "fit-content",
+              color: "#E8F6EF",
+              mb: 2,
+              ":hover": {
+                bgcolor: "#820000", // theme.palette.primary.main
+                color: "white",
+              },
             }}
           >
-            <AddCircleOutlineIcon color="info" sx={{ fontSize: "50px" }} />
-          </Box>
-          {filteredMenuCategories.map((item, index) => (
+            New menuCategory
+          </Button>
+        </Box>
+        <Box sx={{ display: "flex" }}>
+          {validMenuCategoryIds.map((item, index) => (
             <Link
               key={index}
               href={`/backoffice/menucategories/${item.id}`}

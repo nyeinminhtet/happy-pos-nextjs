@@ -28,7 +28,7 @@ const rows = [
 
 const Orders = () => {
   return (
-    <Layout>
+    <Layout title="Order">
       <TableContainer
         component={Paper}
         sx={{ maxWidth: 800, margin: "0 auto", mt: 5 }}

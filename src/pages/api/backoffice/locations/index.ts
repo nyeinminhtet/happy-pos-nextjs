@@ -16,6 +16,7 @@ export default async function handler(
         companies_id: companyId,
       },
     });
+    return res.send(200);
   } else if (req.method === "PUT") {
     const { name, address, id } = req.body;
     const isValid = name && address && id;

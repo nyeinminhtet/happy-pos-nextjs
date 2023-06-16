@@ -71,10 +71,7 @@ export default async function handler(
           })
       )
     );
-    const newAddonCategoriesData = [
-      { category_of_addon: "Drinks" },
-      { category_of_addon: "Sizes" },
-    ];
+    const newAddonCategoriesData = [{ name: "Drinks" }, { name: "Sizes" }];
     const newAddonCategories = await prisma.$transaction(
       newAddonCategoriesData.map((addonCategory) =>
         prisma.addon_categories.create({ data: addonCategory })
@@ -117,6 +114,16 @@ export default async function handler(
         },
       ],
     });
+    const tablesData = [
+      {
+        table_name: "Table-01",
+        location_id: newLocation.id,
+      },
+      {
+        table_name: "Table-02",
+        location_id: newLocation.id,
+      },
+    ];
     return res.send({
       menus: newMenus,
       menuCategories: newMenuCategories,
@@ -145,9 +152,10 @@ export default async function handler(
     const menuCategoriesIds = menuMenuCategoriesLocations.map(
       (item) => item.menu_categories_id
     );
-    const menuIds = menuMenuCategoriesLocations.map(
-      (item) => item.menu_id
-    ).filter((item)=>item !==null) as number[];
+    const menuIds = menuMenuCategoriesLocations
+      .map((item) => item.menu_id)
+      .filter((item) => item !== null) as number[];
+
     const menus = await prisma.menus.findMany({
       where: {
         id: {
@@ -155,6 +163,7 @@ export default async function handler(
         },
       },
     });
+
     const menuCategories = await prisma.menu_categories.findMany({
       where: {
         id: {
@@ -170,26 +179,35 @@ export default async function handler(
         },
       },
     });
-    const addonIds = menuAddons.map(
+
+    const addonCategoryIds = menuAddons.map(
       (item) => item.addon_category_id
     ) as number[];
+
     const addonCategories = await prisma.addon_categories.findMany({
       where: {
         id: {
-          in: addonIds,
+          in: addonCategoryIds,
         },
       },
     });
     const addons = await prisma.addons.findMany({
       where: {
-        id: {
-          in: addonIds,
+        addon_category_id: {
+          in: addonCategoryIds,
         },
       },
     });
     const company = await prisma.companies.findFirst({
       where: {
         id: companyId,
+      },
+    });
+    const tables = await prisma.tables.findMany({
+      where: {
+        location_id: {
+          in: locationIds,
+        },
       },
     });
     res.send({
@@ -200,14 +218,8 @@ export default async function handler(
       locations,
       menuMenuCategoriesLocations,
       company,
+      menuAddons,
+      tables,
     });
   }
-
-  // if (!email) return res.send(400);
-  // const newuser = await prisma.users.findFirst({
-  //   where: {
-  //     email,
-  //   },
-  // });
-  // if (!user) return res.send(400);
 }
