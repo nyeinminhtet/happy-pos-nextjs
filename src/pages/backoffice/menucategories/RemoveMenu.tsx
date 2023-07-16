@@ -22,12 +22,11 @@ interface Props {
 
 const RemoveMenuFromMenuCategory = ({ menu, open, setOpen }: Props) => {
   const selectedlocation = getLocationId() as string;
-  const { fetchData } = useContext(BackofficeContext);
   const router = useRouter();
   const menuCategoryId = router.query.id as string;
 
   const removeMenu = async (menu: Menu) => {
-    await fetch(`${config.apiBackofficeBaseUrl}/menucategories/removeMenu`, {
+    await fetch(`${config.apiBaseUrl}/menucategories/removeMenu`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -36,7 +35,7 @@ const RemoveMenuFromMenuCategory = ({ menu, open, setOpen }: Props) => {
         menuCategoryId: menuCategoryId,
       }),
     });
-    fetchData();
+    // fetchData();
     setOpen(false);
   };
 

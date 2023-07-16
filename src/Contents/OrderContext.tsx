@@ -1,62 +1,95 @@
 import { createContext, useEffect, useState } from "react";
-import { Order } from "../Types/Types";
+import { CartItem } from "../Types/Types";
 import {
   menus as Menu,
   addons as Addons,
   menu_categories as MenuCategories,
   locations as Locations,
   addon_categories as AddonCategories,
+  addons_menus as MenuAddon,
+  menu_menu_categories_locations as MenuMenuCategoryLocaion,
+  orders as Order,
+  orderlines as Orderline,
 } from "@prisma/client";
 import { config } from "../config/config";
-import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
-interface MenuType {
+interface OrderType {
   menus: Menu[];
   menuCategories: MenuCategories[];
   addons: Addons[];
   addonCategories: AddonCategories[];
-  locations: Locations[];
+  location: Locations[];
+  addonMenu: MenuAddon[];
+  menusMenuCategoriesLocations: MenuMenuCategoryLocaion[];
   updateData: (value: any) => void;
   fetchData: () => void;
-  cart: Order[] | null;
+  cart: CartItem[];
+  orders: Order[];
+  orderlines: Orderline[];
+  isloading: boolean;
 }
 export const defaultOrderMenu = {
   menus: [],
   menuCategories: [],
   addons: [],
   addonCategories: [],
-  locations: [],
+  location: [],
+  addonMenu: [],
+  menusMenuCategoriesLocations: [],
   updateData: () => {},
   fetchData: () => {},
-  cart: null,
+  cart: [],
+  orders: [],
+  orderlines: [],
+  isloading: true,
 };
-export const OrderContent = createContext<MenuType>(defaultOrderMenu);
+export const OrderContent = createContext<OrderType>(defaultOrderMenu);
 
 const OrderProvider = (props: any) => {
   const [data, updateData] = useState(defaultOrderMenu);
-  const { data: session } = useSession();
+  const router = useRouter();
+  const query = router.query;
+  const locationId = query.locationId;
 
   useEffect(() => {
-    if (session) {
+    if (locationId) {
       fetchData();
     }
-  }, [session]);
+  }, [locationId]);
 
   //get all menus
   const fetchData = async () => {
-    const response = await fetch(`${config.apiOrderBaseUrl}?locationId=9`);
+    if (!locationId) return null;
+    const response = await fetch(
+      `${config.apiOrderBaseUrl}?locationId=${locationId}`
+    );
     const responseJson = await response.json();
-    const { menus, menuCategories, addons, addonCategories, locations } =
-      responseJson;
+    const {
+      menus,
+      menuCategories,
+      addons,
+      addonCategories,
+      location,
+      addonMenu,
+      orders,
+      orderlines,
+      menusMenuCategoriesLocations,
+    } = responseJson;
+
     updateData({
       ...data,
       menus,
       menuCategories,
       addons,
       addonCategories,
-      locations,
+      location,
+      addonMenu,
+      orders,
+      orderlines,
+      menusMenuCategoriesLocations,
+      isloading: false,
     });
-    console.log("order data", responseJson);
   };
 
   return (

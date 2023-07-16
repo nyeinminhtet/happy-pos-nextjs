@@ -5,22 +5,17 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
-  Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useContext, useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-
-import {
-  menu_categories as MenuCategory,
-  locations as Location,
-  menus as Menu,
-} from "@prisma/client";
 import { getLocationId } from "@/utils";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { config } from "@/config/config";
 import Layout from "@/Components/Layout";
+import ItemCart from "@/Components/ItemCart";
+import TableBarIcon from "@mui/icons-material/TableBar";
+import { useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -34,7 +29,7 @@ const MenuProps = {
 };
 
 const Tables = () => {
-  const { fetchData, tables } = useContext(BackofficeContext);
+  const { tables } = useAppSelector(appData);
   const [open, setOpen] = useState(false);
   const selectedLocationId = getLocationId();
   const [newTable, setNewTable] = useState({
@@ -48,14 +43,14 @@ const Tables = () => {
   const createNewTable = async () => {
     const isValid = newTable.name;
     if (!isValid) return alert("Please enter table name");
-    await fetch(`${config.apiBackofficeBaseUrl}/tables`, {
+    await fetch(`${config.apiBaseUrl}/tables`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newTable),
     });
-    fetchData();
+    // fetchData();
     setNewTable({ name: "", locationId: selectedLocationId });
     setOpen(false);
   };
@@ -84,28 +79,12 @@ const Tables = () => {
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>
           {validTables.map((table) => (
-            <Link
+            <ItemCart
               key={table.id}
               href={`/backoffice/tables/${table.id}`}
-              style={{ textDecoration: "none", color: "#000000" }}
-            >
-              <Box sx={{ textAlign: "center", mr: 4 }}>
-                <Box
-                  sx={{
-                    width: "170px",
-                    height: "170px",
-                    borderRadius: 2,
-                    border: "2px solid #EBEBEB",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    cursor: "pointer",
-                    textAlign: "center",
-                  }}
-                ></Box>
-                <Typography sx={{ mt: 1 }}>{table.table_name}</Typography>
-              </Box>
-            </Link>
+              icon={<TableBarIcon sx={{ fontSize: 40 }} />}
+              title={table.table_name}
+            />
           ))}
         </Box>
       </Box>
@@ -132,7 +111,13 @@ const Tables = () => {
           <Button
             variant="contained"
             onClick={createNewTable}
-            sx={{ width: "fit-content", alignSelf: "flex-end", mt: 2 }}
+            sx={{
+              width: "fit-content",
+              alignSelf: "flex-end",
+              mt: 2,
+              bgcolor: "#820000",
+              ":hover": { bgcolor: "#820000" },
+            }}
           >
             Create
           </Button>

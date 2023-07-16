@@ -1,10 +1,9 @@
 import { useContext, useState } from "react";
-
+import ClassIcon from "@mui/icons-material/Class";
 import {
   Box,
   TextField,
   Button,
-  Typography,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -16,18 +15,13 @@ import {
   OutlinedInput,
   Select,
 } from "@mui/material";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import Link from "next/link";
-import {
-  menu_categories as MenuCategories,
-  locations as Locations,
-  addon_categories,
-} from "@prisma/client";
 import AddIcon from "@mui/icons-material/Add";
 import { config } from "@/config/config";
 import Layout from "@/Components/Layout";
-import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { getLocationId } from "@/utils";
+import ItemCart from "@/Components/ItemCart";
+import { useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -43,13 +37,13 @@ const MenuProps = {
 const AddonCategories = () => {
   const {
     addonCategories,
-    fetchData,
     menuMenuCategoriesLocations,
     menus,
     menuAddons,
     locations,
     addons,
-  } = useContext(BackofficeContext);
+  } = useAppSelector(appData);
+
   const selectedLocationId = getLocationId() as string;
   const [open, setOpen] = useState(false);
 
@@ -86,27 +80,21 @@ const AddonCategories = () => {
   const createAddonCategory = async () => {
     if (!newAddonCategory?.name || !newAddonCategory.menuIds.length)
       return alert("Please fill completely Form for new!");
-    const response = await fetch(
-      `${config.apiBackofficeBaseUrl}/addoncategories`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newAddonCategory),
-      }
-    );
-    fetchData();
+    const response = await fetch(`${config.apiBaseUrl}/addoncategories`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newAddonCategory),
+    });
+    // fetchData();
     setOpen(false);
   };
 
   //delete
   const handleDelete = async (id: any) => {
-    const response = await fetch(
-      `${config.apiBackofficeBaseUrl}/menu-categories/${id}`,
-      {
-        method: "DELETE",
-      }
-    );
-    fetchData();
+    const response = await fetch(`${config.apiBaseUrl}/menu-categories/${id}`, {
+      method: "DELETE",
+    });
+    // fetchData();
   };
 
   return (
@@ -139,30 +127,13 @@ const AddonCategories = () => {
         </Box>
         <Box sx={{ display: "flex" }}>
           {validAddonCategories.map((item, index) => (
-            <Link
+            <ItemCart
               key={index}
               href={`/backoffice/addoncategories/${item.id}`}
-              style={{ textDecoration: "none", color: "#000000" }}
-            >
-              <Box sx={{ textAlign: "center", mr: 4 }}>
-                <Box
-                  sx={{
-                    width: "170px",
-                    height: "170px",
-                    borderRadius: 2,
-                    border: "2px solid #EBEBEB",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    cursor: "pointer",
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography>{getAddonCount(item.id)} addons</Typography>
-                </Box>
-                <Typography>{item.name}</Typography>
-              </Box>
-            </Link>
+              icon={<ClassIcon sx={{ fontSize: 40 }} />}
+              title={item.name}
+              subTitle={`${getAddonCount(item.id)} addons`}
+            />
           ))}
         </Box>
       </Box>
@@ -231,7 +202,14 @@ const AddonCategories = () => {
             variant="contained"
             disabled={disableButton}
             onClick={createAddonCategory}
-            sx={{ width: "fit-content", alignSelf: "flex-end" }}
+            sx={{
+              width: "fit-content",
+              alignSelf: "flex-end",
+              bgcolor: "#820000",
+              ":hover": {
+                bgcolor: "#820000",
+              },
+            }}
           >
             Create
           </Button>

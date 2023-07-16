@@ -9,17 +9,16 @@ import {
   Button,
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-
-import { useRouter } from "next/router";
-import { getAccessToken, getLocationId } from "@/utils";
 import { companies as Company, locations as Locations } from "@prisma/client";
 import { config } from "@/config/config";
 import Layout from "@/Components/Layout";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
+import { getLocationId } from "@/utils";
+import { useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
 
 const Setting = () => {
-  const { locations, company } = useContext(BackofficeContext);
-  console.log(locations);
+  const { locations, company } = useAppSelector(appData);
   const [selectedLocation, setSelectedLocation] = useState<
     Locations | undefined
   >();
@@ -27,8 +26,6 @@ const Setting = () => {
     name: "",
     address: "",
   });
-  const route = useRouter();
-  const accessToken = getAccessToken();
 
   useEffect(() => {
     if (locations.length) {
@@ -44,7 +41,7 @@ const Setting = () => {
       }
     }
     if (company) setCompanyInfo(company);
-  }, [locations, accessToken, company]);
+  }, [locations, company]);
 
   const handleOnChange = (e: SelectChangeEvent<number>) => {
     localStorage.setItem("locationId", String(e.target.value));
@@ -57,17 +54,13 @@ const Setting = () => {
   //update company info
   const updateCompany = async () => {
     try {
-      const response = await fetch(
-        `${config.apiBackofficeBaseUrl}/setting/companies`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: JSON.stringify(companyInfo),
-        }
-      );
+      const response = await fetch(`${config.apiBaseUrl}/setting/companies`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(companyInfo),
+      });
     } catch (error) {
       console.log(error);
     }

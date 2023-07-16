@@ -11,23 +11,33 @@ model addon_categories {
   id           Int            @id @default(autoincrement())
   name         String
   is_require   Boolean?       @default(false)
+  is_archived  Boolean        @default(false)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now()) @updatedAt
   addons       addons[]
   addons_menus addons_menus[]
 }
 
 model addons {
-  id                Int              @id @default(autoincrement())
+  id                Int      @id @default(autoincrement())
   name              String
   price             Int
   addon_category_id Int
-  is_available      Boolean?         @default(true)
-  addon_categories  addon_categories @relation(fields: [addon_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  is_available      Boolean? @default(true)
+  is_archived       Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now()) @updatedAt
+
+  addon_categories addon_categories @relation(fields: [addon_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orderlines       orderlines[]
 }
 
 model addons_menus {
   id                Int              @id @default(autoincrement())
   menu_id           Int
   addon_category_id Int
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @default(now()) @updatedAt
   addon_categories  addon_categories @relation(fields: [addon_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   menus             menus            @relation(fields: [menu_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
@@ -36,23 +46,33 @@ model companies {
   id        Int         @id(map: "company_pkey") @default(autoincrement())
   name      String
   address   String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
   locations locations[]
   users     users[]
 }
 
 model locations {
-  id                             Int                              @id @default(autoincrement())
-  name                           String
-  address                        String?
-  companies_id                   Int
+  id           Int      @id @default(autoincrement())
+  name         String
+  address      String?
+  companies_id Int
+  is_archived  Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+
   companies                      companies                        @relation(fields: [companies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   menu_menu_categories_locations menu_menu_categories_locations[]
   tables                         tables[]
+  orders                         orders[]
 }
 
 model menu_categories {
   id                             Int                              @id @default(autoincrement())
   category                       String
+  is_archived                    Boolean                          @default(false)
+  createdAt                      DateTime                         @default(now())
+  updatedAt                      DateTime                         @default(now()) @updatedAt
   menu_menu_categories_locations menu_menu_categories_locations[]
 }
 
@@ -62,6 +82,9 @@ model menu_menu_categories_locations {
   menu_categories_id Int
   location_id        Int?
   is_available       Boolean?         @default(true)
+  is_archived        Boolean          @default(false)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @default(now()) @updatedAt
   locations          locations?       @relation(fields: [location_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   menu_categories    menu_categories? @relation(fields: [menu_categories_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   menus              menus?           @relation(fields: [menu_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -72,7 +95,11 @@ model tables {
   table_name  String
   location_id Int
   asset_url   String?
+  is_archived Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
   locations   locations @relation(fields: [location_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orders      orders[]
 }
 
 model menus {
@@ -81,8 +108,12 @@ model menus {
   price                          Int
   acess_url                      String?
   description                    String?
+  is_archived                    Boolean                          @default(false)
+  createdAt                      DateTime                         @default(now())
+  updatedAt                      DateTime                         @default(now()) @updatedAt
   addons_menus                   addons_menus[]
   menu_menu_categories_locations menu_menu_categories_locations[]
+  orderlines                     orderlines[]
 }
 
 model users {
@@ -92,7 +123,45 @@ model users {
   password     String
   companies_id Int
   role         Role      @default(admin)
+  is_archived  Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now()) @updatedAt
   companies    companies @relation(fields: [companies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model orders {
+  id          Int          @id @default(autoincrement())
+  location_id Int
+  table_id    Int
+  is_paid     Boolean      @default(false)
+  price       Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now()) @updatedAt
+  locations   locations    @relation(fields: [location_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tables      tables       @relation(fields: [table_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orderlines  orderlines[]
+}
+
+model orderlines {
+  id        Int         @id @default(autoincrement())
+  cart_id   String
+  order_id  Int
+  menus_id  Int
+  addons_id Int?
+  quantity  Int         @default(1)
+  status    OrderStatus @default(PENDING)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+  orders    orders      @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  menus     menus       @relation(fields: [menus_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  addons    addons?     @relation(fields: [addons_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+enum OrderStatus {
+  PENDING
+  PREPARING
+  COMPLETE
+  REJECTED
 }
 
 enum Role {

@@ -2,36 +2,28 @@ import { useContext, useState } from "react";
 import {
   Box,
   Button,
-  Card,
-  CardContent,
   Dialog,
   DialogContent,
   DialogTitle,
   FormControl,
   InputLabel,
-  Link,
-  ListItemText,
   MenuItem,
-  OutlinedInput,
   Select,
-  Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import Layout from "@/Components/Layout";
 import { config } from "@/config/config";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
 import AddIcon from "@mui/icons-material/Add";
-import { getLocationId } from "@/utils";
+import { getAddonCategoryByLocation, getLocationId } from "@/utils";
+import ItemCart from "@/Components/ItemCart";
+import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
+import { useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
+
 const Addons = () => {
-  const {
-    fetchData,
-    addons,
-    addonCategories,
-    menus,
-    menuAddons,
-    menuMenuCategoriesLocations,
-  } = useContext(BackofficeContext);
+  const { addons, addonCategories, menuAddons, menuMenuCategoriesLocations } =
+    useAppSelector(appData);
 
   const [newAddon, setNewAddon] = useState({
     name: "",
@@ -43,32 +35,30 @@ const Addons = () => {
 
   const isDisable = !newAddon.name && !newAddon.price;
   //get addon from location
-  const locationMenuIds = menuMenuCategoriesLocations
-    .filter((item) => item.location_id === Number(selectedLocationId))
-    .map((item) => item.menu_id);
 
-  const validAddonCateogryIds = menuAddons
-    .filter((item) => locationMenuIds.includes(item.menu_id))
-    .map((item) => item.addon_category_id);
-
-  const validAddonCategories = addonCategories.filter((item) =>
-    validAddonCateogryIds.includes(item.id)
+  const validAddonCategoryIds = getAddonCategoryByLocation(
+    menuMenuCategoriesLocations,
+    menuAddons,
+    selectedLocationId
   );
 
+  const validAddonCategories = addonCategories.filter((item) =>
+    validAddonCategoryIds.includes(item.id)
+  );
   const validAddons = addons.filter((item) =>
-    validAddonCateogryIds.includes(item.addon_category_id)
+    validAddonCategoryIds.includes(item.addon_category_id)
   );
 
   //create addon
   const createAddon = async () => {
     setIsOpen(false);
-    const response = await fetch(`${config.apiBackofficeBaseUrl}/addons`, {
+    const response = await fetch(`${config.apiBaseUrl}/addons`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newAddon),
     });
     setNewAddon({ name: "", price: 0, addonCategoryId: "" });
-    fetchData();
+    //fetchData();
   };
 
   return (
@@ -107,37 +97,12 @@ const Addons = () => {
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>
           {validAddons.map((addon) => (
-            <Link
+            <ItemCart
               key={addon.id}
               href={`/backoffice/addons/${addon.id}`}
-              style={{
-                textDecoration: "none",
-                marginRight: "15px",
-                marginBottom: "20px",
-              }}
-            >
-              <Card sx={{ width: 250, height: 100 }}>
-                <CardContent
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Typography gutterBottom variant="h5" component="div">
-                    {addon.name}
-                  </Typography>
-                  <Typography
-                    gutterBottom
-                    variant="h6"
-                    color={"gray"}
-                    component="div"
-                  >
-                    {addon.price} k
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Link>
+              icon={<LocalPizzaIcon sx={{ fontSize: 40 }} />}
+              title={addon.name}
+            />
           ))}
         </Box>
       </Box>
@@ -190,7 +155,15 @@ const Addons = () => {
             variant="contained"
             disabled={isDisable}
             onClick={createAddon}
-            sx={{ width: "fit-content", alignSelf: "flex-end" }}
+            sx={{
+              width: "fit-content",
+              alignSelf: "flex-end",
+              bgcolor: "#820000",
+              color: "white",
+              ":hover": {
+                bgcolor: "#820000",
+              },
+            }}
           >
             Create
           </Button>

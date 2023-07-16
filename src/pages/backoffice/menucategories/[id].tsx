@@ -22,6 +22,9 @@ import {
 } from "@/utils";
 import MenuCard from "@/Components/MenuCard";
 import RemoveMenuFromMenuCategory from "./RemoveMenu";
+import DeleteDialog from "@/Components/DeleteDialog";
+import { useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -34,14 +37,10 @@ interface AutocompleteProps {
 const EditMenuCategories = () => {
   const route = useRouter();
   const menuCategoryId = route.query.id as string;
-  const {
-    menuCategories,
-    locations,
-    menuMenuCategoriesLocations,
-    fetchData,
-    menus,
-  } = useContext(BackofficeContext);
+  const { menuCategories, locations, menuMenuCategoriesLocations, menus } =
+    useAppSelector(appData);
   const [open, setOpen] = useState(false);
+  const [deletOpen, setDeleteOpne] = useState(false);
   const menuCategory = menuCategories.find(
     (item) => item.id === parseInt(menuCategoryId, 10)
   );
@@ -80,24 +79,14 @@ const EditMenuCategories = () => {
     menuIds,
   });
 
-  // useEffect(() => {
-  //   if (menuCategory) {
-  //     setNewMenuCategory({
-  //       ...newMenuCategory,
-  //       category: menuCategory.category,
-  //       locations: selectedLocations,
-  //     });
-  //   }
-  // }, []);
-
   const updateMenuCategory = async () => {
-    await fetch(`${config.apiBackofficeBaseUrl}/menucategories`, {
+    await fetch(`${config.apiBaseUrl}/menucategories`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newMenuCategory),
     });
     route.back();
-    fetchData();
+    //  fetchData();
   };
   const handleRemoveMenu = (menu: Menu) => {
     setSelectedMenuToRemove(menu);
@@ -105,7 +94,7 @@ const EditMenuCategories = () => {
   };
 
   const addMenuToCategory = async () => {
-    await fetch(`${config.apiBackofficeBaseUrl}/menucategories/addMenu`, {
+    await fetch(`${config.apiBaseUrl}/menucategories/addMenu`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -114,13 +103,36 @@ const EditMenuCategories = () => {
         menuCategoryId,
       }),
     });
-    fetchData();
+    // fetchData();
     setSelectedMenu(null);
+  };
+
+  //delete || archive
+  const deletefun = async () => {
+    await fetch(`${config.apiBaseUrl}/menucategories?id=${menuCategoryId}`, {
+      method: "DELETE",
+    });
+    // fetchData();
+    setDeleteOpne(false);
+    route.back();
   };
 
   if (!menuCategory) return null;
   return (
     <Layout title="menu category">
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button
+          onClick={() => setDeleteOpne(true)}
+          variant="contained"
+          sx={{
+            backgroundColor: "#820000",
+            ":hover": { bgcolor: "#820000" },
+          }}
+          startIcon={<DeleteIcon />}
+        >
+          Delete
+        </Button>
+      </Box>
       <Box sx={{ display: "flex" }}>
         <Box sx={{ p: 3, display: "flex", flexDirection: "column" }}>
           <TextField
@@ -210,7 +222,7 @@ const EditMenuCategories = () => {
                 alignItems: "center",
               }}
             >
-              <MenuCard menu={item} />
+              <MenuCard menu={item} href={`/backoffice/menus/${item.id}`} />
               <Button
                 variant="outlined"
                 startIcon={<DeleteIcon />}
@@ -227,6 +239,12 @@ const EditMenuCategories = () => {
         open={open}
         setOpen={setOpen}
         menu={selectedMenuToRemove}
+      />
+      <DeleteDialog
+        open={deletOpen}
+        setOpen={setDeleteOpne}
+        title="MenuCategory"
+        deleteFun={deletefun}
       />
     </Layout>
   );

@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import TopBar from "./TopBar";
 import SideBar from "./SideBar";
-import { useContext } from "react";
-import { BackofficeContext } from "@/Contents/BackofficeContext";
+import { useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
 
 type Props = {
   title?: string;
@@ -10,8 +10,8 @@ type Props = {
 };
 
 const Layout = (props: Props) => {
-  const { isLoading } = useContext(BackofficeContext);
-  if (isLoading) return null;
+  const { isloading } = useAppSelector((state) => state.app);
+  if (isloading) return null;
   return (
     <Box sx={{ width: "100%" }}>
       <TopBar title={props.title} />

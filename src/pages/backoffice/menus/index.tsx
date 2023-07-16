@@ -1,48 +1,94 @@
 import { useContext, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Stack,
-  Typography,
-} from "@mui/material";
-
-import Link from "next/link";
+import { Button, Tab, Tabs } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { getLocationId, getMenusByLocationId } from "@/utils";
+import {
+  getLocationId,
+  getMenuCategoryIdByLocationId,
+  getMenusByLocationId,
+  getMenusByMenuCategoryId,
+} from "@/utils";
 import Layout from "@/Components/Layout";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
 import NewMenu from "./NewMenu";
 import MenuCard from "@/Components/MenuCard";
+import { useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
 
 const Menus = () => {
-  const { menus, fetchData, menuMenuCategoriesLocations } =
-    useContext(BackofficeContext);
+  const { menus, menuMenuCategoriesLocations, menuCategories } =
+    useAppSelector(appData);
   const [open, setOpen] = useState(false);
   const locationId = getLocationId() as string;
+  const selectedLocation = getLocationId() as string;
+  const [selectedMenuCategory, setSelectedMenuCategory] = useState<number>();
+  const [value, setValue] = useState(0);
 
-  const validMenus = getMenusByLocationId(
-    locationId,
-    menuMenuCategoriesLocations,
-    menus
+  const validMenus = getMenusByMenuCategoryId(
+    menus,
+    selectedMenuCategory as number,
+    menuMenuCategoriesLocations
   );
 
+  const validCategory = getMenuCategoryIdByLocationId(
+    menuCategories,
+    selectedLocation,
+    menuMenuCategoriesLocations
+  );
+
+  useEffect(() => {
+    if (validCategory.length) {
+      setSelectedMenuCategory(validCategory[0].id);
+    }
+  }, [menuCategories]);
+
+  if (!validCategory) return null;
   return (
     <Layout title="menus">
+      <Box
+        sx={{
+          width: "100%",
+          mb: 2,
+        }}
+      >
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: "divider",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            w: "100%",
+          }}
+        >
+          {validCategory.map((item, index) => (
+            <Tabs
+              value={value}
+              key={item.id}
+              textColor="inherit"
+              TabIndicatorProps={{ style: { background: "#820000" } }}
+              onChange={(e, v) => setValue(v)}
+            >
+              <Tab
+                label={item.category}
+                value={index}
+                onClick={() => setSelectedMenuCategory(item.id)}
+              />
+            </Tabs>
+          ))}
+        </Box>
+      </Box>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           m: "0 auto",
+          position: "relative",
         }}
       >
         <Box
           sx={{
             width: "100%",
-            display: "flex",
-            justifyContent: "flex-end",
           }}
         >
           <Button
@@ -50,12 +96,15 @@ const Menus = () => {
             variant="contained"
             startIcon={<AddIcon />}
             sx={{
+              position: "fixed",
+              bottom: 0,
+              right: 10,
               backgroundColor: "#4E6C50",
               width: "fit-content",
               color: "#E8F6EF",
               mb: 2,
               ":hover": {
-                bgcolor: "#820000", // theme.palette.primary.main
+                bgcolor: "#820000",
                 color: "white",
               },
             }}
@@ -65,7 +114,11 @@ const Menus = () => {
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>
           {validMenus.map((menu) => (
-            <MenuCard key={menu.id} menu={menu} />
+            <MenuCard
+              key={menu.id}
+              menu={menu}
+              href={`/backoffice/menus/${menu.id}`}
+            />
           ))}
         </Box>
       </Box>

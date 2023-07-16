@@ -1,5 +1,4 @@
 import Link from "next/link";
-import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ClassIcon from "@mui/icons-material/Class";
@@ -16,6 +15,7 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
+import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
 
 const SideBar = () => {
   return (
@@ -102,7 +102,7 @@ export const sidebarMenuItems = [
   {
     id: 4,
     label: "Addons",
-    icon: <LunchDiningIcon />,
+    icon: <LocalPizzaIcon />,
     route: "/backoffice/addons",
   },
   {

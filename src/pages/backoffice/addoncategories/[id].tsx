@@ -1,5 +1,7 @@
 import Layout from "@/Components/Layout";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import {
   Autocomplete,
   Box,
@@ -14,17 +16,15 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import {
-  locations as Location,
-  menu_categories as MenuCategory,
-  menus as Menu,
-} from "@prisma/client";
 import { config } from "@/config/config";
 import {
   getLocationId,
   getMenusByLocationId,
   getMenusIdFromMenuMenuCategoryLocation,
 } from "@/utils";
+import DeleteDialog from "@/Components/DeleteDialog";
+import { useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -32,14 +32,10 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const EditAddonCategories = () => {
   const route = useRouter();
   const addonCategoryId = route.query.id as string;
+  const [open, setOpen] = useState(false);
   const selectedLocationId = getLocationId() as string;
-  const {
-    addonCategories,
-    menus,
-    menuMenuCategoriesLocations,
-    menuAddons,
-    fetchData,
-  } = useContext(BackofficeContext);
+  const { addonCategories, menus, menuMenuCategoriesLocations, menuAddons } =
+    useAppSelector(appData);
   const addonCategory = addonCategories.find(
     (item) => item.id === parseInt(addonCategoryId, 10)
   );
@@ -71,17 +67,40 @@ const EditAddonCategories = () => {
   const [connectedMenus, setConnectedMenus] = useState(selectedMenus);
 
   const updateAddonCategory = async () => {
-    await fetch(`${config.apiBackofficeBaseUrl}/addoncategories`, {
+    await fetch(`${config.apiBaseUrl}/addoncategories`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newAddonCategory),
     });
-    fetchData();
+    //  fetchData();
+    route.back();
+  };
+
+  //delete || archive
+  const deleteAddonCategory = async () => {
+    await fetch(`${config.apiBaseUrl}/addoncategories?id=${addonCategoryId}`, {
+      method: "DELETE",
+    });
+    // fetchData();
+    setOpen(false);
     route.back();
   };
   if (!addonCategory) return null;
   return (
     <Layout title="Edit addon category">
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button
+          onClick={() => setOpen(true)}
+          variant="contained"
+          sx={{
+            backgroundColor: "#820000",
+            ":hover": { bgcolor: "#820000" },
+          }}
+          startIcon={<DeleteIcon />}
+        >
+          Delete
+        </Button>
+      </Box>
       <Box sx={{ p: 3, display: "flex", flexDirection: "column" }}>
         <TextField
           defaultValue={addonCategory.name}
@@ -142,6 +161,12 @@ const EditAddonCategories = () => {
           Update
         </Button>
       </Box>
+      <DeleteDialog
+        open={open}
+        setOpen={setOpen}
+        title="AddonCategory"
+        deleteFun={deleteAddonCategory}
+      />
     </Layout>
   );
 };

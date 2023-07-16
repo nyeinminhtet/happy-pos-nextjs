@@ -10,6 +10,10 @@ import {
   getLocationId,
   getMenuCategoryIdByLocationId,
 } from "@/utils";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteDialog from "@/Components/DeleteDialog";
+import { useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
 
 interface AutocompleteProps {
   id: number;
@@ -21,14 +25,13 @@ const MenuDetails = () => {
     menus,
     menuCategories,
     menuMenuCategoriesLocations,
-    fetchData,
     addonCategories,
     menuAddons,
-  } = useContext(BackofficeContext);
+  } = useAppSelector(appData);
   const router = useRouter();
   const menuId = router.query.id as string;
   const selectedLocationId = getLocationId() as string;
-
+  const [open, setOpen] = useState(false);
   const validMenuCategory = getMenuCategoryIdByLocationId(
     menuCategories,
     selectedLocationId,
@@ -71,82 +74,105 @@ const MenuDetails = () => {
 
   //update
   const updateMenu = async () => {
-    const response = await fetch(`${config.apiBackofficeBaseUrl}/menus`, {
+    const response = await fetch(`${config.apiBaseUrl}/menus`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newMenu),
     });
     router.back();
-    fetchData();
+    //  fetchData();
+  };
+
+  //delete menu || archive
+  const deleteMenu = async () => {
+    await fetch(`${config.apiBaseUrl}/menus?id=${menuId}`, {
+      method: "DELETE",
+    });
+    // fetchData();
+    setOpen(false);
+    router.back();
   };
 
   if (!menu) return null;
 
   return (
     <Layout title="Menu-Details">
-      {menu ? (
-        <Box sx={{ p: 3, display: "flex", flexDirection: "column" }}>
-          <TextField
-            sx={{ mb: 2, width: "50%" }}
-            label="Name"
-            defaultValue={menu.name}
-            onChange={(evt) =>
-              setNewMenu({ ...newMenu, name: evt.target.value })
-            }
-          />
-          <TextField
-            sx={{ mb: 2, width: "50%" }}
-            label="Price"
-            defaultValue={menu.price}
-            type="number"
-            onChange={(evt) =>
-              setNewMenu({ ...newMenu, price: parseInt(evt.target.value, 10) })
-            }
-          />
-          <Autocomplete
-            disablePortal
-            multiple
-            id="combo-box-demo"
-            value={selectedMenuCategories}
-            options={validMenuCategory}
-            isOptionEqualToValue={(option, value) => option.id === value.id}
-            onChange={(e, v) => {
-              const menuCategoryIds = v.map((item) => item.id);
-              setNewMenu({ ...newMenu, menuCategoryIds });
-              setConnectedMenuCategories(v);
-            }}
-            sx={{ width: 500, mb: 3 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Menu-Categories" />
-            )}
-          />
-          <Autocomplete
-            disablePortal
-            multiple
-            options={mappedAddonCategories}
-            value={validAddonCategory}
-            isOptionEqualToValue={(option, value) => option.id === value.id}
-            onChange={(e, v) => {
-              const addonCategoryIds = v.map((item) => item.id);
-              setNewMenu({ ...newMenu, addonCategoryIds });
-              setConnectedAddonCategories(v);
-            }}
-            sx={{ width: 500, mb: 3 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Addon-Categories" />
-            )}
-          />
+      <Box sx={{ p: 3, display: "flex", flexDirection: "column" }}>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
+            onClick={() => setOpen(true)}
             variant="contained"
-            onClick={updateMenu}
-            sx={{ width: "fit-content", mt: 3 }}
+            sx={{
+              backgroundColor: "#820000",
+              ":hover": { bgcolor: "#820000" },
+            }}
+            startIcon={<DeleteIcon />}
           >
-            Update
+            Delete
           </Button>
         </Box>
-      ) : (
-        "menu not found"
-      )}
+        <TextField
+          sx={{ mb: 2, width: "50%" }}
+          label="Name"
+          defaultValue={menu.name}
+          onChange={(evt) => setNewMenu({ ...newMenu, name: evt.target.value })}
+        />
+        <TextField
+          sx={{ mb: 2, width: "50%" }}
+          label="Price"
+          defaultValue={menu.price}
+          type="number"
+          onChange={(evt) =>
+            setNewMenu({ ...newMenu, price: parseInt(evt.target.value, 10) })
+          }
+        />
+        <Autocomplete
+          disablePortal
+          multiple
+          id="combo-box-demo"
+          value={selectedMenuCategories}
+          options={validMenuCategory}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          onChange={(e, v) => {
+            const menuCategoryIds = v.map((item) => item.id);
+            setNewMenu({ ...newMenu, menuCategoryIds });
+            setConnectedMenuCategories(v);
+          }}
+          sx={{ width: 500, mb: 3 }}
+          renderInput={(params) => (
+            <TextField {...params} label="Menu-Categories" />
+          )}
+        />
+        <Autocomplete
+          disablePortal
+          multiple
+          options={mappedAddonCategories}
+          value={validAddonCategory}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          onChange={(e, v) => {
+            const addonCategoryIds = v.map((item) => item.id);
+            setNewMenu({ ...newMenu, addonCategoryIds });
+            setConnectedAddonCategories(v);
+          }}
+          sx={{ width: 500, mb: 3 }}
+          renderInput={(params) => (
+            <TextField {...params} label="Addon-Categories" />
+          )}
+        />
+        <Button
+          variant="contained"
+          onClick={updateMenu}
+          sx={{ width: "fit-content", mt: 3 }}
+        >
+          Update
+        </Button>
+      </Box>
+      <DeleteDialog
+        open={open}
+        setOpen={setOpen}
+        title="menu"
+        deleteFun={deleteMenu}
+      />
     </Layout>
   );
 };

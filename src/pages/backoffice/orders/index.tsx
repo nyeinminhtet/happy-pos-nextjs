@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useContext, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,56 +7,271 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Layout from "@/Components/Layout";
+import { BackofficeContext } from "@/Contents/BackofficeContext";
+import { getLocationId, getQuantityByOrderId } from "@/utils";
+import {
+  orders as Order,
+  orderlines as OrderLine,
+  addons as Addon,
+  addon_categories as AddonCategory,
+  menus as Menu,
+  OrderStatus,
+} from "@prisma/client";
+import {
+  Box,
+  Collapse,
+  Divider,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Typography,
+} from "@mui/material";
+import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
+import { config } from "@/config/config";
+import { useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
+interface Props {
+  menus: Menu[];
+  addons: Addon[];
+  addonCateogries: AddonCategory[];
+  order: Order;
+  orderlines: OrderLine[];
 }
+const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
+  const [open, setOpen] = useState(false);
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+  const renderMenusAndAddonForOrder = () => {
+    const orderlineMenuIds = orderlines.map((item) => item.menus_id);
+    const menuIds: number[] = [];
+    orderlineMenuIds.forEach((item) => {
+      const hasAdded = menuIds.includes(item);
+      if (!hasAdded) menuIds.push(item);
+    });
+    const orderlineMenus = menuIds.map((menuId) => {
+      const orderlineAddonIds = orderlines
+        .filter((item) => item.menus_id === menuId)
+        .map((item) => item.addons_id);
+
+      //addons
+      const orderlineAddons = addons.filter((item) =>
+        orderlineAddonIds.includes(item.id)
+      );
+
+      //menus
+      const orderlineMenus = menus.find((item) => item.id === menuId) as Menu;
+
+      //status
+      const status = orderlines.find(
+        (item) => item.menus_id === menuId
+      )?.status;
+
+      //quantity
+      const quantity = orderlines.find(
+        (item) => item.menus_id === menuId
+      )?.quantity;
+
+      //find respective addon's category
+      const addonsWithCategory: { [key: number]: Addon[] } = {};
+      orderlineAddons.forEach((item) => {
+        const addonCategory = addonCateogries.find(
+          (addoncategory) => addoncategory.id === item.addon_category_id
+        ) as AddonCategory;
+        if (!addonsWithCategory[addonCategory.id]) {
+          addonsWithCategory[addonCategory.id] = [item];
+        } else {
+          addonsWithCategory[addonCategory.id] = [
+            ...addonsWithCategory[addonCategory.id],
+            item,
+          ];
+        }
+      });
+      return { menu: orderlineMenus, addonsWithCategory, status, quantity };
+    });
+
+    const handleUpdateOrderStatus = async (
+      evt: SelectChangeEvent<"PENDING" | "PREPARING" | "COMPLETE" | "REJECTED">
+    ) => {
+      const { order_id: orderId, menus_id: menuId } = orderlines[0];
+      await fetch(`${config.apiBaseUrl}/order`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId, menuId, status: evt.target.value }),
+      });
+      // fetchData();
+    };
+
+    return orderlineMenus.map((item, index) => (
+      <Box key={index} sx={{ mr: 2 }}>
+        <Paper
+          elevation={3}
+          sx={{
+            width: 250,
+            height: 300,
+            p: 2,
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <Box>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography variant="h6">{item.menu.name}</Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    backgroundColor: "#4E6C50",
+                    borderRadius: "50%",
+                    width: 30,
+                    height: 30,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    color: "white",
+                  }}
+                >
+                  {item.quantity}
+                </Typography>
+              </Box>
+              <Divider sx={{ my: 1 }} />
+              <Box
+                sx={{
+                  minHeight: "180px",
+                  overflow: "scroll",
+                }}
+              >
+                {Object.keys(item.addonsWithCategory).map((addonCategoryId) => {
+                  const addonCategory = addonCateogries.find(
+                    (item) => item.id === Number(addonCategoryId)
+                  ) as AddonCategory;
+                  const addons = item.addonsWithCategory[
+                    Number(addonCategoryId)
+                  ] as Addon[];
+                  return (
+                    <Box sx={{ mb: 1.5 }} key={addonCategoryId}>
+                      <Typography sx={{ fontWeight: "bold" }}>
+                        {addonCategory.name}
+                      </Typography>
+                      <Box sx={{ pl: 2 }}>
+                        {addons.map((item) => {
+                          return (
+                            <Box key={item.id}>
+                              <Typography
+                                variant="body1"
+                                sx={{ fontStyle: "italic" }}
+                              >
+                                {item.name}
+                              </Typography>
+                            </Box>
+                          );
+                        })}
+                      </Box>
+                    </Box>
+                  );
+                })}
+              </Box>
+            </Box>
+            <Box>
+              <Divider sx={{ mb: 2 }} />
+              <Box
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <FormControl sx={{ width: "100%" }}>
+                  <InputLabel>Status</InputLabel>
+                  <Select
+                    value={item.status}
+                    label="Status"
+                    onChange={handleUpdateOrderStatus}
+                  >
+                    <MenuItem value={OrderStatus.PENDING}>Pending</MenuItem>
+                    <MenuItem value={OrderStatus.PREPARING}>Preparing</MenuItem>
+                    <MenuItem value={OrderStatus.COMPLETE}>Complete</MenuItem>
+                    <MenuItem value={OrderStatus.REJECTED}>Reject</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </Box>
+          </Box>
+        </Paper>
+      </Box>
+    ));
+  };
+
+  return (
+    <>
+      <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+        <TableCell>
+          <IconButton size="small" onClick={() => setOpen(!open)}>
+            {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+          </IconButton>
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {order.id}
+        </TableCell>
+        <TableCell>{getQuantityByOrderId(orderlines, order.id)}</TableCell>
+        <TableCell>{order.table_id}</TableCell>
+        <TableCell>{order.is_paid ? "Yes" : "No"}</TableCell>
+        <TableCell>{order.price}</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ display: "flex" }}>{renderMenusAndAddonForOrder()}</Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </>
+  );
+};
 
 const Orders = () => {
+  const { orders, orderlines, menus, addonCategories, addons } =
+    useAppSelector(appData);
+  const selectedLocation = getLocationId();
+  const currentLocationOrder = orders.filter(
+    (item) => item.location_id === Number(selectedLocation)
+  );
+  console.log("orderlines", orderlines);
+  const getOrderlinesByOrderId = (orderId: number) => {
+    return orderlines.filter((item) => item.order_id === orderId);
+  };
   return (
-    <Layout title="Order">
-      <TableContainer
-        component={Paper}
-        sx={{ maxWidth: 800, margin: "0 auto", mt: 5 }}
-      >
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <Layout title="Orders">
+      <TableContainer component={Paper} sx={{ maxHeight: "100%" }}>
+        <Table sx={{ minWidth: 650 }} stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell />
+              <TableCell>Order-IDs</TableCell>
+              <TableCell>Quantity of Menus</TableCell>
+              <TableCell>Table-Ids</TableCell>
+              <TableCell>Paid</TableCell>
+              <TableCell>Price</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-              </TableRow>
+            {currentLocationOrder.map((order, index) => (
+              <Row
+                key={index}
+                order={order}
+                orderlines={getOrderlinesByOrderId(order.id)}
+                menus={menus}
+                addons={addons}
+                addonCateogries={addonCategories}
+              />
             ))}
           </TableBody>
         </Table>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-
 import {
   Box,
   TextField,
@@ -16,18 +15,14 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { useRouter } from "next/router";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
-import {
-  locations as Locations,
-  menus as Menu,
-  menu_categories as MenuCategories,
-} from "@prisma/client";
 import { config } from "@/config/config";
 import Layout from "@/Components/Layout";
 import FileDropZone from "../filedropzone";
 import { LoadingButton } from "@mui/lab";
 import { getLocationId, getMenuCategoryIdByLocationId } from "@/utils";
+import { useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
 
 interface Props {
   open: boolean;
@@ -39,18 +34,16 @@ const NewMenu = ({ open, setOpen }: Props) => {
   const [selectedMenucategoryIds, setSelectedMenucategoryIds] = useState<
     number[]
   >([]);
-  const { menuMenuCategoriesLocations, menuCategories, fetchData } =
-    useContext(BackofficeContext);
+  const { menuMenuCategoriesLocations, menuCategories } =
+    useAppSelector(appData);
   const selectedLocationId = getLocationId() as string;
   const [menu, setMenu] = useState({
     name: "",
     price: 0,
-    description: "",
     locationIds: [parseInt(selectedLocationId, 10)],
     menuCategoryIds: selectedMenucategoryIds,
     assetUrl: "",
   });
-  const route = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const validMenuCategories = getMenuCategoryIdByLocationId(
@@ -59,11 +52,7 @@ const NewMenu = ({ open, setOpen }: Props) => {
     menuMenuCategoriesLocations
   ).map((item) => ({ id: item.id, label: item.category }));
 
-  const isDisable =
-    !menu.name ||
-    !menu.price ||
-    !menu.description ||
-    !menu.menuCategoryIds.length;
+  const isDisable = !menu.name || !menu.price || !menu.menuCategoryIds.length;
 
   const onFileSelected = (files: File[]) => {
     setMenuImg(files[0]);
@@ -75,23 +64,22 @@ const NewMenu = ({ open, setOpen }: Props) => {
       if (menuImg) {
         const formData = new FormData();
         formData.append("files", menuImg as Blob);
-        const response = await fetch(`${config.apiBackofficeBaseUrl}/assets`, {
+        const response = await fetch(`${config.apiBaseUrl}/assets`, {
           method: "POST",
           body: formData,
         });
         const responseData = await response.json();
         const assetUrl = responseData.assetUrl;
         menu.assetUrl = assetUrl;
-        console.log(responseData.assetUrl);
       }
-      const response = await fetch(`${config.apiBackofficeBaseUrl}/menus`, {
+      const response = await fetch(`${config.apiBaseUrl}/menus`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(menu),
       });
       setIsLoading(false);
       if (response.ok) {
-        fetchData();
+        // fetchData();
         setOpen(false);
       }
     } catch (err) {
@@ -101,12 +89,9 @@ const NewMenu = ({ open, setOpen }: Props) => {
   };
   const deleteMenu = async (menuId?: number) => {
     if (!menuId) return;
-    const response = await fetch(
-      `${config.apiBackofficeBaseUrl}/menus/${menuId}`,
-      {
-        method: "DELETE",
-      }
-    );
+    const response = await fetch(`${config.apiBaseUrl}/menus/${menuId}`, {
+      method: "DELETE",
+    });
   };
 
   return (
@@ -137,14 +122,6 @@ const NewMenu = ({ open, setOpen }: Props) => {
               sx={{ mb: 2 }}
               onChange={(evt) =>
                 setMenu({ ...menu, price: parseInt(evt.target.value, 10) })
-              }
-            />
-            <TextField
-              label="Description"
-              variant="outlined"
-              sx={{ mb: 2 }}
-              onChange={(evt) =>
-                setMenu({ ...menu, description: evt.target.value })
               }
             />
             <FormControl>
@@ -203,13 +180,19 @@ const NewMenu = ({ open, setOpen }: Props) => {
                 />
               )}
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
               <LoadingButton
                 loading={isLoading}
                 variant="contained"
                 onClick={createMenu}
                 disabled={isDisable}
-                sx={{ mt: 2, width: "fit-content" }}
+                sx={{
+                  mt: 2,
+                  width: "fit-content",
+                  bgcolor: "#820000",
+                  color: "white",
+                  ":hover": { bgcolor: "#820000" },
+                }}
               >
                 Create Menu
               </LoadingButton>

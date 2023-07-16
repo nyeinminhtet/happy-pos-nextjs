@@ -1,17 +1,31 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import BackofficeProvider from "@/Contents/BackofficeContext";
-import OrderProvider from "@/Contents/OrderContext";
+import { Provider } from "react-redux";
+import { store } from "@/store";
+import { getLocationId } from "@/utils";
+import { useEffect } from "react";
+import { fetchAppData } from "@/store/slices/appSlice";
+import { Session } from "next-auth";
 
-export default function App({ Component, pageProps }: AppProps) {
+type CustomeAppProps = AppProps & { session: Session };
+
+export default function App({
+  Component,
+  pageProps,
+  session,
+}: CustomeAppProps) {
+  const getLocation = getLocationId() as string;
+
+  useEffect(() => {
+    store.dispatch(fetchAppData(getLocation));
+  }, []);
+
   return (
-    <SessionProvider session={pageProps.session}>
-      <BackofficeProvider>
-        <OrderProvider>
-          <Component {...pageProps} />
-        </OrderProvider>
-      </BackofficeProvider>
-    </SessionProvider>
+    <Provider store={store}>
+      <SessionProvider session={pageProps.session}>
+        <Component {...pageProps} />
+      </SessionProvider>
+    </Provider>
   );
 }

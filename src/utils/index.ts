@@ -1,3 +1,4 @@
+import { CartItem } from "@/Types/Types";
 import { config } from "@/config/config";
 import {
   menus as Menu,
@@ -6,6 +7,9 @@ import {
   addon_categories as AddonCategory,
   addons_menus as MenusAddons,
   menu_categories as MenuCategory,
+  menu_menu_categories_locations,
+  addons_menus,
+  orderlines as Orderline,
 } from "@prisma/client";
 
 export const getAccessToken = () => {
@@ -32,12 +36,12 @@ export const getQrCodeUrl = (locationId: number, tableId: number) => {
 
 export const getMenusByMenuCategoryId = (
   menus: Menu[],
-  menuCategroyId: string,
+  menuCategroyId: number,
   menuMenuCategoriesLocations: MenuMenuCatgoriesLocation[]
 ) => {
   const selectedLocation = getLocationId() as string;
   const validMenuIds = menuMenuCategoriesLocations
-    .filter((item) => item.menu_categories_id === Number(menuCategroyId))
+    .filter((item) => item.menu_categories_id === menuCategroyId)
     .map((item) => item.menu_id);
   return menus.filter((item) => validMenuIds.includes(item.id));
 };
@@ -96,3 +100,60 @@ export const getAddonCategoryByMenuId = (
     validAddonCategoryId.includes(item.id)
   );
 };
+
+export const getAddonCategoryByLocation = (
+  menuMenuCategoriesLocations: menu_menu_categories_locations[],
+  menuAddons: addons_menus[],
+  locationId: string
+) => {
+  const locationMenuIds = menuMenuCategoriesLocations
+    .filter((item) => item.location_id === Number(locationId))
+    .map((item) => item.menu_id);
+
+  return menuAddons
+    .filter((item) => locationMenuIds.includes(item.menu_id))
+    .map((item) => item.addon_category_id);
+};
+
+export const getQuantityByOrderId = (
+  orderlines: Orderline[],
+  orderId: number
+) => {
+  const validOrderlines = orderlines.filter(
+    (item) => item.order_id === orderId
+  );
+  const menuIds: number[] = [];
+  validOrderlines.forEach((item) => {
+    const hasAdded = menuIds.find((menuId) => menuId === item.menus_id);
+    if (!hasAdded) menuIds.push(item.menus_id);
+  });
+  return menuIds.length;
+};
+
+// export const getMenusFromOrderlines = (
+//   orderId: number,
+//   orderlines: Orderline[],
+//   menus: Menu[]
+// ) => {
+//   const currentOrderlines = orderlines
+//     .filter((item) => item.order_id === orderId)
+
+//   co
+//   return menus.filter((item) => currentOrderlines.includes(item.id));
+// };
+
+export const getCartTotalPrice = (cart: CartItem[]) => {
+  const totalPrice = cart.reduce((prev, curr) => {
+    const menuPrice = curr.menu.price;
+    const addonPrice = curr.addons.reduce(
+      (preAddon, currAddon) => (preAddon += currAddon.price),
+      0
+    );
+    prev += (menuPrice + addonPrice) * curr.quantity;
+    return prev;
+  }, 0);
+  return totalPrice;
+};
+
+export const generateRandomId = () =>
+  (Math.random() + 1).toString(36).substring(7);

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -20,7 +20,6 @@ const TopBar = ({ title = "" }: Props) => {
   const selectedLocation = locations.find(
     (location) => location.id === Number(locationId)
   );
-  console.log("data", data);
   return (
     <Box>
       <AppBar position="sticky">
