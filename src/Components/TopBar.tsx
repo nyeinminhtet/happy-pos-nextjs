@@ -48,7 +48,7 @@ const TopBar = ({ title = "" }: Props) => {
                 }}
               >
                 <Typography sx={{ fontSize: "1.5rem", mb: 0 }}>
-                  Sarr-Mall
+                  Sarr-Mell
                 </Typography>
 
                 <Typography sx={{ color: "lightcoral" }}>
@@ -78,7 +78,7 @@ const TopBar = ({ title = "" }: Props) => {
               component="div"
               sx={{ flexGrow: 1, textAlign: "center" }}
             >
-              Sarr-Mall
+              Sarr-Mell
             </Typography>
           )}
         </Toolbar>

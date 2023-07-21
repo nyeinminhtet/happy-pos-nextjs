@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { addons as Addon } from "@prisma/client";
 
 interface AddonsState {
@@ -20,9 +20,15 @@ export const addonsSlice = createSlice({
     setAddons: (state, action) => {
       state.items = action.payload;
     },
+    addAddon: (state, action: PayloadAction<Addon>) => {
+      state.items = [...state.items, action.payload];
+    },
+    removeAddon: (state, action: PayloadAction<Addon>) => {
+      state.items = state.items.filter((item) => item.id !== action.payload.id);
+    },
   },
 });
 
-export const { setAddons } = addonsSlice.actions;
+export const { setAddons, addAddon, removeAddon } = addonsSlice.actions;
 
 export default addonsSlice.reducer;

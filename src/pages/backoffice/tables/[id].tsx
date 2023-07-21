@@ -1,36 +1,33 @@
 import Layout from "@/Components/Layout";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { config } from "@/config/config";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import { updateTable } from "@/store/slices/tablesSlice";
 import { getLocationId } from "@/utils";
-import {
-  Autocomplete,
-  Box,
-  Button,
-  FormControlLabel,
-  Switch,
-  TextField,
-} from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 const EditTable = () => {
   const router = useRouter();
   const tableId = router.query.id as string;
   const selectedLocationId = getLocationId() as string;
   const { tables } = useAppSelector(appData);
+  const dispatch = useAppDispatch();
 
   const table = tables.find((table) => table.id === Number(tableId));
   const [tableName, setTableName] = useState(table?.table_name);
 
-  const updateTable = async () => {
-    await fetch(`${config.apiBaseUrl}/tables`, {
+  const handleUpdateTable = async () => {
+    const response = await fetch(`${config.apiBaseUrl}/tables`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ tableId, tableName }),
     });
     // fetchData();
+    const tableUpdated = await response.json();
+    dispatch(updateTable(tableUpdated));
     router.back();
   };
 
@@ -44,7 +41,7 @@ const EditTable = () => {
         />
         <Button
           variant="contained"
-          onClick={updateTable}
+          onClick={handleUpdateTable}
           sx={{ width: "fit-content", mt: 3 }}
         >
           Update

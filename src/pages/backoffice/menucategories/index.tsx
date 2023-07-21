@@ -31,13 +31,6 @@ const Menu_Categories = () => {
         item.location_id === Number(selectedLocationId)
     ).length;
   };
-  //delete
-  const handleDelete = async (id: any) => {
-    const response = await fetch(`${config.apiBaseUrl}/menucategories/${id}`, {
-      method: "DELETE",
-    });
-    // fetchData();
-  };
 
   return (
     <Layout title="Menu-Categories">

@@ -1,5 +1,4 @@
 import Layout from "@/Components/Layout";
-import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { config } from "@/config/config";
 import { getLocationId, getMenusIdFromMenuMenuCategoryLocation } from "@/utils";
 import {
@@ -15,17 +14,22 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import DeleteDialog from "@/Components/DeleteDialog";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import { removeAddon } from "@/store/slices/addonsSlice";
+import { addons as Addon } from "@prisma/client";
 
 const EditAddon = () => {
   const router = useRouter();
   const addonId = router.query.id as string;
   const selectedLocationId = getLocationId() as string;
+  const dispatch = useAppDispatch();
   const { addons, menuMenuCategoriesLocations, menuAddons, addonCategories } =
     useAppSelector(appData);
 
-  const addon = addons.find((addon) => addon.id === parseInt(addonId, 10));
+  const addon = addons.find(
+    (addon) => addon.id === parseInt(addonId, 10)
+  ) as Addon;
   const [open, setOpen] = useState(false);
   //get menuId from menulocatios
   const locationMenuIds = getMenusIdFromMenuMenuCategoryLocation(
@@ -65,7 +69,7 @@ const EditAddon = () => {
         addonCategoryId: addon.addon_category_id,
       });
     }
-  }, [addon]);
+  }, [addon, addonId]);
 
   const updateAddon = async () => {
     try {
@@ -87,6 +91,7 @@ const EditAddon = () => {
       method: "DELETE",
     });
     // fetchData();
+    dispatch(removeAddon(addon));
     setOpen(false);
     router.back();
   };

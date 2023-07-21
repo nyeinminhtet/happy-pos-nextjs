@@ -16,6 +16,7 @@ import ItemCart from "@/Components/ItemCart";
 import TableBarIcon from "@mui/icons-material/TableBar";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import CreateTable from "./CreateTable";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -32,28 +33,10 @@ const Tables = () => {
   const { tables } = useAppSelector(appData);
   const [open, setOpen] = useState(false);
   const selectedLocationId = getLocationId();
-  const [newTable, setNewTable] = useState({
-    name: "",
-    locationId: selectedLocationId,
-  });
+
   const validTables = tables.filter(
     (item) => item.location_id === Number(selectedLocationId)
   );
-
-  const createNewTable = async () => {
-    const isValid = newTable.name;
-    if (!isValid) return alert("Please enter table name");
-    await fetch(`${config.apiBaseUrl}/tables`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newTable),
-    });
-    // fetchData();
-    setNewTable({ name: "", locationId: selectedLocationId });
-    setOpen(false);
-  };
 
   return (
     <Layout title="Tables">
@@ -88,41 +71,7 @@ const Tables = () => {
           ))}
         </Box>
       </Box>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Create new table</DialogTitle>
-        <DialogContent
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            minWidth: 300,
-          }}
-        >
-          <TextField
-            label="Name"
-            variant="outlined"
-            sx={{ mt: 1 }}
-            onChange={(evt) =>
-              setNewTable({
-                ...newTable,
-                name: evt.target.value,
-              })
-            }
-          />
-          <Button
-            variant="contained"
-            onClick={createNewTable}
-            sx={{
-              width: "fit-content",
-              alignSelf: "flex-end",
-              mt: 2,
-              bgcolor: "#820000",
-              ":hover": { bgcolor: "#820000" },
-            }}
-          >
-            Create
-          </Button>
-        </DialogContent>
-      </Dialog>
+      <CreateTable open={open} setOpen={setOpen} />
     </Layout>
   );
 };

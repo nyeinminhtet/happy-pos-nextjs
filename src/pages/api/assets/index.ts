@@ -21,7 +21,7 @@ export default async function handler(
 ) {
   try {
     fileUpload(req, res, async (error) => {
-      if (error) return console.log(error);
+      if (error) return res.status(500).send(error);
       const files = req.files as Express.MulterS3.File[];
       const file = files[0];
       const assetUrl = file.location;
@@ -29,5 +29,6 @@ export default async function handler(
     });
   } catch (err) {
     console.error(err);
+    res.status(500).end();
   }
 }

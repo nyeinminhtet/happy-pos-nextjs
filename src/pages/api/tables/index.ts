@@ -26,9 +26,9 @@ export default async function handler(
     });
     return res.status(200).send(table);
   } else if (req.method === "PUT") {
-    const { tableId, name } = req.body;
+    const { tableId, tableName } = req.body;
     const tableUpdate = await prisma.tables.update({
-      data: { table_name: name },
+      data: { table_name: tableName },
       where: { id: Number(tableId) },
     });
     return res.status(200).send(tableUpdate);

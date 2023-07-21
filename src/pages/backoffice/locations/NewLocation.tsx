@@ -1,6 +1,6 @@
-import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { config } from "@/config/config";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { addLocation } from "@/store/slices/LocationsSlice";
 import { appData } from "@/store/slices/appSlice";
 import {
   Dialog,
@@ -18,6 +18,7 @@ interface Props {
 
 const NewLocation: React.FC<Props> = ({ open, setOpen }) => {
   const { company } = useAppSelector(appData);
+  const dispatch = useAppDispatch();
   const [newLocation, setNewLocation] = useState({
     name: "",
     address: "",
@@ -38,6 +39,8 @@ const NewLocation: React.FC<Props> = ({ open, setOpen }) => {
         body: JSON.stringify(newLocation),
       });
       //  fetchData();
+      const locationCreate = await response.json();
+      dispatch(addLocation(locationCreate));
       setOpen(false);
       setNewLocation({ name: "", address: "", companyId: company?.id });
     } catch (err) {

@@ -14,10 +14,12 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { config } from "@/config/config";
-import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { useState, useContext } from "react";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import { addMenuCategory } from "@/store/slices/menuCategoriesSlice";
+import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";
+import { getLocationId } from "@/utils";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -41,19 +43,26 @@ const CreateMenuCategory = ({ open, setOpen }: Props) => {
     locationIds: [] as number[],
   });
   const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
   const { locations } = useAppSelector(appData);
   const isDisable =
     !newMenuCategory.category && !newMenuCategory.locationIds.length;
+  const selectedLocation = getLocationId() as string;
+
   //create category
   const createMenuCategory = async () => {
     setLoading(true);
     try {
-      await fetch(`${config.apiBaseUrl}/menucategories`, {
+      const response = await fetch(`${config.apiBaseUrl}/menucategories`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newMenuCategory),
       });
       // fetchData();
+      const menuCategroyCreated = await response.json();
+
+      dispatch(addMenuCategory(menuCategroyCreated));
+      dispatch(fetchMenusMenuCategoriesLocations(selectedLocation));
       setLoading(false);
       setOpen(false);
       setNewMenuCat({ category: "", locationIds: [] });

@@ -21,8 +21,10 @@ import Layout from "@/Components/Layout";
 import FileDropZone from "../filedropzone";
 import { LoadingButton } from "@mui/lab";
 import { getLocationId, getMenuCategoryIdByLocationId } from "@/utils";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import { addMenu } from "@/store/slices/menusSlice";
+import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";
 
 interface Props {
   open: boolean;
@@ -36,7 +38,10 @@ const NewMenu = ({ open, setOpen }: Props) => {
   >([]);
   const { menuMenuCategoriesLocations, menuCategories } =
     useAppSelector(appData);
+
+  const dispatch = useAppDispatch();
   const selectedLocationId = getLocationId() as string;
+
   const [menu, setMenu] = useState({
     name: "",
     price: 0,
@@ -44,13 +49,8 @@ const NewMenu = ({ open, setOpen }: Props) => {
     menuCategoryIds: selectedMenucategoryIds,
     assetUrl: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
 
-  const validMenuCategories = getMenuCategoryIdByLocationId(
-    menuCategories,
-    selectedLocationId,
-    menuMenuCategoriesLocations
-  ).map((item) => ({ id: item.id, label: item.category }));
+  const [isLoading, setIsLoading] = useState(false);
 
   const isDisable = !menu.name || !menu.price || !menu.menuCategoryIds.length;
 
@@ -80,18 +80,15 @@ const NewMenu = ({ open, setOpen }: Props) => {
       setIsLoading(false);
       if (response.ok) {
         // fetchData();
+        const createdMenu = await response.json();
+        dispatch(addMenu(createdMenu));
+        dispatch(fetchMenusMenuCategoriesLocations(selectedLocationId));
         setOpen(false);
       }
     } catch (err) {
       setIsLoading(false);
       console.error(err);
     }
-  };
-  const deleteMenu = async (menuId?: number) => {
-    if (!menuId) return;
-    const response = await fetch(`${config.apiBaseUrl}/menus/${menuId}`, {
-      method: "DELETE",
-    });
   };
 
   return (

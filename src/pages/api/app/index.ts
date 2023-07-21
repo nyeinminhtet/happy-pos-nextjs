@@ -7,7 +7,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await getSession({ req });
-  if (!session) return res.send(401);
+  if (!session) return res.status(401).end();
   const user = session.user;
   const name = user?.name as string;
   const email = user?.email as string;

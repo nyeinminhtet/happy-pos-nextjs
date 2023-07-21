@@ -1,4 +1,3 @@
-import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { locations as Location } from "@prisma/client";
@@ -7,8 +6,9 @@ import Layout from "@/Components/Layout";
 import { Box, Button, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteDialog from "@/Components/DeleteDialog";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import { removeLocation, updateLocation } from "@/store/slices/LocationsSlice";
 
 const EditLocation = () => {
   const router = useRouter();
@@ -16,26 +16,29 @@ const EditLocation = () => {
   const [open, setOpen] = useState(false);
   const { locations } = useAppSelector(appData);
   const [location, setLocation] = useState<Location>();
+  const dispatch = useAppDispatch();
 
+  const validLocation = locations.find(
+    (item) => item.id === Number(locationId)
+  ) as Location;
   useEffect(() => {
     if (locations.length) {
-      const validLocation = locations.find(
-        (item) => item.id === Number(locationId)
-      );
       setLocation(validLocation);
     }
-  }, [locations, locationId]);
+  }, [locations, , validLocation]);
 
   //upload locations
   const uploadLocation = async () => {
     const isValid = location && location.name && location.address;
     if (!isValid) return alert("Please fill fully form!");
-    await fetch(`${config.apiBaseUrl}/locations`, {
+    const response = await fetch(`${config.apiBaseUrl}/locations`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(location),
     });
     // fetchData();
+    const locationUpdate = await response.json();
+    dispatch(updateLocation(locationUpdate));
     router.back();
   };
 
@@ -45,6 +48,7 @@ const EditLocation = () => {
       method: "DELETE",
     });
     // fetchData();
+    dispatch(removeLocation(validLocation));
     setOpen(false);
     router.back();
   };

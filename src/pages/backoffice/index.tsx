@@ -7,17 +7,6 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const App = () => {
-  const { data } = useSession();
-  const router = useRouter();
-  const { isloading } = useAppSelector((state) => state.app);
-
-  useEffect(() => {
-    if (data) {
-      !isloading && router.push("/backoffice/orders");
-    } else {
-      router.push("/auth/signin");
-    }
-  }, [data, isloading, router]);
   return <Layout title="Backoffice">Backoffice for SarrMal</Layout>;
 };
 export default App;

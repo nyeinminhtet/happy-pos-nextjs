@@ -1,5 +1,4 @@
 import Layout from "@/Components/Layout";
-import { BackofficeContext } from "@/Contents/BackofficeContext";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import {
@@ -17,14 +16,12 @@ import { useContext, useEffect, useState } from "react";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { config } from "@/config/config";
-import {
-  getLocationId,
-  getMenusByLocationId,
-  getMenusIdFromMenuMenuCategoryLocation,
-} from "@/utils";
+import { getLocationId, getMenusByLocationId } from "@/utils";
 import DeleteDialog from "@/Components/DeleteDialog";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import { removeAddonCategory } from "@/store/slices/addonCategoriesSlice";
+import { addon_categories as AddonCategory } from "@prisma/client";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -36,9 +33,12 @@ const EditAddonCategories = () => {
   const selectedLocationId = getLocationId() as string;
   const { addonCategories, menus, menuMenuCategoriesLocations, menuAddons } =
     useAppSelector(appData);
+
   const addonCategory = addonCategories.find(
     (item) => item.id === parseInt(addonCategoryId, 10)
-  );
+  ) as AddonCategory;
+
+  const dispatch = useAppDispatch();
 
   //get menus from location
   const locationMenus = getMenusByLocationId(
@@ -83,9 +83,11 @@ const EditAddonCategories = () => {
     });
     // fetchData();
     setOpen(false);
+    dispatch(removeAddonCategory(addonCategory));
     route.back();
   };
   if (!addonCategory) return null;
+
   return (
     <Layout title="Edit addon category">
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>

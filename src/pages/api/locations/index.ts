@@ -5,7 +5,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "POST") {
+  if (req.method === "GET") {
+    const companyId = req.query.companyId;
+    const isValid = companyId;
+    if (!isValid) return res.status(400).end();
+    const locations = await prisma.locations.findMany({
+      where: { companies_id: Number(companyId) },
+    });
+    return res.status(200).send(locations);
+  } else if (req.method === "POST") {
     const { name, address, companyId } = req.body;
     const isValid = name && address;
     if (!isValid) return res.send(401);
@@ -20,7 +28,7 @@ export default async function handler(
   } else if (req.method === "PUT") {
     const { name, address, id } = req.body;
     const isValid = name && address && id;
-    if (!isValid) return res.send(400);
+    if (!isValid) return res.status(400).end();
     const locationUpdate = await prisma.locations.update({
       where: {
         id: parseInt(id, 10),

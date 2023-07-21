@@ -1,5 +1,7 @@
 import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { config } from "@/config/config";
+import { useAppDispatch } from "@/store/hooks";
+import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";
 import { getLocationId } from "@/utils";
 import {
   Dialog,
@@ -12,7 +14,6 @@ import {
 } from "@mui/material";
 import { menus as Menu } from "@prisma/client";
 import { useRouter } from "next/router";
-import { useContext } from "react";
 
 interface Props {
   menu?: Menu;
@@ -24,6 +25,7 @@ const RemoveMenuFromMenuCategory = ({ menu, open, setOpen }: Props) => {
   const selectedlocation = getLocationId() as string;
   const router = useRouter();
   const menuCategoryId = router.query.id as string;
+  const dispatch = useAppDispatch();
 
   const removeMenu = async (menu: Menu) => {
     await fetch(`${config.apiBaseUrl}/menucategories/removeMenu`, {
@@ -36,6 +38,7 @@ const RemoveMenuFromMenuCategory = ({ menu, open, setOpen }: Props) => {
       }),
     });
     // fetchData();
+    dispatch(fetchMenusMenuCategoriesLocations(selectedlocation));
     setOpen(false);
   };
 

@@ -48,8 +48,8 @@ export default async function handler(
     }
     return res.status(200).send(menu);
   } else if (req.method === "PUT") {
-    const { id, name, price, menuCategoryIds, locationId, addonCategoryIds } =
-      req.body;
+    const { id, name, price, addonCategoryIds } = req.body;
+    console.log(id);
 
     const updateMenu = await prisma.menus.update({
       data: {
@@ -57,13 +57,13 @@ export default async function handler(
         price,
       },
       where: {
-        id,
+        id: Number(id),
       },
     });
     if (addonCategoryIds.length) {
       const menuAddonCategories = await prisma.addons_menus.findMany({
         where: {
-          menu_id: id,
+          menu_id: Number(id),
         },
       });
 
@@ -80,7 +80,7 @@ export default async function handler(
 
       if (addedAddonCategories) {
         const data = addedAddonCategories.map((item: number) => ({
-          menu_id: id,
+          menu_id: Number(id),
           addon_category_id: item,
         }));
         await prisma.addons_menus.createMany({
@@ -91,7 +91,7 @@ export default async function handler(
       if (removedAddonCategories) {
         await prisma.addons_menus.deleteMany({
           where: {
-            menu_id: id,
+            menu_id: Number(id),
             addon_category_id: { in: removedAddonCategories },
           },
         });

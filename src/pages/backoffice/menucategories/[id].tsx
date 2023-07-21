@@ -1,5 +1,4 @@
 import Layout from "@/Components/Layout";
-import { BackofficeContext } from "@/Contents/BackofficeContext";
 import {
   Autocomplete,
   Box,
@@ -8,7 +7,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { menus as Menu } from "@prisma/client";
+import {
+  menus as Menu,
+  locations as Location,
+  menu_categories as MenuCategory,
+} from "@prisma/client";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -23,28 +26,30 @@ import {
 import MenuCard from "@/Components/MenuCard";
 import RemoveMenuFromMenuCategory from "./RemoveMenu";
 import DeleteDialog from "@/Components/DeleteDialog";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";
+import { removeMenuCategory } from "@/store/slices/menuCategoriesSlice";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-interface AutocompleteProps {
-  id: number;
-  label: string;
-}
-
 const EditMenuCategories = () => {
   const route = useRouter();
   const menuCategoryId = route.query.id as string;
+
   const { menuCategories, locations, menuMenuCategoriesLocations, menus } =
     useAppSelector(appData);
+
   const [open, setOpen] = useState(false);
   const [deletOpen, setDeleteOpne] = useState(false);
+
   const menuCategory = menuCategories.find(
     (item) => item.id === parseInt(menuCategoryId, 10)
-  );
+  ) as MenuCategory;
+
   const selectedlocation = getLocationId() as string;
+  const dispatch = useAppDispatch();
 
   const menuIds = menuMenuCategoriesLocations
     .filter(
@@ -67,9 +72,8 @@ const EditMenuCategories = () => {
     menuMenuCategoriesLocations
   );
 
-  const [selectedMenu, setSelectedMenu] = useState<AutocompleteProps | null>(
-    null
-  );
+  const [selectedMenu, setSelectedMenu] = useState<Menu>();
+
   const [selectedMenuToRemove, setSelectedMenuToRemove] = useState<Menu>();
 
   const [newMenuCategory, setNewMenuCategory] = useState({
@@ -88,6 +92,8 @@ const EditMenuCategories = () => {
     route.back();
     //  fetchData();
   };
+
+  //remove menu from menucategory
   const handleRemoveMenu = (menu: Menu) => {
     setSelectedMenuToRemove(menu);
     setOpen(true);
@@ -104,15 +110,18 @@ const EditMenuCategories = () => {
       }),
     });
     // fetchData();
-    setSelectedMenu(null);
+    dispatch(fetchMenusMenuCategoriesLocations(selectedlocation));
+    setSelectedMenu(undefined);
   };
 
-  //delete || archive
+  //delete || archive for menucategory
   const deletefun = async () => {
     await fetch(`${config.apiBaseUrl}/menucategories?id=${menuCategoryId}`, {
       method: "DELETE",
     });
     // fetchData();
+    dispatch(removeMenuCategory(menuCategory));
+    dispatch(fetchMenusMenuCategoriesLocations(selectedlocation));
     setDeleteOpne(false);
     route.back();
   };
@@ -186,17 +195,15 @@ const EditMenuCategories = () => {
           Menus
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-          <Autocomplete
+          {/* <Autocomplete
             sx={{ minWidth: 300, mr: 3 }}
-            value={selectedMenu}
+            defaultValue={selectedMenu}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             onChange={(evt, value) => {
-              setSelectedMenu(value);
+             setSelectedMenu(value);
             }}
             clearOnBlur
-            options={locationMenus
-              .filter((item) => !menuIds.includes(item.id))
-              .map((item) => ({ id: item.id, label: item.name }))}
+            optaions={menus.filter((item)=>menuIds.includes(item.id))}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -206,6 +213,20 @@ const EditMenuCategories = () => {
                   type: "search",
                 }}
               />
+            )}
+          /> */}
+          <Autocomplete
+            sx={{ minWidth: 300, mr: 3 }}
+            defaultValue={selectedMenu}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            getOptionLabel={(option) => option.name}
+            onChange={(evt, value) => {
+              if (value) setSelectedMenu(value);
+            }}
+            clearOnBlur
+            options={menus.filter((item) => !menuIds.includes(item.id))}
+            renderInput={(params) => (
+              <TextField {...params} label="Add menu to this category" />
             )}
           />
           <Button variant="contained" onClick={addMenuToCategory}>
