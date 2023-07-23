@@ -10,6 +10,8 @@ export const authOptions = {
       clientSecret: config.clientSecret,
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
+
   pages: {
     signIn: "/auth/signin",
   },
