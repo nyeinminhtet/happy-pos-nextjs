@@ -1,24 +1,26 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { OrderContent } from "@/Contents/OrderContext";
 import {
   addons as Addon,
   addon_categories as AddonCategory,
 } from "@prisma/client";
 import { getAddonCategoryByMenuId } from "@/utils";
 import { Box, Button, Typography } from "@mui/material";
-import AddonCategories from "@/Components/AddonCategories";
-import Quantity from "@/Components/Quantity";
+import AddonCategories from "@/components/AddonCategories";
+import Quantity from "@/components/Quantity";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
+import { selectCart, updateCart } from "@/store/slices/cartSlice";
 
 const MenuUpdate = () => {
   const router = useRouter();
   const query = router.query;
-  const { menus, addonCategories, addons, addonMenu, updateData, cart } =
-    useContext(OrderContent);
-  const { ...data } = useContext(OrderContent);
+  const dispatch = useAppDispatch();
+  const { addonCategories, addons, menuAddons } = useAppSelector(appData);
+  const { items } = useAppSelector(selectCart);
 
   const cartItemId = query.id as string;
-  const cartItem = cart.find((item) => item.id === cartItemId);
+  const cartItem = items.find((item) => item.id === cartItemId);
 
   const [selectedAddons, setSelectedAddons] = useState<Addon[]>([]);
   const [quantity, setQuantity] = useState(1);
@@ -28,7 +30,7 @@ const MenuUpdate = () => {
     ? getAddonCategoryByMenuId(
         addonCategories,
         String(cartItem?.menu.id),
-        addonMenu
+        menuAddons
       )
     : [];
   const validAddonCategoryIds = validAddonCategories.map((item) => item.id);
@@ -37,19 +39,17 @@ const MenuUpdate = () => {
   );
 
   //update cart
-  const updateCart = () => {
-    if (!cartItem) return null;
-    let otherCartItems = cart.filter((item) => item.id !== cartItem.id);
-    const newCartItem = [
-      ...otherCartItems,
-      {
-        id: cartItem.id,
-        menu: cartItem.menu,
-        addons: selectedAddons,
-        quantity,
-      },
-    ];
-    updateData({ ...data, cart: newCartItem });
+  const handleUpdateCart = () => {
+    if (!cartItem) return;
+
+    const cartUpdate = {
+      id: cartItemId,
+      menu: cartItem.menu,
+      addons: selectedAddons,
+      quantity,
+    };
+    dispatch(updateCart(cartUpdate));
+
     router.push({ pathname: "/order/cart", query });
   };
 
@@ -85,13 +85,13 @@ const MenuUpdate = () => {
 
   useEffect(() => {
     if (cartItem) {
-      const selectedAddons = cart.find(
+      const selectedAddons = items.find(
         (item) => item.menu.id === cartItem.menu.id
       )?.addons as Addon[];
       setSelectedAddons(selectedAddons);
       setQuantity(cartItem.quantity);
     }
-  }, [cartItem, cart]);
+  }, [cartItem, items]);
 
   //check quantity
   const handleQuantityOnDecrease = () => {
@@ -128,7 +128,7 @@ const MenuUpdate = () => {
       <Button
         variant="contained"
         disabled={isDisable}
-        onClick={updateCart}
+        onClick={handleUpdateCart}
         sx={{ mt: 3, width: "fit-content" }}
       >
         Update

@@ -37,7 +37,7 @@ const MenuProps = {
 };
 
 const NewAddonCategory = ({ open, setOpen }: Props) => {
-  const { menuMenuCategoriesLocations, menus } = useAppSelector(appData);
+  const { menusMenuCategoriesLocations, menus } = useAppSelector(appData);
 
   const [newAddonCategory, setNewAddonCategory] = useState({
     name: "",
@@ -51,7 +51,7 @@ const NewAddonCategory = ({ open, setOpen }: Props) => {
   const selectedLocationId = getLocationId() as string;
 
   //get menus from locations
-  const validMenuIds = menuMenuCategoriesLocations
+  const validMenuIds = menusMenuCategoriesLocations
     .filter((item) => item.location_id === Number(selectedLocationId))
     .map((item) => item.menu_id as number);
   const validMenus = menus.filter((item) => validMenuIds.includes(item.id));

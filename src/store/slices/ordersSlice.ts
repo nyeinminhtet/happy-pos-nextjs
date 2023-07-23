@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { orders as Order } from "@prisma/client";
 
 interface OrdersState {
@@ -17,12 +17,15 @@ export const ordersSlice = createSlice({
   name: "orders",
   initialState,
   reducers: {
-    setOrders: (state, action) => {
+    setOrders: (state, action: PayloadAction<Order[]>) => {
       state.items = action.payload;
+    },
+    addOrder: (state, action: PayloadAction<Order>) => {
+      state.items = [...state.items, action.payload];
     },
   },
 });
 
-export const { setOrders } = ordersSlice.actions;
+export const { setOrders, addOrder } = ordersSlice.actions;
 
 export default ordersSlice.reducer;

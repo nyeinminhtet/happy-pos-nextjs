@@ -8,20 +8,28 @@ import { addons as Addon } from "@prisma/client";
 import { CartItem } from "@/Types/Types";
 import { config } from "@/config/config";
 import { getCartTotalPrice } from "@/utils";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
+import {
+  addToCart,
+  removeFromCart,
+  selectCart,
+} from "@/store/slices/cartSlice";
+import { addOrder } from "@/store/slices/ordersSlice";
 
 const Review = () => {
-  const { ...data } = useContext(OrderContent);
-  const { isloading, updateData, fetchData, cart } = useContext(OrderContent);
+  const { items, isLoading } = useAppSelector(selectCart);
   const router = useRouter();
   const query = router.query;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!isloading && !cart.length) {
+    if (!isLoading && !items.length) {
       const query = router.query;
       const isValid = query.locationId;
       isValid && router.push({ pathname: "/order", query });
     }
-  }, [cart, isloading, router]);
+  }, [router, items, isLoading]);
 
   const renderAddons = (addons: Addon[]) => {
     if (!addons.length) return;
@@ -44,32 +52,32 @@ const Review = () => {
 
   //remove orderline
   const removeCartItems = (cartItem: CartItem) => {
-    const remainingOrderlines = cart.filter(
-      (item) => item.menu.id !== cartItem.menu.id
-    );
-    updateData({ ...data, cart: remainingOrderlines });
+    dispatch(removeFromCart(cartItem));
   };
 
   //comform order
   const conformOrder = async () => {
     const { locationId, tableId } = query;
-    const isValid = locationId && tableId && cart.length;
+    const isValid = locationId && tableId && items.length;
     if (!isValid) return alert("Something is Wrong!");
 
     const data = await fetch(
-      `${config.apiOrderBaseUrl}?locationId=${locationId}&tableId=${tableId}`,
+      `${config.apiBaseUrl}/order?locationId=${locationId}&tableId=${tableId}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cart }),
+        body: JSON.stringify({ items }),
       }
     );
-    const response = await data.json();
-    const order = response.order;
-    fetchData();
-    router.push({ pathname: `/order/activeCart/${order.id}`, query });
+    const orderCreated = await data.json();
+    console.log(orderCreated);
+    dispatch(addOrder(orderCreated));
+    router.push({
+      pathname: `/order/activeCart/${orderCreated.id}`,
+      query,
+    });
   };
-  if (!cart.length) return null;
+  if (!items.length) return null;
 
   return (
     <Box
@@ -87,7 +95,7 @@ const Review = () => {
         <Typography variant="h5" sx={{ textAlign: "center", mb: 3 }}>
           Review your order
         </Typography>
-        {cart.map((cartItem, index) => {
+        {items.map((cartItem, index) => {
           const { menu, addons, quantity } = cartItem;
           return (
             <Box key={index}>
@@ -141,7 +149,9 @@ const Review = () => {
         })}
         <Divider />
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-          <Typography variant="h4">Total: {getCartTotalPrice(cart)}</Typography>
+          <Typography variant="h4">
+            Total: {getCartTotalPrice(items)}
+          </Typography>
         </Box>
         <Box sx={{ mt: 3, textAlign: "center" }}>
           <Button variant="contained" onClick={conformOrder}>

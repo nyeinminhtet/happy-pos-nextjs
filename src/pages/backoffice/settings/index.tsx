@@ -11,7 +11,7 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { companies as Company, locations as Locations } from "@prisma/client";
 import { config } from "@/config/config";
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { getLocationId } from "@/utils";
 import { useAppSelector } from "@/store/hooks";

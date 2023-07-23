@@ -107,7 +107,8 @@ export default async function handler(
     const query = req.query;
     const locationId = query.locationId as string;
     const tableId = query.tableId as string;
-    const cart = req.body.cart;
+    const cart = req.body.items;
+
     const isValid = locationId && tableId && cart.length;
     if (!isValid) return res.status(400).end();
 
@@ -146,6 +147,6 @@ export default async function handler(
         });
       }
     });
-    return res.status(200).send({ order });
+    return res.status(200).send(order);
   }
 }

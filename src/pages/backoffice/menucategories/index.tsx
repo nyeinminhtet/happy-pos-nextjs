@@ -2,29 +2,29 @@ import { useContext, useState } from "react";
 import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { config } from "@/config/config";
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { getLocationId, getMenuCategoryIdByLocationId } from "@/utils";
 import CreateMenuCategory from "./CreateMenuCategory";
 import CategoryIcon from "@mui/icons-material/Category";
-import ItemCart from "@/Components/ItemCart";
+import ItemCart from "@/components/ItemCart";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 
 const Menu_Categories = () => {
   const [open, setOpen] = useState(false);
-  const { menuCategories, menuMenuCategoriesLocations, locations } =
+  const { menuCategories, menusMenuCategoriesLocations, locations } =
     useAppSelector(appData);
   const selectedLocationId = getLocationId() as string;
 
   const validMenuCategoryIds = getMenuCategoryIdByLocationId(
     menuCategories,
     selectedLocationId,
-    menuMenuCategoriesLocations
+    menusMenuCategoriesLocations
   );
   const getMenuCount = (menuCategoryId?: number) => {
     if (!menuCategoryId) return 0;
-    return menuMenuCategoriesLocations.filter(
+    return menusMenuCategoriesLocations.filter(
       (item) =>
         item.menu_categories_id === menuCategoryId &&
         item.menu_id &&

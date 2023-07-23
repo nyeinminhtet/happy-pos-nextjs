@@ -16,6 +16,7 @@ import { setOrders } from "./ordersSlice";
 import { setOrderlines } from "./orderlinesSlice";
 import { setMenusMenuCategoriesLocations } from "./menusMenuCategoriesLocationsSlice";
 import { RootState } from "..";
+import { getLocationId } from "@/utils";
 
 interface AppState {
   isloading: boolean;
@@ -27,12 +28,16 @@ const initialState: AppState = {
   error: null,
 };
 
+interface FetchAppDataPayload {
+  locationId?: string;
+}
+
 export const fetchAppData = createAsyncThunk(
   "app/fetchAppData",
-  async (locationId: string, thunkAPI) => {
+  async (payload: FetchAppDataPayload, thunkAPI) => {
     thunkAPI.dispatch(setApploading(true));
     const response = await fetch(
-      `${config.apiBaseUrl}/app?locationId=${locationId}`
+      `${config.apiBaseUrl}/app?locationId=${payload.locationId}`
     );
     const responseJson = await response.json();
     const {
@@ -46,8 +51,9 @@ export const fetchAppData = createAsyncThunk(
       tables,
       orders,
       orderlines,
-      menuMenuCategoriesLocations,
+      menusMenuCategoriesLocations,
     } = responseJson;
+
     thunkAPI.dispatch(setAddons(addons));
     thunkAPI.dispatch(setMenus(menus));
     thunkAPI.dispatch(setMenuCategories(menuCategories));
@@ -59,9 +65,13 @@ export const fetchAppData = createAsyncThunk(
     thunkAPI.dispatch(setOrders(orders));
     thunkAPI.dispatch(setOrderlines(orderlines));
     thunkAPI.dispatch(
-      setMenusMenuCategoriesLocations(menuMenuCategoriesLocations)
+      setMenusMenuCategoriesLocations(menusMenuCategoriesLocations)
     );
     thunkAPI.dispatch(setApploading(false));
+    const selectedLocationId = getLocationId();
+    if (!selectedLocationId) {
+      localStorage.setItem("selectedLocationId", locations[0].id);
+    }
   }
 );
 
@@ -117,7 +127,7 @@ export const appData = createSelector(
     menuCategories,
     menus,
     menuAddons,
-    menuMenuCategoriesLocations,
+    menusMenuCategoriesLocations,
     orderlines,
     orders,
     tables
@@ -130,7 +140,7 @@ export const appData = createSelector(
       menuCategories,
       menus,
       menuAddons,
-      menuMenuCategoriesLocations,
+      menusMenuCategoriesLocations,
       orderlines,
       orders,
       tables,

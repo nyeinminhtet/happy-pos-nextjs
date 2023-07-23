@@ -22,7 +22,7 @@ interface Props {
 }
 
 const NewAddon = ({ open, setOpen }: Props) => {
-  const { addonCategories, menuAddons, menuMenuCategoriesLocations } =
+  const { addonCategories, menuAddons, menusMenuCategoriesLocations } =
     useAppSelector(appData);
   const dispatch = useAppDispatch();
   const [newAddon, setNewAddon] = useState({
@@ -35,7 +35,7 @@ const NewAddon = ({ open, setOpen }: Props) => {
   const isDisable = !newAddon.name && !newAddon.price;
 
   const validAddonCategoryIds = getAddonCategoryByLocation(
-    menuMenuCategoriesLocations,
+    menusMenuCategoriesLocations,
     menuAddons,
     selectedLocationId
   );

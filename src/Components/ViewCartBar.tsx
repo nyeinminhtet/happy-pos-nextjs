@@ -1,13 +1,13 @@
-import { OrderContent } from "@/Contents/OrderContext";
 import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useContext } from "react";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import { useAppSelector } from "@/store/hooks";
+import { selectCart } from "@/store/slices/cartSlice";
 
 const ViewCartBar = () => {
   const router = useRouter();
-  const { cart } = useContext(OrderContent);
-  const cartText = `You have ${cart.length} item in cart`;
+  const { items } = useAppSelector(selectCart);
+  const cartText = `You have ${items.length} item in cart`;
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Box

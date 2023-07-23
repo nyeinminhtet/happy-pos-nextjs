@@ -15,17 +15,11 @@ export default function App({
   pageProps,
   session,
 }: CustomeAppProps) {
-  const getLocation = getLocationId() as string;
-
-  useEffect(() => {
-    store.dispatch(fetchAppData(getLocation));
-  }, []);
-
   return (
-    <Provider store={store}>
-      <SessionProvider session={pageProps.session}>
+    <SessionProvider session={pageProps.session}>
+      <Provider store={store}>
         <Component {...pageProps} />
-      </SessionProvider>
-    </Provider>
+      </Provider>
+    </SessionProvider>
   );
 }

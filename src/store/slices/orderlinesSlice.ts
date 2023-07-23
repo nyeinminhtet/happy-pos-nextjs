@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { orderlines as Orderline } from "@prisma/client";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { OrderStatus, orderlines as Orderline } from "@prisma/client";
+import { config } from "@/config/config";
 
 interface OrderlinesState {
   isLoading: boolean;
@@ -13,6 +14,23 @@ const initialState: OrderlinesState = {
   error: null,
 };
 
+interface UpdateOrderlinePayload {
+  cartId: string;
+  status: OrderStatus;
+}
+
+export const updateOrderlineStatus = createAsyncThunk(
+  "orderlines/updateOrderlineStatus",
+  async (payload: UpdateOrderlinePayload, thunkAPI) => {
+    await fetch(`${config.apiBaseUrl}/orderlines`, {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    thunkAPI.dispatch(updateOrderline(payload));
+  }
+);
+
 export const orderlinesSlice = createSlice({
   name: "orderlines",
   initialState,
@@ -20,9 +38,20 @@ export const orderlinesSlice = createSlice({
     setOrderlines: (state, action) => {
       state.items = action.payload;
     },
+    updateOrderline: (
+      state,
+      action: PayloadAction<{ cartId: string; status: OrderStatus }>
+    ) => {
+      state.items = state.items.map((item) => {
+        if (item.cart_id === action.payload.cartId) {
+          return { ...item, status: action.payload.status };
+        }
+        return item;
+      });
+    },
   },
 });
 
-export const { setOrderlines } = orderlinesSlice.actions;
+export const { setOrderlines, updateOrderline } = orderlinesSlice.actions;
 
 export default orderlinesSlice.reducer;

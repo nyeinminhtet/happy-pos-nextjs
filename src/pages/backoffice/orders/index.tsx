@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { getLocationId, getQuantityByOrderId } from "@/utils";
 import {
@@ -45,15 +45,15 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
   const [open, setOpen] = useState(false);
 
   const renderMenusAndAddonForOrder = () => {
-    const orderlineMenuIds = orderlines.map((item) => item.menus_id);
-    const menuIds: number[] = [];
-    orderlineMenuIds.forEach((item) => {
-      const hasAdded = menuIds.includes(item);
-      if (!hasAdded) menuIds.push(item);
+    const orderlineItemsIds = orderlines.map((item) => item.cart_id);
+    const cartIds: string[] = [];
+    orderlineItemsIds.forEach((item) => {
+      const hasAdded = cartIds.includes(item);
+      if (!hasAdded) cartIds.push(item);
     });
-    const orderlineMenus = menuIds.map((menuId) => {
+    const orderlineMenus = cartIds.map((cartId) => {
       const orderlineAddonIds = orderlines
-        .filter((item) => item.menus_id === menuId)
+        .filter((item) => item.cart_id === cartId)
         .map((item) => item.addons_id);
 
       //addons
@@ -62,16 +62,19 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
       );
 
       //menus
-      const orderlineMenus = menus.find((item) => item.id === menuId) as Menu;
+      const orderlineItems = orderlines.find(
+        (item) => item.cart_id === cartId
+      ) as OrderLine;
+      const orderlineMenus = menus.find(
+        (item) => item.id === orderlineItems.menus_id
+      ) as Menu;
 
       //status
-      const status = orderlines.find(
-        (item) => item.menus_id === menuId
-      )?.status;
+      const status = orderlines.find((item) => item.cart_id === cartId)?.status;
 
       //quantity
       const quantity = orderlines.find(
-        (item) => item.menus_id === menuId
+        (item) => item.cart_id === cartId
       )?.quantity;
 
       //find respective addon's category

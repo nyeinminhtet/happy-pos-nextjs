@@ -11,19 +11,19 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { config } from "@/config/config";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
 import AddIcon from "@mui/icons-material/Add";
 import { getAddonCategoryByLocation, getLocationId } from "@/utils";
-import ItemCart from "@/Components/ItemCart";
+import ItemCart from "@/components/ItemCart";
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import NewAddon from "./NewAddon";
 
 const Addons = () => {
-  const { addons, addonCategories, menuAddons, menuMenuCategoriesLocations } =
+  const { addons, addonCategories, menuAddons, menusMenuCategoriesLocations } =
     useAppSelector(appData);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +32,7 @@ const Addons = () => {
   //get addon from location
 
   const validAddonCategoryIds = getAddonCategoryByLocation(
-    menuMenuCategoriesLocations,
+    menusMenuCategoriesLocations,
     menuAddons,
     selectedLocationId
   );

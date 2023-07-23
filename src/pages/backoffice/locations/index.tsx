@@ -3,10 +3,10 @@ import AddIcon from "@mui/icons-material/Add";
 import { Box, Button } from "@mui/material";
 import { locations as Locations } from "@prisma/client";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
 import NewLocation from "./NewLocation";
-import ItemCart from "@/Components/ItemCart";
+import ItemCart from "@/components/ItemCart";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 

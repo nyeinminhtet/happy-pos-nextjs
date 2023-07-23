@@ -37,10 +37,9 @@ export const getQrCodeUrl = (locationId: number, tableId: number) => {
 export const getMenusByMenuCategoryId = (
   menus: Menu[],
   menuCategroyId: number,
-  menuMenuCategoriesLocations: MenuMenuCatgoriesLocation[]
+  menusMenuCategoriesLocations: MenuMenuCatgoriesLocation[]
 ) => {
-  const selectedLocation = getLocationId() as string;
-  const validMenuIds = menuMenuCategoriesLocations
+  const validMenuIds = menusMenuCategoriesLocations
     .filter((item) => item.menu_categories_id === menuCategroyId)
     .map((item) => item.menu_id);
   return menus.filter((item) => validMenuIds.includes(item.id));
@@ -48,19 +47,19 @@ export const getMenusByMenuCategoryId = (
 
 export const getMenusIdFromMenuMenuCategoryLocation = (
   locationId: string,
-  menuMenuCategoriesLocations: MenuMenuCatgoriesLocation[]
+  menusMenuCategoriesLocations: MenuMenuCatgoriesLocation[]
 ) => {
-  return menuMenuCategoriesLocations
+  return menusMenuCategoriesLocations
     .filter((item) => item.location_id === Number(locationId))
     .map((item) => item.menu_id);
 };
 
 export const getMenusByLocationId = (
   locationId: string,
-  menuMenuCategoriesLocations: MenuMenuCatgoriesLocation[],
+  menusMenuCategoriesLocations: MenuMenuCatgoriesLocation[],
   menus: Menu[]
 ) => {
-  const validMenuIds = menuMenuCategoriesLocations
+  const validMenuIds = menusMenuCategoriesLocations
     .filter((item) => item.location_id === Number(locationId))
     .map((item) => item.menu_id);
   return menus.filter((item) => validMenuIds.includes(item.id));
@@ -69,9 +68,9 @@ export const getMenusByLocationId = (
 export const getMenuCategoryIdByLocationId = (
   menCategory: MenuCategory[],
   locationId: string,
-  menuMenuCategoriesLocations: MenuMenuCatgoriesLocation[]
+  menusMenuCategoriesLocations: MenuMenuCatgoriesLocation[]
 ) => {
-  const validMenuCategoryIds = menuMenuCategoriesLocations
+  const validMenuCategoryIds = menusMenuCategoriesLocations
     .filter((item) => item.location_id === Number(locationId))
     .map((item) => item.menu_categories_id);
   return menCategory.filter((item) => validMenuCategoryIds.includes(item.id));
@@ -80,9 +79,9 @@ export const getMenuCategoryIdByLocationId = (
 export const getLocationByMenuCategoryId = (
   locations: Location[],
   menuCategroyId: string,
-  menuMenuCategoriesLocations: MenuMenuCatgoriesLocation[]
+  menusMenuCategoriesLocations: MenuMenuCatgoriesLocation[]
 ) => {
-  const validLocationIds = menuMenuCategoriesLocations
+  const validLocationIds = menusMenuCategoriesLocations
     .filter((item) => item.menu_categories_id === Number(menuCategroyId))
     .map((item) => item.location_id);
   return locations.filter((item) => validLocationIds.includes(item.id));
@@ -102,11 +101,11 @@ export const getAddonCategoryByMenuId = (
 };
 
 export const getAddonCategoryByLocation = (
-  menuMenuCategoriesLocations: menu_menu_categories_locations[],
+  menusMenuCategoriesLocations: menu_menu_categories_locations[],
   menuAddons: addons_menus[],
   locationId: string
 ) => {
-  const locationMenuIds = menuMenuCategoriesLocations
+  const locationMenuIds = menusMenuCategoriesLocations
     .filter((item) => item.location_id === Number(locationId))
     .map((item) => item.menu_id);
 
@@ -129,18 +128,6 @@ export const getQuantityByOrderId = (
   });
   return menuIds.length;
 };
-
-// export const getMenusFromOrderlines = (
-//   orderId: number,
-//   orderlines: Orderline[],
-//   menus: Menu[]
-// ) => {
-//   const currentOrderlines = orderlines
-//     .filter((item) => item.order_id === orderId)
-
-//   co
-//   return menus.filter((item) => currentOrderlines.includes(item.id));
-// };
 
 export const getCartTotalPrice = (cart: CartItem[]) => {
   const totalPrice = cart.reduce((prev, curr) => {

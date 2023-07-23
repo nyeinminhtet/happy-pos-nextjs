@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Autocomplete, Box, Button, Checkbox, TextField } from "@mui/material";
 import { useRouter } from "next/router";
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { config } from "@/config/config";
 import {
   getAddonCategoryByMenuId,
@@ -14,7 +14,7 @@ import {
   addon_categories as AddonCategory,
 } from "@prisma/client";
 import DeleteIcon from "@mui/icons-material/Delete";
-import DeleteDialog from "@/Components/DeleteDialog";
+import DeleteDialog from "@/components/DeleteDialog";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { removeMenu, updateMenu } from "@/store/slices/menusSlice";

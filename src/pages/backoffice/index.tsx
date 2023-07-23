@@ -1,4 +1,4 @@
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getLocationId } from "@/utils";
 import { getServerSession } from "next-auth";

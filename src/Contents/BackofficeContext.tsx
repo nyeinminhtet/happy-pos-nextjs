@@ -22,7 +22,7 @@ interface MenuType {
   menuAddons: MenuAddon[];
   addonCategories: AddonCategories[];
   locations: Locations[];
-  menuMenuCategoriesLocations: MenuMenuCategoriesLocations[];
+  menusMenuCategoriesLocations: MenuMenuCategoriesLocations[];
   company: Company | null;
   tables: Table[];
   orders: Order[];
@@ -37,7 +37,7 @@ export const defaultBackofficeMenu = {
   addons: [],
   addonCategories: [],
   menuAddons: [],
-  menuMenuCategoriesLocations: [],
+  menusMenuCategoriesLocations: [],
   locations: [],
   company: null,
   tables: [],
@@ -61,7 +61,7 @@ const BackofficeProvider = (props: any) => {
 
   //get all menus
   const fetchData = async () => {
-    const response = await fetch(`${config.apiBackofficeBaseUrl}`);
+    const response = await fetch(`${config}`);
     const responseJson = await response.json();
     const {
       menus,

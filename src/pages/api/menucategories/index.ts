@@ -52,13 +52,13 @@ export default async function handler(
     }
 
     //first get all existing rows on menu_menucategroies_locations
-    const menuMenuCategoriesLocations =
+    const menusMenuCategoriesLocations =
       await prisma.menu_menu_categories_locations.findMany({
         where: { menu_categories_id: menuCategoryId },
       });
 
     //existing locations from db
-    const existingLocations = menuMenuCategoriesLocations
+    const existingLocations = menusMenuCategoriesLocations
       .map((item) => item.location_id)
       .filter((item) => item);
 

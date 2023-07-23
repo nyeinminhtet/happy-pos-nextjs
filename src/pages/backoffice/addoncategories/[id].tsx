@@ -1,4 +1,4 @@
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import {
@@ -17,7 +17,7 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { config } from "@/config/config";
 import { getLocationId, getMenusByLocationId } from "@/utils";
-import DeleteDialog from "@/Components/DeleteDialog";
+import DeleteDialog from "@/components/DeleteDialog";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { removeAddonCategory } from "@/store/slices/addonCategoriesSlice";
@@ -31,7 +31,7 @@ const EditAddonCategories = () => {
   const addonCategoryId = route.query.id as string;
   const [open, setOpen] = useState(false);
   const selectedLocationId = getLocationId() as string;
-  const { addonCategories, menus, menuMenuCategoriesLocations, menuAddons } =
+  const { addonCategories, menus, menusMenuCategoriesLocations, menuAddons } =
     useAppSelector(appData);
 
   const addonCategory = addonCategories.find(
@@ -43,7 +43,7 @@ const EditAddonCategories = () => {
   //get menus from location
   const locationMenus = getMenusByLocationId(
     selectedLocationId,
-    menuMenuCategoriesLocations,
+    menusMenuCategoriesLocations,
     menus
   ).map((item) => ({ id: item.id, label: item.name }));
 

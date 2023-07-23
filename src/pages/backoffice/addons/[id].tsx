@@ -1,4 +1,4 @@
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { config } from "@/config/config";
 import { getLocationId, getMenusIdFromMenuMenuCategoryLocation } from "@/utils";
 import {
@@ -13,7 +13,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
-import DeleteDialog from "@/Components/DeleteDialog";
+import DeleteDialog from "@/components/DeleteDialog";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { removeAddon } from "@/store/slices/addonsSlice";
@@ -24,7 +24,7 @@ const EditAddon = () => {
   const addonId = router.query.id as string;
   const selectedLocationId = getLocationId() as string;
   const dispatch = useAppDispatch();
-  const { addons, menuMenuCategoriesLocations, menuAddons, addonCategories } =
+  const { addons, menusMenuCategoriesLocations, menuAddons, addonCategories } =
     useAppSelector(appData);
 
   const addon = addons.find(
@@ -34,7 +34,7 @@ const EditAddon = () => {
   //get menuId from menulocatios
   const locationMenuIds = getMenusIdFromMenuMenuCategoryLocation(
     selectedLocationId,
-    menuMenuCategoriesLocations
+    menusMenuCategoriesLocations
   );
 
   const addoncategoryMenuIds = menuAddons

@@ -8,15 +8,15 @@ import {
   getMenusByLocationId,
   getMenusByMenuCategoryId,
 } from "@/utils";
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
 import NewMenu from "./NewMenu";
-import MenuCard from "@/Components/MenuCard";
+import MenuCard from "@/components/MenuCard";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 
 const Menus = () => {
-  const { menus, menuMenuCategoriesLocations, menuCategories } =
+  const { menus, menusMenuCategoriesLocations, menuCategories } =
     useAppSelector(appData);
   const [open, setOpen] = useState(false);
   const locationId = getLocationId() as string;
@@ -27,13 +27,13 @@ const Menus = () => {
   const validMenus = getMenusByMenuCategoryId(
     menus,
     selectedMenuCategory as number,
-    menuMenuCategoriesLocations
+    menusMenuCategoriesLocations
   );
 
   const validCategory = getMenuCategoryIdByLocationId(
     menuCategories,
     selectedLocation,
-    menuMenuCategoriesLocations
+    menusMenuCategoriesLocations
   );
 
   useEffect(() => {

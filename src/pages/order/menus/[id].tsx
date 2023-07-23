@@ -1,4 +1,3 @@
-import { OrderContent } from "@/Contents/OrderContext";
 import { generateRandomId, getAddonCategoryByMenuId } from "@/utils";
 import { Box, Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
@@ -7,16 +6,20 @@ import {
   addon_categories as AddonCategory,
   addons as Addon,
 } from "@prisma/client";
-import AddonCategories from "@/Components/AddonCategories";
-import Quantity from "@/Components/Quantity";
+import AddonCategories from "@/components/AddonCategories";
+import Quantity from "@/components/Quantity";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
+import { CartItem } from "@/Types/Types";
+import { addToCart } from "@/store/slices/cartSlice";
 
 const DetailMenu = () => {
   const router = useRouter();
   const query = router.query;
   const menuId = router.query.id as string;
-  const { menus, addonCategories, addons, addonMenu, updateData, cart } =
-    useContext(OrderContent);
-  const { ...data } = useContext(OrderContent);
+  const { menus, addonCategories, addons, menuAddons } =
+    useAppSelector(appData);
+  const dispatch = useAppDispatch();
   const [selectedAddons, setSelectedAddons] = useState<Addon[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [isDisable, setIsDisable] = useState(false);
@@ -26,7 +29,7 @@ const DetailMenu = () => {
   const validAddonCategories = getAddonCategoryByMenuId(
     addonCategories,
     menuId,
-    addonMenu
+    menuAddons
   );
   const validAddonCategoryIds = validAddonCategories.map((item) => item.id);
   const validAddons = addons.filter((item) =>
@@ -91,17 +94,18 @@ const DetailMenu = () => {
   };
 
   //add to cart
-  const addToCart = () => {
+  const handleAddToCart = () => {
     if (!menu) return null;
-    updateData({
-      ...data,
-      cart: [
-        ...data.cart,
-        { id: generateRandomId(), menu, quantity, addons: selectedAddons },
-      ],
-    });
+    const cartItems: CartItem = {
+      id: generateRandomId(),
+      menu,
+      quantity,
+      addons: selectedAddons,
+    };
+    dispatch(addToCart(cartItems));
     router.back();
   };
+
   //check quantity
   const handleQuantityOnDecrease = () => {
     const newQuantity = quantity - 1 === 0 ? 1 : quantity - 1;
@@ -139,7 +143,7 @@ const DetailMenu = () => {
       <Button
         variant="contained"
         disabled={isDisable}
-        onClick={addToCart}
+        onClick={handleAddToCart}
         sx={{ mt: 3, width: "fit-content" }}
       >
         Add to Cart

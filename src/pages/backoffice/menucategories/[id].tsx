@@ -1,4 +1,4 @@
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import {
   Autocomplete,
   Box,
@@ -23,9 +23,9 @@ import {
   getLocationId,
   getMenusByLocationId,
 } from "@/utils";
-import MenuCard from "@/Components/MenuCard";
+import MenuCard from "@/components/MenuCard";
 import RemoveMenuFromMenuCategory from "./RemoveMenu";
-import DeleteDialog from "@/Components/DeleteDialog";
+import DeleteDialog from "@/components/DeleteDialog";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";
@@ -38,7 +38,7 @@ const EditMenuCategories = () => {
   const route = useRouter();
   const menuCategoryId = route.query.id as string;
 
-  const { menuCategories, locations, menuMenuCategoriesLocations, menus } =
+  const { menuCategories, locations, menusMenuCategoriesLocations, menus } =
     useAppSelector(appData);
 
   const [open, setOpen] = useState(false);
@@ -51,7 +51,7 @@ const EditMenuCategories = () => {
   const selectedlocation = getLocationId() as string;
   const dispatch = useAppDispatch();
 
-  const menuIds = menuMenuCategoriesLocations
+  const menuIds = menusMenuCategoriesLocations
     .filter(
       (item) =>
         item.menu_categories_id === Number(menuCategoryId) &&
@@ -61,7 +61,7 @@ const EditMenuCategories = () => {
 
   const locationMenus = getMenusByLocationId(
     selectedlocation,
-    menuMenuCategoriesLocations,
+    menusMenuCategoriesLocations,
     menus
   );
 
@@ -69,7 +69,7 @@ const EditMenuCategories = () => {
   const validLocations = getLocationByMenuCategoryId(
     locations,
     menuCategoryId,
-    menuMenuCategoriesLocations
+    menusMenuCategoriesLocations
   );
 
   const [selectedMenu, setSelectedMenu] = useState<Menu>();

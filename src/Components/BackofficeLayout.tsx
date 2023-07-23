@@ -1,17 +1,22 @@
 import { Box } from "@mui/material";
+import { useAppDispatch } from "@/store/hooks";
+import { fetchAppData } from "@/store/slices/appSlice";
+import { useEffect } from "react";
 import TopBar from "./TopBar";
 import SideBar from "./SideBar";
-import { useAppSelector } from "@/store/hooks";
-import { appData } from "@/store/slices/appSlice";
 
 type Props = {
   title?: string;
   children: string | JSX.Element | JSX.Element[];
 };
 
-const Layout = (props: Props) => {
-  const { isloading } = useAppSelector((state) => state.app);
-  if (isloading) return null;
+const BackofficeLayout = (props: Props) => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAppData({ locationId: undefined }));
+  }, []);
+
   return (
     <Box sx={{ width: "100%" }}>
       <TopBar title={props.title} />
@@ -23,4 +28,4 @@ const Layout = (props: Props) => {
   );
 };
 
-export default Layout;
+export default BackofficeLayout;

@@ -17,9 +17,9 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { config } from "@/config/config";
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import { getLocationId } from "@/utils";
-import ItemCart from "@/Components/ItemCart";
+import ItemCart from "@/components/ItemCart";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import NewAddonCategory from "./NewAddonCategory";
@@ -27,7 +27,7 @@ import NewAddonCategory from "./NewAddonCategory";
 const AddonCategories = () => {
   const {
     addonCategories,
-    menuMenuCategoriesLocations,
+    menusMenuCategoriesLocations,
     menus,
     menuAddons,
     locations,
@@ -38,7 +38,7 @@ const AddonCategories = () => {
   const [open, setOpen] = useState(false);
 
   //get menus from locations
-  const validMenuIds = menuMenuCategoriesLocations
+  const validMenuIds = menusMenuCategoriesLocations
     .filter((item) => item.location_id === Number(selectedLocationId))
     .map((item) => item.menu_id);
   //get addoncategories from menus

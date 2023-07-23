@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { config } from "@/config/config";
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 import FileDropZone from "../filedropzone";
 import { LoadingButton } from "@mui/lab";
 import { getLocationId, getMenuCategoryIdByLocationId } from "@/utils";
@@ -36,7 +36,7 @@ const NewMenu = ({ open, setOpen }: Props) => {
   const [selectedMenucategoryIds, setSelectedMenucategoryIds] = useState<
     number[]
   >([]);
-  const { menuMenuCategoriesLocations, menuCategories } =
+  const { menusMenuCategoriesLocations, menuCategories } =
     useAppSelector(appData);
 
   const dispatch = useAppDispatch();

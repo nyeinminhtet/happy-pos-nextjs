@@ -19,10 +19,13 @@ const MenuCard = ({ menu, href }: Props) => {
       }}
     >
       <Card sx={{ width: 250, height: 250, py: 2 }}>
-        <CardMedia
-          sx={{ height: 180, backgroundSize: "contain" }}
-          image={menu.acess_url || ""}
-        />
+        {menu.acess_url && (
+          <CardMedia
+            sx={{ height: 180, backgroundSize: "contain" }}
+            image={menu.acess_url || ""}
+          />
+        )}
+
         <CardContent
           sx={{
             display: "flex",

@@ -12,7 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { config } from "@/config/config";
-import Layout from "@/Components/Layout";
+import Layout from "@/components/BackofficeLayout";
 
 const Register = () => {
   const [open, setOpen] = useState(false);
