@@ -1,33 +1,13 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  TextField,
-} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { getLocationId } from "@/utils";
-import { BackofficeContext } from "@/Contents/BackofficeContext";
-import { config } from "@/config/config";
 import Layout from "@/components/BackofficeLayout";
 import ItemCart from "@/components/ItemCart";
 import TableBarIcon from "@mui/icons-material/TableBar";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import CreateTable from "./CreateTable";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 const Tables = () => {
   const { tables } = useAppSelector(appData);

@@ -1,10 +1,9 @@
-import { OrderContent } from "@/Contents/OrderContext";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { emptyCart } from "@/store/slices/cartSlice";
 import { Box, Paper, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 
 const ActiveOrder = () => {
   const router = useRouter();

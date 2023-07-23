@@ -13,7 +13,7 @@ import {
   menu_categories as MenuCategory,
 } from "@prisma/client";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -58,12 +58,6 @@ const EditMenuCategories = () => {
         item.location_id === Number(selectedlocation)
     )
     .map((item) => item.menu_id);
-
-  const locationMenus = getMenusByLocationId(
-    selectedlocation,
-    menusMenuCategoriesLocations,
-    menus
-  );
 
   const validMenus = menus.filter((item) => menuIds.includes(item.id));
   const validLocations = getLocationByMenuCategoryId(

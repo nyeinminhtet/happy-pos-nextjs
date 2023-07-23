@@ -1,26 +1,11 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import ClassIcon from "@mui/icons-material/Class";
-import {
-  Box,
-  TextField,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  Checkbox,
-  FormControl,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Select,
-} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { config } from "@/config/config";
 import Layout from "@/components/BackofficeLayout";
 import { getLocationId } from "@/utils";
 import ItemCart from "@/components/ItemCart";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import NewAddonCategory from "./NewAddonCategory";
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import {
   Box,
   TextField,
@@ -15,12 +15,10 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { config } from "@/config/config";
-import Layout from "@/components/BackofficeLayout";
 import FileDropZone from "../filedropzone";
 import { LoadingButton } from "@mui/lab";
-import { getLocationId, getMenuCategoryIdByLocationId } from "@/utils";
+import { getLocationId } from "@/utils";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { addMenu } from "@/store/slices/menusSlice";

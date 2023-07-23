@@ -1,7 +1,6 @@
-import { OrderContent } from "@/Contents/OrderContext";
 import { Box, Typography, Avatar, Button, Divider } from "@mui/material";
 import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { addons as Addon } from "@prisma/client";
@@ -9,12 +8,7 @@ import { CartItem } from "@/Types/Types";
 import { config } from "@/config/config";
 import { getCartTotalPrice } from "@/utils";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { appData } from "@/store/slices/appSlice";
-import {
-  addToCart,
-  removeFromCart,
-  selectCart,
-} from "@/store/slices/cartSlice";
+import { removeFromCart, selectCart } from "@/store/slices/cartSlice";
 import { addOrder } from "@/store/slices/ordersSlice";
 
 const Review = () => {

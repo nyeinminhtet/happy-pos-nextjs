@@ -1,9 +1,7 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { config } from "@/config/config";
 import Layout from "@/components/BackofficeLayout";
-import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { getLocationId, getMenuCategoryIdByLocationId } from "@/utils";
 import CreateMenuCategory from "./CreateMenuCategory";
 import CategoryIcon from "@mui/icons-material/Category";

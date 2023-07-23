@@ -9,7 +9,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { companies as Company, locations as Locations } from "@prisma/client";
 import { config } from "@/config/config";
 import Layout from "@/components/BackofficeLayout";
@@ -41,6 +41,7 @@ const Setting = () => {
       }
     }
     if (company)
+      //@ts-ignore
       setCompanyInfo({ name: company.name, address: company.address });
   }, [locations, company]);
 

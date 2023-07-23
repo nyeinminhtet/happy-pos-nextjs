@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,7 +6,8 @@ import { Typography } from "@mui/material";
 
 import { signOut, useSession } from "next-auth/react";
 import { getLocationId } from "@/utils";
-import { BackofficeContext } from "@/Contents/BackofficeContext";
+import { useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
 
 interface Props {
   title?: string;
@@ -16,7 +16,7 @@ interface Props {
 const TopBar = ({ title = "" }: Props) => {
   const { data } = useSession();
   const locationId = getLocationId() as string;
-  const { locations } = useContext(BackofficeContext);
+  const { locations } = useAppSelector(appData);
   const selectedLocation = locations.find(
     (location) => location.id === Number(locationId)
   );
