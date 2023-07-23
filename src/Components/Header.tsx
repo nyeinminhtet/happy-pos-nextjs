@@ -1,4 +1,4 @@
-import { Box, Slide, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import headerImg from "../assets/wave.svg";
 

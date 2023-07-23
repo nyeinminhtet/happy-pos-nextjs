@@ -12,7 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { companies as Company, locations as Locations } from "@prisma/client";
 import { config } from "@/config/config";
-import Layout from "@/components/BackofficeLayout";
+import Layout from "@/Components/BackofficeLayout";
 import { getLocationId } from "@/utils";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";

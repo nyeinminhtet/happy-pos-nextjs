@@ -1,4 +1,4 @@
-import TopBar from "@/components/TopBar";
+import TopBar from "@/Components/TopBar";
 import { Box, Button } from "@mui/material";
 import { signIn } from "next-auth/react";
 

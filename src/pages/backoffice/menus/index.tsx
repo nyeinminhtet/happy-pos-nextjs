@@ -8,9 +8,9 @@ import {
   getMenusByLocationId,
   getMenusByMenuCategoryId,
 } from "@/utils";
-import Layout from "@/components/BackofficeLayout";
+import Layout from "@/Components/BackofficeLayout";
 import NewMenu from "./NewMenu";
-import MenuCard from "@/components/MenuCard";
+import MenuCard from "@/Components/MenuCard";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 

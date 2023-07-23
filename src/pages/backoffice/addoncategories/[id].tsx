@@ -1,4 +1,4 @@
-import Layout from "@/components/BackofficeLayout";
+import Layout from "@/Components/BackofficeLayout";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import {
@@ -17,7 +17,7 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { config } from "@/config/config";
 import { getLocationId, getMenusByLocationId } from "@/utils";
-import DeleteDialog from "@/components/DeleteDialog";
+import DeleteDialog from "@/Components/DeleteDialog";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { removeAddonCategory } from "@/store/slices/addonCategoriesSlice";

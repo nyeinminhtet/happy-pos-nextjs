@@ -1,4 +1,4 @@
-import { Box, Slide, Typography, Zoom } from "@mui/material";
+import { Box, Typography, Zoom } from "@mui/material";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import LocationOn from "@mui/icons-material/LocationOn";

@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import { Box } from "@mui/material";
 
 import { useRouter } from "next/router";

@@ -1,6 +1,6 @@
-import MenuCard from "@/components/MenuCard";
-import OrderLayout from "@/components/OrderLayout";
-import ViewCartBar from "@/components/ViewCartBar";
+import MenuCard from "@/Components/MenuCard";
+import OrderLayout from "@/Components/OrderLayout";
+import ViewCartBar from "@/Components/ViewCartBar";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { getMenusByMenuCategoryId } from "@/utils";

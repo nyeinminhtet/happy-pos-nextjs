@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Box, Button } from "@mui/material";
-import Layout from "@/components/BackofficeLayout";
+import Layout from "@/Components/BackofficeLayout";
 import AddIcon from "@mui/icons-material/Add";
 import { getAddonCategoryByLocation, getLocationId } from "@/utils";
-import ItemCart from "@/components/ItemCart";
+import ItemCart from "@/Components/ItemCart";
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";

@@ -1,8 +1,8 @@
-import Features from "@/components/Features";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Testimonials from "@/components/Testimonial";
+import Features from "@/Components/Features";
+import Footer from "@/Components/Footer";
+import Header from "@/Components/Header";
+import Hero from "@/Components/Hero";
+import Testimonials from "@/Components/Testimonial";
 import { Box } from "@mui/material";
 
 const HappyPos = () => {
