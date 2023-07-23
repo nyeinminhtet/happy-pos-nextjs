@@ -16,7 +16,7 @@ export default async function handler(
   } else if (req.method === "POST") {
     const { name, address, companyId } = req.body;
     const isValid = name && address;
-    if (!isValid) return res.send(401);
+    if (!isValid) return res.status(401).end();
     const locationCreate = await prisma.locations.create({
       data: {
         name,

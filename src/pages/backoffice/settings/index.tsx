@@ -7,12 +7,12 @@ import {
   SelectChangeEvent,
   TextField,
   Button,
+  Typography,
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { companies as Company, locations as Locations } from "@prisma/client";
 import { config } from "@/config/config";
 import Layout from "@/components/BackofficeLayout";
-import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { getLocationId } from "@/utils";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
@@ -40,7 +40,8 @@ const Setting = () => {
         setSelectedLocation(selectedLocation);
       }
     }
-    if (company) setCompanyInfo(company);
+    if (company)
+      setCompanyInfo({ name: company.name, address: company.address });
   }, [locations, company]);
 
   const handleOnChange = (e: SelectChangeEvent<number>) => {
@@ -79,12 +80,12 @@ const Setting = () => {
           mt: 1,
         }}
       >
-        <h1>Choose Your Info</h1>
+        <Typography variant="h4">Choose Your Info</Typography>
         <TextField
           label="Name"
           variant="outlined"
           value={companyInfo.name}
-          sx={{ mb: 2, minWidth: 400 }}
+          sx={{ mb: 2, minWidth: 400, mt: 2 }}
           onChange={(evt) => {
             const name = evt.target.value;
             setCompanyInfo({ ...companyInfo, name });
@@ -122,7 +123,12 @@ const Setting = () => {
         </FormControl>
         <Button
           variant="contained"
-          sx={{ mt: 2, width: "fit-content" }}
+          sx={{
+            mt: 2,
+            width: "fit-content",
+            bgcolor: "#4E6C50",
+            ":hover": { bgcolor: "#820000" },
+          }}
           onClick={updateCompany}
         >
           Update

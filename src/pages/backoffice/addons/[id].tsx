@@ -16,7 +16,7 @@ import { useContext, useEffect, useState } from "react";
 import DeleteDialog from "@/components/DeleteDialog";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
-import { removeAddon } from "@/store/slices/addonsSlice";
+import { removeAddon, updateAddon } from "@/store/slices/addonsSlice";
 import { addons as Addon } from "@prisma/client";
 
 const EditAddon = () => {
@@ -50,8 +50,6 @@ const EditAddon = () => {
     .filter((item) => addon && item.id === addon.addon_category_id)
     .map((item) => ({ id: item.id, label: item.name }));
 
-  const [selected, setSelected] = useState(selectedAddonCategory);
-
   //update new addon
   const [newAddon, setNewAddon] = useState({
     id: Number(addonId),
@@ -71,14 +69,16 @@ const EditAddon = () => {
     }
   }, [addon, addonId]);
 
-  const updateAddon = async () => {
+  const handleUpdateAddon = async () => {
     try {
-      await fetch(`${config.apiBaseUrl}/addons`, {
+      const response = await fetch(`${config.apiBaseUrl}/addons`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newAddon),
       });
       //  fetchData();
+      const addonnew = await response.json();
+      dispatch(updateAddon(addonnew));
       router.back();
     } catch (err) {
       console.log(err);
@@ -158,7 +158,7 @@ const EditAddon = () => {
 
         <Button
           variant="contained"
-          onClick={updateAddon}
+          onClick={handleUpdateAddon}
           sx={{ width: "fit-content", mt: 2 }}
         >
           Update

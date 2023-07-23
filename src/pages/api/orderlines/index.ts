@@ -7,14 +7,14 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "PUT") {
-    const { itemId, status } = req.body;
-    const isValid = itemId.length && status;
+    const { cartId, status } = req.body;
+    const isValid = cartId.length && status;
     if (!isValid) return res.status(400).send("Bad request");
     await prisma.orderlines.updateMany({
       data: {
         status,
       },
-      where: { cart_id: itemId },
+      where: { cart_id: cartId },
     });
     return res.send(200);
   }

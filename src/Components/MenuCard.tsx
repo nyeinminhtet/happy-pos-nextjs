@@ -18,7 +18,13 @@ const MenuCard = ({ menu, href }: Props) => {
         marginBottom: "20px",
       }}
     >
-      <Card sx={{ width: 250, height: 250, py: 2 }}>
+      <Card
+        sx={{
+          width: 250,
+          height: 250,
+          py: 2,
+        }}
+      >
         {menu.acess_url && (
           <CardMedia
             sx={{ height: 180, backgroundSize: "contain" }}

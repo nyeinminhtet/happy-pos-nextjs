@@ -27,7 +27,7 @@ import MenuCard from "@/components/MenuCard";
 import RemoveMenuFromMenuCategory from "./RemoveMenu";
 import DeleteDialog from "@/components/DeleteDialog";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { appData } from "@/store/slices/appSlice";
+import { appData, fetchAppData } from "@/store/slices/appSlice";
 import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";
 import { removeMenuCategory } from "@/store/slices/menuCategoriesSlice";
 
@@ -89,6 +89,7 @@ const EditMenuCategories = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newMenuCategory),
     });
+    dispatch(fetchMenusMenuCategoriesLocations(selectedlocation));
     route.back();
     //  fetchData();
   };
@@ -195,26 +196,6 @@ const EditMenuCategories = () => {
           Menus
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-          {/* <Autocomplete
-            sx={{ minWidth: 300, mr: 3 }}
-            defaultValue={selectedMenu}
-            isOptionEqualToValue={(option, value) => option.id === value.id}
-            onChange={(evt, value) => {
-             setSelectedMenu(value);
-            }}
-            clearOnBlur
-            optaions={menus.filter((item)=>menuIds.includes(item.id))}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Add menu to this category"
-                InputProps={{
-                  ...params.InputProps,
-                  type: "search",
-                }}
-              />
-            )}
-          /> */}
           <Autocomplete
             sx={{ minWidth: 300, mr: 3 }}
             defaultValue={selectedMenu}

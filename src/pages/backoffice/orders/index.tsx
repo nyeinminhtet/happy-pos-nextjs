@@ -7,7 +7,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Layout from "@/components/BackofficeLayout";
-import { BackofficeContext } from "@/Contents/BackofficeContext";
 import { getLocationId, getQuantityByOrderId } from "@/utils";
 import {
   orders as Order,
@@ -30,9 +29,9 @@ import {
   Typography,
 } from "@mui/material";
 import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
-import { config } from "@/config/config";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import { updateOrderlineStatus } from "@/store/slices/orderlinesSlice";
 
 interface Props {
   menus: Menu[];
@@ -43,6 +42,7 @@ interface Props {
 }
 const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
   const [open, setOpen] = useState(false);
+  const dispatch = useAppDispatch();
 
   const renderMenusAndAddonForOrder = () => {
     const orderlineItemsIds = orderlines.map((item) => item.cart_id);
@@ -92,19 +92,27 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
           ];
         }
       });
-      return { menu: orderlineMenus, addonsWithCategory, status, quantity };
+      return {
+        menu: orderlineMenus,
+        addonsWithCategory,
+        status,
+        quantity,
+        cartId,
+      };
     });
 
+    //update orderline status
+
     const handleUpdateOrderStatus = async (
+      cartId: string,
       evt: SelectChangeEvent<"PENDING" | "PREPARING" | "COMPLETE" | "REJECTED">
     ) => {
-      const { order_id: orderId, menus_id: menuId } = orderlines[0];
-      await fetch(`${config.apiBaseUrl}/order`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId, menuId, status: evt.target.value }),
-      });
-      // fetchData();
+      dispatch(
+        updateOrderlineStatus({
+          cartId,
+          status: evt.target.value as OrderStatus,
+        })
+      );
     };
 
     return orderlineMenus.map((item, index) => (
@@ -113,7 +121,7 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
           elevation={3}
           sx={{
             width: 250,
-            height: 300,
+            height: 350,
             p: 2,
           }}
         >
@@ -197,12 +205,22 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
                   <Select
                     value={item.status}
                     label="Status"
-                    onChange={handleUpdateOrderStatus}
+                    onChange={(evt) =>
+                      handleUpdateOrderStatus(item.cartId, evt)
+                    }
                   >
-                    <MenuItem value={OrderStatus.PENDING}>Pending</MenuItem>
-                    <MenuItem value={OrderStatus.PREPARING}>Preparing</MenuItem>
-                    <MenuItem value={OrderStatus.COMPLETE}>Complete</MenuItem>
-                    <MenuItem value={OrderStatus.REJECTED}>Reject</MenuItem>
+                    <MenuItem value={OrderStatus.PENDING}>
+                      {OrderStatus.PENDING}
+                    </MenuItem>
+                    <MenuItem value={OrderStatus.PREPARING}>
+                      {OrderStatus.PREPARING}
+                    </MenuItem>
+                    <MenuItem value={OrderStatus.COMPLETE}>
+                      {OrderStatus.COMPLETE}
+                    </MenuItem>
+                    <MenuItem value={OrderStatus.REJECTED}>
+                      {OrderStatus.REJECTED}
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -253,7 +271,7 @@ const Orders = () => {
   };
   return (
     <Layout title="Orders">
-      <TableContainer component={Paper} sx={{ maxHeight: "100%" }}>
+      <TableContainer component={Paper} sx={{ height: "100%" }}>
         <Table sx={{ minWidth: 650 }} stickyHeader>
           <TableHead>
             <TableRow>

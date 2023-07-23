@@ -85,7 +85,7 @@ const AddonCategories = () => {
             New Addon_Category
           </Button>
         </Box>
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
           {validAddonCategories.map((item, index) => (
             <ItemCart
               key={index}

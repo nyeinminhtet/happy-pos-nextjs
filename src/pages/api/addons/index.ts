@@ -7,9 +7,9 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     const { name, price, addonCategoryId } = req.body;
-    const isValid = name && price && addonCategoryId;
+    const isValid = name && addonCategoryId;
 
-    if (!isValid)
+    if (!isValid && !(price >= 0))
       return res.status(401).json({ message: "You need to more information" });
 
     const adddonsCreate = await prisma.addons.create({
@@ -23,7 +23,7 @@ export default async function handler(
   } else if (req.method === "PUT") {
     const { id, name, price, addonCategoryId } = req.body;
     const isValid = !id && !name;
-    if (!isValid) return res.status(400).json({ message: "bad request!" });
+    if (isValid) return res.status(400).json({ message: "bad request!" });
     const addonsUpdate = await prisma.addons.update({
       where: {
         id,
