@@ -100,7 +100,7 @@ export const selectAddons = (state: RootState) => state.addons.items;
 export const selectAddonCategories = (state: RootState) =>
   state.addonCategories.items;
 export const selectLocations = (state: RootState) => state.locations.items;
-export const selectCompany = (state: RootState) => state.company.item;
+export const selectCompany = (state: RootState) => state.company.items;
 export const selectTables = (state: RootState) => state.tables.items;
 export const selectOrders = (state: RootState) => state.orders.items;
 export const selectOrderlines = (state: RootState) => state.orderlines.items;

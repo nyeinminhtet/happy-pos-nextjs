@@ -14,14 +14,23 @@ import { companies as Company, locations as Locations } from "@prisma/client";
 import { config } from "@/config/config";
 import Layout from "@/Components/BackofficeLayout";
 import { getLocationId } from "@/utils";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import { updateCompany } from "@/store/slices/companySlice";
 
 const Setting = () => {
   const { locations, company } = useAppSelector(appData);
+
+  const dispatch = useAppDispatch();
+
   const [selectedLocation, setSelectedLocation] = useState<
     Locations | undefined
   >();
+
+  useEffect(() => {
+    console.log(company);
+  }, []);
+
   const [companyInfo, setCompanyInfo] = useState({
     name: "",
     address: "",
@@ -35,26 +44,30 @@ const Setting = () => {
         setSelectedLocation(locations[0]);
       } else {
         const selectedLocation = locations.find(
-          (location) => String(location.id) === selectedLocationId
+          (location: Locations) => String(location.id) === selectedLocationId
         );
         setSelectedLocation(selectedLocation);
       }
     }
     if (company)
-      //@ts-ignore
-      setCompanyInfo({ name: company.name, address: company.address });
+      setCompanyInfo({
+        id: company.id,
+        name: company.name,
+        //@ts-ignore
+        address: company.address,
+      });
   }, [locations, company]);
 
   const handleOnChange = (e: SelectChangeEvent<number>) => {
     localStorage.setItem("locationId", String(e.target.value));
     const selectedLocation = locations.find(
-      (location) => location.id === e.target.value
+      (location: Locations) => location.id === e.target.value
     );
     setSelectedLocation(selectedLocation);
   };
 
   //update company info
-  const updateCompany = async () => {
+  const handleUpdateCompany = async () => {
     try {
       const response = await fetch(`${config.apiBaseUrl}/setting/companies`, {
         method: "PUT",
@@ -63,6 +76,8 @@ const Setting = () => {
         },
         body: JSON.stringify(companyInfo),
       });
+      const data = await response.json();
+      dispatch(updateCompany(data));
     } catch (error) {
       console.log(error);
     }
@@ -130,7 +145,7 @@ const Setting = () => {
             bgcolor: "#4E6C50",
             ":hover": { bgcolor: "#820000" },
           }}
-          onClick={updateCompany}
+          onClick={handleUpdateCompany}
         >
           Update
         </Button>
