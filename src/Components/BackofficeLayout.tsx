@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import { useAppDispatch } from "@/store/hooks";
-import { fetchAppData } from "@/store/slices/appSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { appData, fetchAppData } from "@/store/slices/appSlice";
 import { useEffect } from "react";
 import TopBar from "./TopBar";
 import SideBar from "./SideBar";
@@ -12,10 +12,13 @@ type Props = {
 
 const BackofficeLayout = (props: Props) => {
   const dispatch = useAppDispatch();
+  const { init } = useAppSelector((state) => state.app);
 
   useEffect(() => {
-    dispatch(fetchAppData({ locationId: undefined }));
-  }, []);
+    if (!init) {
+      dispatch(fetchAppData({ locationId: undefined }));
+    }
+  }, [init, dispatch]);
 
   return (
     <Box sx={{ width: "100%" }}>

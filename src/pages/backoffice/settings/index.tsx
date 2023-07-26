@@ -27,10 +27,6 @@ const Setting = () => {
     Locations | undefined
   >();
 
-  useEffect(() => {
-    console.log(company);
-  }, []);
-
   const [companyInfo, setCompanyInfo] = useState({
     name: "",
     address: "",

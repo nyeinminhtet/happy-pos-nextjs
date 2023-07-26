@@ -1,5 +1,6 @@
 import { config } from "@/config/config";
 import {
+  PayloadAction,
   createAsyncThunk,
   createSelector,
   createSlice,
@@ -20,11 +21,13 @@ import { getLocationId } from "@/utils";
 
 interface AppState {
   isloading: boolean;
+  init: boolean;
   error: Error | null;
 }
 
 const initialState: AppState = {
   isloading: false,
+  init: false,
   error: null,
 };
 
@@ -68,6 +71,7 @@ export const fetchAppData = createAsyncThunk(
       setMenusMenuCategoriesLocations(menusMenuCategoriesLocations)
     );
     thunkAPI.dispatch(setApploading(false));
+    thunkAPI.dispatch(setInit(true));
     const selectedLocationId = getLocationId();
     if (!selectedLocationId) {
       localStorage.setItem("selectedLocationId", locations[0].id);
@@ -79,13 +83,16 @@ export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setApploading: (state, action) => {
+    setApploading: (state, action: PayloadAction<boolean>) => {
       state.isloading = action.payload;
+    },
+    setInit: (state, action: PayloadAction<boolean>) => {
+      state.init = action.payload;
     },
   },
 });
 
-export const { setApploading } = appSlice.actions;
+export const { setApploading, setInit } = appSlice.actions;
 
 export const selectMenuCategories = (state: RootState) =>
   state.menuCategories.items;
