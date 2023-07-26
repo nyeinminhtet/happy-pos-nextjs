@@ -1,4 +1,6 @@
 import { config } from "@/config/config";
+import { useAppDispatch } from "@/store/hooks";
+import { addTable } from "@/store/slices/tablesSlice";
 import { getLocationId } from "@/utils";
 import {
   Dialog,
@@ -16,6 +18,7 @@ interface Props {
 
 const CreateTable = ({ open, setOpen }: Props) => {
   const selectedLocationId = getLocationId();
+  const dispatch = useAppDispatch();
 
   const [newTable, setNewTable] = useState({
     name: "",
@@ -25,7 +28,7 @@ const CreateTable = ({ open, setOpen }: Props) => {
   const createNewTable = async () => {
     const isValid = newTable.name;
     if (!isValid) return alert("Please enter table name");
-    await fetch(`${config.apiBaseUrl}/tables`, {
+    const response = await fetch(`${config.apiBaseUrl}/tables`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,6 +36,8 @@ const CreateTable = ({ open, setOpen }: Props) => {
       body: JSON.stringify(newTable),
     });
     // fetchData();
+    const data = await response.json();
+    dispatch(addTable(data));
     setNewTable({ name: "", locationId: selectedLocationId });
     setOpen(false);
   };
