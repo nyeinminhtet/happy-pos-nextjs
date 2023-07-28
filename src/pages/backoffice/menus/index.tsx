@@ -13,12 +13,12 @@ import NewMenu from "./NewMenu";
 import MenuCard from "@/Components/MenuCard";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import Loading from "@/Components/Loading";
 
 const Menus = () => {
-  const { menus, menusMenuCategoriesLocations, menuCategories } =
+  const { menus, menusMenuCategoriesLocations, menuCategories, isLoading } =
     useAppSelector(appData);
   const [open, setOpen] = useState(false);
-  const locationId = getLocationId() as string;
   const selectedLocation = getLocationId() as string;
   const [selectedMenuCategory, setSelectedMenuCategory] = useState<number>();
   const [value, setValue] = useState(0);
@@ -39,11 +39,13 @@ const Menus = () => {
     if (validCategory.length) {
       setSelectedMenuCategory(validCategory[0].id);
     }
-  }, [menuCategories]);
+  }, [menuCategories, validCategory]);
 
+  if (isLoading) return <Loading />;
   if (!validCategory) return null;
+
   return (
-    <Layout title="menus">
+    <Box>
       <Box
         sx={{
           width: "100%",
@@ -98,14 +100,8 @@ const Menus = () => {
               position: "fixed",
               bottom: 0,
               right: 10,
-              backgroundColor: "#4E6C50",
               width: "fit-content",
-              color: "#E8F6EF",
               mb: 2,
-              ":hover": {
-                bgcolor: "#820000",
-                color: "white",
-              },
             }}
           >
             New menu
@@ -122,7 +118,7 @@ const Menus = () => {
         </Box>
       </Box>
       <NewMenu open={open} setOpen={setOpen} />
-    </Layout>
+    </Box>
   );
 };
 

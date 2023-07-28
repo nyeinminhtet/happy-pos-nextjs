@@ -1,6 +1,13 @@
-import Layout from "@/Components/BackofficeLayout";
+import { useAppSelector } from "@/store/hooks";
+import Orders from "./orders";
+import { appData } from "@/store/slices/appSlice";
+import Loading from "@/Components/Loading";
 
 const App = () => {
-  return <Layout title="Backoffice">Backoffice for SarrMal</Layout>;
+  const { isLoading } = useAppSelector(appData);
+
+  if (isLoading) return <Loading />;
+
+  return <Orders />;
 };
 export default App;

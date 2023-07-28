@@ -21,13 +21,13 @@ const Quantity = ({ value, decrease, increase }: Props) => {
     >
       <IconButton
         disabled={value === 1 ? true : false}
-        color="info"
+        color="primary"
         onClick={decrease}
       >
         <RemoveCircleIcon />
       </IconButton>
       <Typography variant="h5">{value}</Typography>
-      <IconButton color="info" onClick={increase}>
+      <IconButton color="primary" onClick={increase}>
         <AddCircleIcon />
       </IconButton>
     </Box>

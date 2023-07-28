@@ -8,10 +8,11 @@ import CategoryIcon from "@mui/icons-material/Category";
 import ItemCart from "@/Components/ItemCart";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import Loading from "@/Components/Loading";
 
 const Menu_Categories = () => {
   const [open, setOpen] = useState(false);
-  const { menuCategories, menusMenuCategoriesLocations, locations } =
+  const { menuCategories, menusMenuCategoriesLocations, isLoading } =
     useAppSelector(appData);
   const selectedLocationId = getLocationId() as string;
 
@@ -30,8 +31,10 @@ const Menu_Categories = () => {
     ).length;
   };
 
+  if (isLoading) return <Loading />;
+
   return (
-    <Layout title="Menu-Categories">
+    <Box>
       <Box>
         <Box
           sx={{
@@ -45,14 +48,9 @@ const Menu_Categories = () => {
             variant="contained"
             startIcon={<AddIcon />}
             sx={{
-              backgroundColor: "#4E6C50",
               width: "fit-content",
               color: "#E8F6EF",
               mb: 2,
-              ":hover": {
-                bgcolor: "#820000", // theme.palette.primary.main
-                color: "white",
-              },
             }}
           >
             New menuCategory
@@ -71,7 +69,7 @@ const Menu_Categories = () => {
         </Box>
       </Box>
       <CreateMenuCategory open={open} setOpen={setOpen} />
-    </Layout>
+    </Box>
   );
 };
 

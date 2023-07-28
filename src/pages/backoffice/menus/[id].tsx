@@ -19,9 +19,11 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { removeMenu, updateMenu } from "@/store/slices/menusSlice";
 import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";
+import Loading from "@/Components/Loading";
 
 const MenuDetails = () => {
-  const { menus, addonCategories, menuAddons } = useAppSelector(appData);
+  const { menus, addonCategories, menuAddons, isLoading } =
+    useAppSelector(appData);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -87,19 +89,16 @@ const MenuDetails = () => {
     router.back();
   };
 
+  if (isLoading) return <Loading />;
   if (!menu) return null;
 
   return (
-    <Layout title="Menu-Details">
+    <Box>
       <Box sx={{ p: 3, display: "flex", flexDirection: "column" }}>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             onClick={() => setOpen(true)}
             variant="contained"
-            sx={{
-              backgroundColor: "#820000",
-              ":hover": { bgcolor: "#820000" },
-            }}
             startIcon={<DeleteIcon />}
           >
             Delete
@@ -149,7 +148,7 @@ const MenuDetails = () => {
         title="menu"
         deleteFun={deleteMenu}
       />
-    </Layout>
+    </Box>
   );
 };
 

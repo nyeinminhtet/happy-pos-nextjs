@@ -70,8 +70,8 @@ const CreateTable = ({ open, setOpen }: Props) => {
             width: "fit-content",
             alignSelf: "flex-end",
             mt: 2,
-            bgcolor: "#820000",
-            ":hover": { bgcolor: "#820000" },
+            // bgcolor: "#820000",
+            // ":hover": { bgcolor: "#820000" },
           }}
         >
           Create

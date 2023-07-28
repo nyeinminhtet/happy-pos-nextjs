@@ -1,6 +1,4 @@
-import Layout from "@/Components/BackofficeLayout";
 import DeleteIcon from "@mui/icons-material/Delete";
-
 import {
   Autocomplete,
   Box,
@@ -9,10 +7,9 @@ import {
   FormControlLabel,
   Switch,
   TextField,
-  styled,
 } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { config } from "@/config/config";
@@ -20,8 +17,12 @@ import { getLocationId, getMenusByLocationId } from "@/utils";
 import DeleteDialog from "@/Components/DeleteDialog";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
-import { removeAddonCategory } from "@/store/slices/addonCategoriesSlice";
+import {
+  removeAddonCategory,
+  updateAddonCategory,
+} from "@/store/slices/addonCategoriesSlice";
 import { addon_categories as AddonCategory } from "@prisma/client";
+import Loading from "@/Components/Loading";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -31,14 +32,18 @@ const EditAddonCategories = () => {
   const addonCategoryId = route.query.id as string;
   const [open, setOpen] = useState(false);
   const selectedLocationId = getLocationId() as string;
-  const { addonCategories, menus, menusMenuCategoriesLocations, menuAddons } =
-    useAppSelector(appData);
+  const {
+    addonCategories,
+    menus,
+    menusMenuCategoriesLocations,
+    menuAddons,
+    isLoading,
+  } = useAppSelector(appData);
+  const dispatch = useAppDispatch();
 
   const addonCategory = addonCategories.find(
     (item) => item.id === parseInt(addonCategoryId, 10)
   ) as AddonCategory;
-
-  const dispatch = useAppDispatch();
 
   //get menus from location
   const locationMenus = getMenusByLocationId(
@@ -66,13 +71,15 @@ const EditAddonCategories = () => {
   //to connect with menus
   const [connectedMenus, setConnectedMenus] = useState(selectedMenus);
 
-  const updateAddonCategory = async () => {
-    await fetch(`${config.apiBaseUrl}/addoncategories`, {
+  const HandleUpdateAddonCategory = async () => {
+    const response = await fetch(`${config.apiBaseUrl}/addoncategories`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newAddonCategory),
     });
     //  fetchData();
+    const data = await response.json();
+    dispatch(updateAddonCategory(data));
     route.back();
   };
 
@@ -83,20 +90,21 @@ const EditAddonCategories = () => {
     });
     // fetchData();
     setOpen(false);
-    dispatch(removeAddonCategory(addonCategory));
+    addonCategory && dispatch(removeAddonCategory(addonCategory));
     route.back();
   };
+
+  if (isLoading) return <Loading />;
   if (!addonCategory) return null;
 
   return (
-    <Layout title="Edit addon category">
+    <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Button
           onClick={() => setOpen(true)}
           variant="contained"
           sx={{
-            backgroundColor: "#820000",
-            ":hover": { bgcolor: "#820000" },
+            backgroundColor: "#E21818",
           }}
           startIcon={<DeleteIcon />}
         >
@@ -105,6 +113,7 @@ const EditAddonCategories = () => {
       </Box>
       <Box sx={{ p: 3, display: "flex", flexDirection: "column" }}>
         <TextField
+          label="Name"
           defaultValue={addonCategory.name}
           sx={{ mb: 2, width: "50%" }}
           onChange={(v) =>
@@ -137,27 +146,27 @@ const EditAddonCategories = () => {
               {option.label}
             </li>
           )}
-          style={{ width: 500 }}
+          style={{ width: 460 }}
           renderInput={(params) => <TextField {...params} label="menus" />}
         />
         <FormControlLabel
-          sx={{ m: 2 }}
+          sx={{ my: 2 }}
           control={
-            <Android12Switch
-              checked={newAddonCategory.isRequire ? true : false}
-              onChange={(e) => {
+            <Switch
+              defaultChecked={newAddonCategory?.isRequire ? true : false}
+              onChange={(evt) =>
                 setNewAddonCategory({
                   ...newAddonCategory,
-                  isRequire: e.target.checked,
-                });
-              }}
+                  isRequire: evt.target.checked,
+                })
+              }
             />
           }
-          label="require"
+          label="required"
         />
         <Button
           variant="contained"
-          onClick={updateAddonCategory}
+          onClick={HandleUpdateAddonCategory}
           sx={{ width: "fit-content", mt: 3 }}
         >
           Update
@@ -169,41 +178,8 @@ const EditAddonCategories = () => {
         title="AddonCategory"
         deleteFun={deleteAddonCategory}
       />
-    </Layout>
+    </Box>
   );
 };
 
 export default EditAddonCategories;
-
-const Android12Switch = styled(Switch)(({ theme }) => ({
-  padding: 8,
-  "& .MuiSwitch-track": {
-    borderRadius: 22 / 2,
-    "&:before, &:after": {
-      content: '""',
-      position: "absolute",
-      top: "50%",
-      transform: "translateY(-50%)",
-      width: 16,
-      height: 16,
-    },
-    "&:before": {
-      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main)
-      )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
-      left: 12,
-    },
-    "&:after": {
-      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main)
-      )}" d="M19,13H5V11H19V13Z" /></svg>')`,
-      right: 12,
-    },
-  },
-  "& .MuiSwitch-thumb": {
-    boxShadow: "none",
-    width: 16,
-    height: 16,
-    margin: 2,
-  },
-}));

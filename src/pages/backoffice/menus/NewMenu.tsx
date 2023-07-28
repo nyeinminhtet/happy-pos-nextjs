@@ -184,9 +184,9 @@ const NewMenu = ({ open, setOpen }: Props) => {
                 sx={{
                   mt: 2,
                   width: "fit-content",
-                  bgcolor: "#820000",
-                  color: "white",
-                  ":hover": { bgcolor: "#820000" },
+                  // bgcolor: "#820000",
+                  // color: "white",
+                  // ":hover": { bgcolor: "#820000" },
                 }}
               >
                 Create Menu

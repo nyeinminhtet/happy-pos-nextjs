@@ -3,10 +3,11 @@ import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { Provider } from "react-redux";
 import { store } from "@/store";
-import { getLocationId } from "@/utils";
-import { useEffect } from "react";
-import { fetchAppData } from "@/store/slices/appSlice";
+import { ThemeProvider } from "@mui/material";
 import { Session } from "next-auth";
+import { theme } from "@/utils/theme";
+import Layout from "@/Components/Layout";
+import Head from "next/head";
 
 type CustomeAppProps = AppProps & { session: Session };
 
@@ -16,10 +17,19 @@ export default function App({
   session,
 }: CustomeAppProps) {
   return (
-    <SessionProvider session={pageProps.session}>
-      <Provider store={store}>
-        <Component {...pageProps} />
-      </Provider>
-    </SessionProvider>
+    <>
+      <Head>
+        <title>Sarr Mal</title>
+      </Head>
+      <SessionProvider session={pageProps.session}>
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ThemeProvider>
+        </Provider>
+      </SessionProvider>
+    </>
   );
 }

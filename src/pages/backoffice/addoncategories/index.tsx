@@ -8,15 +8,15 @@ import ItemCart from "@/Components/ItemCart";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import NewAddonCategory from "./NewAddonCategory";
+import Loading from "@/Components/Loading";
 
 const AddonCategories = () => {
   const {
     addonCategories,
     menusMenuCategoriesLocations,
-    menus,
     menuAddons,
-    locations,
     addons,
+    isLoading,
   } = useAppSelector(appData);
 
   const selectedLocationId = getLocationId() as string;
@@ -42,8 +42,10 @@ const AddonCategories = () => {
       .length;
   };
 
+  if (isLoading) return <Loading />;
+
   return (
-    <Layout title="Addon-Categories">
+    <Box>
       <Box>
         <Box
           sx={{
@@ -57,14 +59,9 @@ const AddonCategories = () => {
             variant="contained"
             startIcon={<AddIcon />}
             sx={{
-              backgroundColor: "#4E6C50",
               width: "fit-content",
               color: "#E8F6EF",
               mb: 2,
-              ":hover": {
-                bgcolor: "#820000", // theme.palette.primary.main
-                color: "white",
-              },
             }}
           >
             New Addon_Category
@@ -83,7 +80,7 @@ const AddonCategories = () => {
         </Box>
       </Box>
       <NewAddonCategory open={open} setOpen={setOpen} />
-    </Layout>
+    </Box>
   );
 };
 

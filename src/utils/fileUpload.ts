@@ -15,7 +15,7 @@ const s3Client = new S3Client({
   },
 });
 
-export const querCodeSend = async (locationId: number, tableId: number) => {
+export const qrCodeSend = async (locationId: number, tableId: number) => {
   const qrImageData = await QRCode.toDataURL(
     generateLinkForQRCode(locationId, tableId)
   );
@@ -24,7 +24,7 @@ export const querCodeSend = async (locationId: number, tableId: number) => {
     Key: `happy-pos/qrcode/jey_qrcode/locationId-${locationId}-tableId-${tableId}.png`,
     ACL: "public-read",
     Body: Buffer.from(
-      qrImageData.replace(/^data:image\/w+;base64,/, ""),
+      qrImageData.replace(/^data:image\/\w+;base64,/, ""),
       "base64"
     ),
   };

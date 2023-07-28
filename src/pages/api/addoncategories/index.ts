@@ -30,6 +30,7 @@ export default async function handler(
     return res.status(200).send(newAddonCategory);
   } else if (req.method === "PUT") {
     const { name, isRequire, menuIds, id } = req.body;
+
     const isValid = name || menuIds || isRequire;
     if (!isValid) return res.status(400).json({ message: "bad request!" });
     const updateAddonCategory = await prisma.addon_categories.update({

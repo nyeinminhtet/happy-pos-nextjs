@@ -8,9 +8,10 @@ import NewLocation from "./NewLocation";
 import ItemCart from "@/Components/ItemCart";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import Loading from "@/Components/Loading";
 
 const LocationsComp = () => {
-  const { locations, company } = useAppSelector(appData);
+  const { locations, isLoading } = useAppSelector(appData);
   const [open, setOpen] = useState(false);
 
   const [updateLocations, setUpdateLocations] =
@@ -20,22 +21,19 @@ const LocationsComp = () => {
     setUpdateLocations(locations);
   }, [locations]);
 
+  if (isLoading) return <Loading />;
+
   return (
-    <Layout title="Locations">
+    <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Button
           onClick={() => setOpen(true)}
           variant="contained"
           startIcon={<AddIcon />}
           sx={{
-            backgroundColor: "#4E6C50",
             width: "fit-content",
             color: "#E8F6EF",
             mb: 2,
-            ":hover": {
-              bgcolor: "#820000", // theme.palette.primary.main
-              color: "white",
-            },
           }}
         >
           New menu location
@@ -54,7 +52,7 @@ const LocationsComp = () => {
         })}
       </Box>
       <NewLocation open={open} setOpen={setOpen} />
-    </Layout>
+    </Box>
   );
 };
 

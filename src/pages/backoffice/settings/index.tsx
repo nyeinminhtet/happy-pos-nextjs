@@ -17,9 +17,10 @@ import { getLocationId } from "@/utils";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { updateCompany } from "@/store/slices/companySlice";
+import Loading from "@/Components/Loading";
 
 const Setting = () => {
-  const { locations, company } = useAppSelector(appData);
+  const { locations, company, isLoading } = useAppSelector(appData);
 
   const dispatch = useAppDispatch();
 
@@ -79,8 +80,10 @@ const Setting = () => {
     }
   };
 
+  if (isLoading) return <Loading />;
+
   return (
-    <Layout title="Setting">
+    <Box>
       <Box
         sx={{
           display: "flex",
@@ -138,15 +141,13 @@ const Setting = () => {
           sx={{
             mt: 2,
             width: "fit-content",
-            bgcolor: "#4E6C50",
-            ":hover": { bgcolor: "#820000" },
           }}
           onClick={handleUpdateCompany}
         >
           Update
         </Button>
       </Box>
-    </Layout>
+    </Box>
   );
 };
 

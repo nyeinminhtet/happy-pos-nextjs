@@ -23,13 +23,22 @@ export const addonCategoriesSlice = createSlice({
     addAddonCategory: (state, action: PayloadAction<AddonCategory>) => {
       state.items = [...state.items, action.payload];
     },
+    updateAddonCategory: (state, action: PayloadAction<AddonCategory>) => {
+      state.items = state.items.map((item) =>
+        item.id === action.payload.id ? action.payload : item
+      );
+    },
     removeAddonCategory: (state, action: PayloadAction<AddonCategory>) => {
       state.items = state.items.filter((item) => item.id !== action.payload.id);
     },
   },
 });
 
-export const { setAddonCategories, addAddonCategory, removeAddonCategory } =
-  addonCategoriesSlice.actions;
+export const {
+  setAddonCategories,
+  addAddonCategory,
+  removeAddonCategory,
+  updateAddonCategory,
+} = addonCategoriesSlice.actions;
 
 export default addonCategoriesSlice.reducer;

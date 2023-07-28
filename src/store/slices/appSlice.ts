@@ -72,10 +72,7 @@ export const fetchAppData = createAsyncThunk(
     );
     thunkAPI.dispatch(setApploading(false));
     thunkAPI.dispatch(setInit(true));
-    const selectedLocationId = getLocationId();
-    if (!selectedLocationId) {
-      localStorage.setItem("selectedLocationId", locations[0].id);
-    }
+    localStorage.setItem("selectedLocationId", locations[0].id);
   }
 );
 
@@ -93,6 +90,7 @@ export const appSlice = createSlice({
 });
 
 export const { setApploading, setInit } = appSlice.actions;
+export const selectApp = (state: RootState) => state.app;
 
 export const selectMenuCategories = (state: RootState) =>
   state.menuCategories.items;
@@ -114,6 +112,7 @@ export const selectOrderlines = (state: RootState) => state.orderlines.items;
 
 export const appData = createSelector(
   [
+    selectApp,
     selectAddonCategories,
     selectAddons,
     selectCompany,
@@ -127,6 +126,7 @@ export const appData = createSelector(
     selectTables,
   ],
   (
+    app,
     addonCategories,
     addons,
     company,
@@ -140,6 +140,7 @@ export const appData = createSelector(
     tables
   ) => {
     return {
+      isLoading: app.isloading,
       addonCategories,
       addons,
       company,

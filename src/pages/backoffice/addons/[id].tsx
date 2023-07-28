@@ -18,14 +18,20 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { removeAddon, updateAddon } from "@/store/slices/addonsSlice";
 import { addons as Addon } from "@prisma/client";
+import Loading from "@/Components/Loading";
 
 const EditAddon = () => {
   const router = useRouter();
   const addonId = router.query.id as string;
   const selectedLocationId = getLocationId() as string;
   const dispatch = useAppDispatch();
-  const { addons, menusMenuCategoriesLocations, menuAddons, addonCategories } =
-    useAppSelector(appData);
+  const {
+    addons,
+    menusMenuCategoriesLocations,
+    menuAddons,
+    addonCategories,
+    isLoading,
+  } = useAppSelector(appData);
 
   const addon = addons.find(
     (addon) => addon.id === parseInt(addonId, 10)
@@ -95,16 +101,16 @@ const EditAddon = () => {
     setOpen(false);
     router.back();
   };
+
+  if (isLoading) return <Loading />;
+  if (!addon) return null;
+
   return (
-    <Layout title="Edit Addon">
+    <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Button
           onClick={() => setOpen(true)}
           variant="contained"
-          sx={{
-            backgroundColor: "#820000",
-            ":hover": { bgcolor: "#820000" },
-          }}
           startIcon={<DeleteIcon />}
         >
           Delete
@@ -170,7 +176,7 @@ const EditAddon = () => {
         title="Addon"
         deleteFun={deleteAddon}
       />
-    </Layout>
+    </Box>
   );
 };
 

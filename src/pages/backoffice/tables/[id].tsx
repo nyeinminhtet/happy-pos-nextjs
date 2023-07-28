@@ -1,4 +1,5 @@
 import Layout from "@/Components/BackofficeLayout";
+import Loading from "@/Components/Loading";
 import { config } from "@/config/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
@@ -11,8 +12,7 @@ import { useState } from "react";
 const EditTable = () => {
   const router = useRouter();
   const tableId = router.query.id as string;
-  const selectedLocationId = getLocationId() as string;
-  const { tables } = useAppSelector(appData);
+  const { tables, isLoading } = useAppSelector(appData);
   const dispatch = useAppDispatch();
 
   const table = tables.find((table) => table.id === Number(tableId));
@@ -29,6 +29,8 @@ const EditTable = () => {
     dispatch(updateTable(tableUpdated));
     router.back();
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <Layout title="Edit Table">

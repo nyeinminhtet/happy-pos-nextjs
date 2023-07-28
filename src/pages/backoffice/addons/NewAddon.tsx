@@ -111,11 +111,11 @@ const NewAddon = ({ open, setOpen }: Props) => {
           sx={{
             width: "fit-content",
             alignSelf: "flex-end",
-            bgcolor: "#820000",
-            color: "white",
-            ":hover": {
-              bgcolor: "#820000",
-            },
+            // bgcolor: "#820000",
+            // color: "white",
+            // ":hover": {
+            //   bgcolor: "#820000",
+            // },
           }}
         >
           Create

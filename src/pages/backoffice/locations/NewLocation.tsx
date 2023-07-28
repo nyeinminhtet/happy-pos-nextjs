@@ -75,11 +75,7 @@ const NewLocation: React.FC<Props> = ({ open, setOpen }) => {
             setNewLocation({ ...newLocation, address: evt.target.value });
           }}
         />
-        <Button
-          variant="contained"
-          onClick={createLocation}
-          sx={{ bgcolor: "#820000", ":hover": { bgcolor: "#820000" } }}
-        >
+        <Button variant="contained" onClick={createLocation}>
           Create
         </Button>
       </DialogContent>

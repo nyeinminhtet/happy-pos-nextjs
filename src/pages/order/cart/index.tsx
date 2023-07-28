@@ -37,8 +37,12 @@ const Review = () => {
             alignItems: "center",
           }}
         >
-          <Typography>{addon.name}</Typography>
-          <Typography>{addon.price}</Typography>
+          <Typography color={"primary"} sx={{ fontStyle: "italic" }}>
+            {addon.name}
+          </Typography>
+          <Typography color={"primary"} sx={{ fontStyle: "italic" }}>
+            {addon.price}
+          </Typography>
         </Box>
       );
     });
@@ -64,7 +68,6 @@ const Review = () => {
       }
     );
     const orderCreated = await data.json();
-    console.log(orderCreated);
     dispatch(addOrder(orderCreated));
     router.push({
       pathname: `/order/activeCart/${orderCreated.id}`,
@@ -74,83 +77,96 @@ const Review = () => {
   if (!items.length) return null;
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        p: 3,
-      }}
-    >
+    <Box>
       <Box
         sx={{
-          width: { xs: "100%", md: "500px" },
+          display: "flex",
+          justifyContent: "center",
+          p: 3,
+          bgcolor: "#98DFD6",
+          borderRadius: 15,
+          mx: 3,
         }}
       >
-        <Typography variant="h5" sx={{ textAlign: "center", mb: 3 }}>
-          Review your order
-        </Typography>
-        {items.map((cartItem, index) => {
-          const { menu, addons, quantity } = cartItem;
-          return (
-            <Box key={index}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Avatar
-                  sx={{
-                    width: 30,
-                    height: 30,
-                    mr: 1,
-                    backgroundColor: "grey",
-                  }}
-                >
-                  {quantity}x
-                </Avatar>
+        <Box
+          sx={{
+            width: { xs: "100%", md: "500px" },
+          }}
+        >
+          <Typography
+            variant="h5"
+            color="primary"
+            sx={{ textAlign: "center", mb: 3 }}
+          >
+            Review your order
+          </Typography>
+          {items.map((cartItem, index) => {
+            const { menu, addons, quantity } = cartItem;
+            return (
+              <Box key={index}>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <Avatar
+                    sx={{
+                      width: 30,
+                      height: 30,
+                      mr: 1,
+                      backgroundColor: "#1B9C85",
+                    }}
+                  >
+                    {quantity}x
+                  </Avatar>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography variant="h6" color="black">
+                      {menu.name}
+                    </Typography>
+                    <Typography variant="h6" color="primary">
+                      {menu.price}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box sx={{ pl: 6 }}>{addons && renderAddons(addons)}</Box>
                 <Box
                   sx={{
                     display: "flex",
-                    justifyContent: "space-between",
-                    width: "100%",
+                    justifyContent: "flex-end",
+                    mb: 3,
+                    mt: 1,
                   }}
                 >
-                  <Typography>{menu.name}</Typography>
-                  <Typography>{menu.price}</Typography>
+                  <DeleteIcon
+                    sx={{ mr: 2, cursor: "pointer" }}
+                    onClick={() => removeCartItems(cartItem)}
+                  />
+                  <EditIcon
+                    sx={{ cursor: "pointer" }}
+                    onClick={() =>
+                      router.push({
+                        pathname: `menuUpdate/${cartItem.id}`,
+                        query: router.query,
+                      })
+                    }
+                  />
                 </Box>
               </Box>
-              <Box sx={{ pl: 6 }}>{addons && renderAddons(addons)}</Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  mb: 3,
-                  mt: 1,
-                }}
-              >
-                <DeleteIcon
-                  sx={{ mr: 2, cursor: "pointer" }}
-                  onClick={() => removeCartItems(cartItem)}
-                />
-                <EditIcon
-                  sx={{ cursor: "pointer" }}
-                  onClick={() =>
-                    router.push({
-                      pathname: `menuUpdate/${cartItem.id}`,
-                      query: router.query,
-                    })
-                  }
-                />
-              </Box>
-            </Box>
-          );
-        })}
-        <Divider />
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-          <Typography variant="h4">
-            Total: {getCartTotalPrice(items)}
-          </Typography>
-        </Box>
-        <Box sx={{ mt: 3, textAlign: "center" }}>
-          <Button variant="contained" onClick={conformOrder}>
-            Confirm order
-          </Button>
+            );
+          })}
+          <Divider />
+          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+            <Typography variant="h4" color="primary">
+              Total: {getCartTotalPrice(items)}
+            </Typography>
+          </Box>
+          <Box sx={{ mt: 3, textAlign: "center" }}>
+            <Button variant="contained" onClick={conformOrder}>
+              Confirm order
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>

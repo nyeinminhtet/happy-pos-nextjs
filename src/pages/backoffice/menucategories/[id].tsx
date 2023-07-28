@@ -18,11 +18,7 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { config } from "@/config/config";
-import {
-  getLocationByMenuCategoryId,
-  getLocationId,
-  getMenusByLocationId,
-} from "@/utils";
+import { getLocationByMenuCategoryId, getLocationId } from "@/utils";
 import MenuCard from "@/Components/MenuCard";
 import RemoveMenuFromMenuCategory from "./RemoveMenu";
 import DeleteDialog from "@/Components/DeleteDialog";
@@ -30,6 +26,7 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { appData, fetchAppData } from "@/store/slices/appSlice";
 import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";
 import { removeMenuCategory } from "@/store/slices/menuCategoriesSlice";
+import Loading from "@/Components/Loading";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -38,8 +35,13 @@ const EditMenuCategories = () => {
   const route = useRouter();
   const menuCategoryId = route.query.id as string;
 
-  const { menuCategories, locations, menusMenuCategoriesLocations, menus } =
-    useAppSelector(appData);
+  const {
+    menuCategories,
+    locations,
+    menusMenuCategoriesLocations,
+    menus,
+    isLoading,
+  } = useAppSelector(appData);
 
   const [open, setOpen] = useState(false);
   const [deletOpen, setDeleteOpne] = useState(false);
@@ -121,17 +123,15 @@ const EditMenuCategories = () => {
     route.back();
   };
 
+  if (isLoading) return <Loading />;
   if (!menuCategory) return null;
+
   return (
-    <Layout title="menu category">
+    <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Button
           onClick={() => setDeleteOpne(true)}
           variant="contained"
-          sx={{
-            backgroundColor: "#820000",
-            ":hover": { bgcolor: "#820000" },
-          }}
           startIcon={<DeleteIcon />}
         >
           Delete
@@ -242,7 +242,7 @@ const EditMenuCategories = () => {
         title="MenuCategory"
         deleteFun={deletefun}
       />
-    </Layout>
+    </Box>
   );
 };
 

@@ -23,7 +23,7 @@ const SideBar = () => {
       <Box
         sx={{
           minWidth: 250,
-          background: "#820000",
+          background: "#00235B",
           border: "1px solid white",
         }}
       >

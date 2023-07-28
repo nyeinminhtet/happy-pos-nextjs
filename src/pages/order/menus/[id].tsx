@@ -12,10 +12,10 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { CartItem } from "@/Types/Types";
 import { addToCart } from "@/store/slices/cartSlice";
+import Image from "next/image";
 
 const DetailMenu = () => {
   const router = useRouter();
-  const query = router.query;
   const menuId = router.query.id as string;
   const { menus, addonCategories, addons, menuAddons } =
     useAppSelector(appData);
@@ -122,12 +122,43 @@ const DetailMenu = () => {
         justifyContent: "center",
         flexDirection: "column",
         p: 4,
+        position: "relative",
+        bgcolor: "#98DFD6",
       }}
     >
-      <Typography variant="h3" gutterBottom>
-        {menu?.name}
-      </Typography>
-      <Box>
+      <Box
+        sx={{
+          position: "sticky",
+          top: 0,
+          bgcolor: "white",
+          zIndex: 100,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-evenly",
+          borderRadius: 5,
+        }}
+      >
+        <Image
+          src={menu?.acess_url || ""}
+          alt="menu-image"
+          width={150}
+          height={150}
+          style={{
+            borderRadius: "50%",
+          }}
+        />
+        <Typography variant="h4" sx={{ textAlign: "center" }} gutterBottom>
+          {menu?.name}
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          mt: 5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <AddonCategories
           validAddonCategories={validAddonCategories}
           validAddons={validAddons}
@@ -139,15 +170,16 @@ const DetailMenu = () => {
           decrease={handleQuantityOnDecrease}
           increase={handleQuantityOnIncrease}
         />
+
+        <Button
+          variant="contained"
+          disabled={isDisable}
+          onClick={handleAddToCart}
+          sx={{ mt: 3, width: "fit-content" }}
+        >
+          Add to Cart
+        </Button>
       </Box>
-      <Button
-        variant="contained"
-        disabled={isDisable}
-        onClick={handleAddToCart}
-        sx={{ mt: 3, width: "fit-content" }}
-      >
-        Add to Cart
-      </Button>
     </Box>
   );
 };

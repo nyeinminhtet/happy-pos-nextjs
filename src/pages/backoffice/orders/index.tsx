@@ -32,6 +32,7 @@ import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { updateOrderlineStatus } from "@/store/slices/orderlinesSlice";
+import Loading from "@/Components/Loading";
 
 interface Props {
   menus: Menu[];
@@ -259,18 +260,20 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
 };
 
 const Orders = () => {
-  const { orders, orderlines, menus, addonCategories, addons } =
+  const { orders, orderlines, menus, addonCategories, addons, isLoading } =
     useAppSelector(appData);
   const selectedLocation = getLocationId();
   const currentLocationOrder = orders.filter(
     (item) => item.location_id === Number(selectedLocation)
   );
-  console.log("orderlines", orderlines);
   const getOrderlinesByOrderId = (orderId: number) => {
     return orderlines.filter((item) => item.order_id === orderId);
   };
+
+  if (isLoading) return <Loading />;
+
   return (
-    <Layout title="Orders">
+    <Box>
       <TableContainer component={Paper} sx={{ height: "100%" }}>
         <Table sx={{ minWidth: 650 }} stickyHeader>
           <TableHead>
@@ -297,7 +300,7 @@ const Orders = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Layout>
+    </Box>
   );
 };
 

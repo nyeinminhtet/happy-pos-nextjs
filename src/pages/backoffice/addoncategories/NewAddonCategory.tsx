@@ -139,10 +139,6 @@ const NewAddonCategory = ({ open, setOpen }: Props) => {
           sx={{
             width: "fit-content",
             alignSelf: "flex-end",
-            bgcolor: "#820000",
-            ":hover": {
-              bgcolor: "#820000",
-            },
           }}
         >
           Create

@@ -11,6 +11,7 @@ import Quantity from "@/Components/Quantity";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { selectCart, updateCart } from "@/store/slices/cartSlice";
+import Image from "next/image";
 
 const MenuUpdate = () => {
   const router = useRouter();
@@ -111,28 +112,49 @@ const MenuUpdate = () => {
         p: 4,
       }}
     >
+      <Image
+        src={cartItem?.menu.acess_url || ""}
+        alt="image"
+        width={150}
+        height={150}
+        style={{
+          borderRadius: "50%",
+          margin: "0 auto",
+        }}
+      />
       <Typography variant="h3" sx={{ mb: 2 }}>
         {cartItem?.menu.name}
       </Typography>
-      <AddonCategories
-        validAddonCategories={validAddonCategories}
-        validAddons={validAddons}
-        selectedAddons={selectedAddons}
-        onChange={(checked, item) => handleAddonSelect(checked, item)}
-      />
-      <Quantity
-        value={quantity}
-        decrease={handleQuantityOnDecrease}
-        increase={handleQuantityOnIncrease}
-      />
-      <Button
-        variant="contained"
-        disabled={isDisable}
-        onClick={handleUpdateCart}
-        sx={{ mt: 3, width: "fit-content" }}
+
+      <Box
+        sx={{
+          mt: 5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
-        Update
-      </Button>
+        <AddonCategories
+          validAddonCategories={validAddonCategories}
+          validAddons={validAddons}
+          selectedAddons={selectedAddons}
+          onChange={(checked, item) => handleAddonSelect(checked, item)}
+        />
+        <Quantity
+          value={quantity}
+          decrease={handleQuantityOnDecrease}
+          increase={handleQuantityOnIncrease}
+        />
+        <Button
+          variant="contained"
+          disabled={isDisable}
+          color="primary"
+          onClick={handleUpdateCart}
+          sx={{ mt: 3, width: "fit-content" }}
+        >
+          Update
+        </Button>
+      </Box>
     </Box>
   );
 };

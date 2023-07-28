@@ -8,9 +8,10 @@ import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import NewAddon from "./NewAddon";
+import Loading from "@/Components/Loading";
 
 const Addons = () => {
-  const { addons, addonCategories, menuAddons, menusMenuCategoriesLocations } =
+  const { addons, isLoading, menuAddons, menusMenuCategoriesLocations } =
     useAppSelector(appData);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -28,8 +29,10 @@ const Addons = () => {
     validAddonCategoryIds.includes(item.addon_category_id)
   );
 
+  if (isLoading) return <Loading />;
+
   return (
-    <Layout title="Addons">
+    <Box>
       <Box
         sx={{
           display: "flex",
@@ -49,14 +52,9 @@ const Addons = () => {
             variant="contained"
             startIcon={<AddIcon />}
             sx={{
-              backgroundColor: "#4E6C50",
               width: "fit-content",
               color: "#E8F6EF",
               mb: 2,
-              ":hover": {
-                bgcolor: "#820000", // theme.palette.primary.main
-                color: "white",
-              },
             }}
           >
             New Addon
@@ -74,7 +72,7 @@ const Addons = () => {
         </Box>
       </Box>
       <NewAddon open={isOpen} setOpen={setIsOpen} />
-    </Layout>
+    </Box>
   );
 };
 

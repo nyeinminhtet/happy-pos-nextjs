@@ -29,7 +29,7 @@ const Hero = () => {
             variant="h2"
           >
             Manage your menu catelog easily with
-            <Typography fontSize={50} color="#820000">
+            <Typography fontSize={50} color="#00235B">
               Sarr Mal
             </Typography>
             and entice your customers with QR code ordering system.
@@ -48,8 +48,8 @@ const Hero = () => {
                 fontSize: { xs: "16px", md: "20px" },
                 mr: 2,
                 width: "fit-content",
-                backgroundColor: "#4C4C6D",
-                ":hover": { bgcolor: "#820000" },
+                // backgroundColor: "#4C4C6D",
+                // ":hover": { bgcolor: "#00235B" },
               }}
             >
               Order App
@@ -59,8 +59,8 @@ const Hero = () => {
               sx={{
                 fontSize: { xs: "16px", md: "20px" },
                 width: "fit-content",
-                backgroundColor: "#4C4C6D",
-                ":hover": { bgcolor: "#820000" },
+                // backgroundColor: "#4C4C6D",
+                // ":hover": { bgcolor: "#00235B" },
               }}
             >
               Backoffice App

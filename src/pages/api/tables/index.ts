@@ -1,6 +1,6 @@
 import { getQrCodeUrl } from "@/utils";
 import { prisma } from "@/utils/db";
-import { querCodeSend } from "@/utils/fileUpload";
+import { qrCodeSend } from "@/utils/fileUpload";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -17,9 +17,8 @@ export default async function handler(
         location_id: Number(locationId),
       },
     });
-    await querCodeSend(locationId, table.id);
+    await qrCodeSend(locationId, table.id);
     const qrCodeUrl = getQrCodeUrl(Number(locationId), table.id);
-    console.log(qrCodeUrl);
     await prisma.tables.update({
       data: { asset_url: qrCodeUrl },
       where: { id: table.id },

@@ -3,7 +3,13 @@ import {
   addon_categories as AddonCategory,
   addons as Addon,
 } from "@prisma/client";
-import { Box, Checkbox, FormControlLabel, Radio } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  Radio,
+  Typography,
+} from "@mui/material";
 
 interface Props {
   addonCategory: AddonCategory;
@@ -25,12 +31,20 @@ const Addons = ({
     <Box>
       {addons.map((item) => {
         return (
-          <Box key={item.id}>
+          <Box
+            key={item.id}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <FormControlLabel
               value={item.name}
               control={
                 addonCategory.is_require ? (
                   <Radio
+                    color="primary"
                     checked={
                       selectedAddons &&
                       selectedAddons.find((addon) => addon.id === item.id)
@@ -41,6 +55,7 @@ const Addons = ({
                   />
                 ) : (
                   <Checkbox
+                    color="primary"
                     checked={
                       selectedAddons.find((addon) => addon.id === item.id)
                         ? true
@@ -52,6 +67,9 @@ const Addons = ({
               }
               label={item.name}
             />
+            <Typography sx={{ fontFamily: "cursive", color: "info" }}>
+              {item.price} K
+            </Typography>
           </Box>
         );
       })}

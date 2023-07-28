@@ -8,6 +8,7 @@ import { signOut, useSession } from "next-auth/react";
 import { getLocationId } from "@/utils";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
+import { useRouter } from "next/router";
 
 interface Props {
   title?: string;
@@ -20,6 +21,21 @@ const TopBar = ({ title = "" }: Props) => {
   const selectedLocation = locations.find(
     (location) => location.id === Number(locationId)
   );
+  const router = useRouter();
+
+  const getTitle = () => {
+    const pathname = router.pathname;
+    if (pathname.includes("orders")) return "Orders";
+    if (pathname.includes("menucategories")) return "Menu Categories";
+    if (pathname.includes("menus")) return "Menus";
+    if (pathname.includes("addoncategories")) return "Adddon Categories";
+    if (pathname.includes("addons")) return "Addons";
+    if (pathname.includes("tables")) return "Tables";
+    if (pathname.includes("locations")) return "Locations";
+    if (pathname.includes("settings")) return "Settings";
+    return "";
+  };
+
   return (
     <Box>
       <AppBar position="sticky">
@@ -27,7 +43,7 @@ const TopBar = ({ title = "" }: Props) => {
           sx={{
             display: "flex",
             alignItems: "center",
-            background: "#820000",
+            background: "#00235B",
           }}
         >
           {data ? (
@@ -48,10 +64,10 @@ const TopBar = ({ title = "" }: Props) => {
                 }}
               >
                 <Typography sx={{ fontSize: "1.5rem", mb: 0 }}>
-                  Sarr-Mell
+                  Sarr-Mal
                 </Typography>
 
-                <Typography sx={{ color: "lightcoral" }}>
+                <Typography sx={{ color: "gray" }}>
                   {selectedLocation ? selectedLocation.name : ""}
                 </Typography>
               </Box>
@@ -61,13 +77,13 @@ const TopBar = ({ title = "" }: Props) => {
                   component="div"
                   sx={{ flexGrow: 1, textAlign: "center" }}
                 >
-                  {title}
+                  {getTitle()}
                 </Typography>
               </Box>
               <Button
                 variant="text"
                 onClick={() => signOut()}
-                sx={{ color: "#E8F6EF" }}
+                sx={{ color: "white" }}
               >
                 Sign out
               </Button>
@@ -78,7 +94,7 @@ const TopBar = ({ title = "" }: Props) => {
               component="div"
               sx={{ flexGrow: 1, textAlign: "center" }}
             >
-              Sarr-Mell
+              Sarr-Mal
             </Typography>
           )}
         </Toolbar>

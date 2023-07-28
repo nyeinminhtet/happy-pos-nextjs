@@ -37,7 +37,7 @@ const Footer = () => {
             </Typography>
           </Box>
           <Box sx={{ width: "350px", position: "relative", mt: 2 }}>
-            <Typography variant="h3" color="#820000" fontWeight="bold">
+            <Typography variant="h3" color="#00235B" fontWeight="bold">
               Sarr Mal
             </Typography>
           </Box>

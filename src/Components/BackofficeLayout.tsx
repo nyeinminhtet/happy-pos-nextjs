@@ -4,6 +4,7 @@ import { appData, fetchAppData } from "@/store/slices/appSlice";
 import { useEffect } from "react";
 import TopBar from "./TopBar";
 import SideBar from "./SideBar";
+import { useSession } from "next-auth/react";
 
 type Props = {
   title?: string;
@@ -12,6 +13,7 @@ type Props = {
 
 const BackofficeLayout = (props: Props) => {
   const dispatch = useAppDispatch();
+  const { data } = useSession();
   const { init } = useAppSelector((state) => state.app);
 
   useEffect(() => {
@@ -21,11 +23,11 @@ const BackofficeLayout = (props: Props) => {
   }, [init, dispatch]);
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <TopBar title={props.title} />
-      <Box sx={{ display: "flex" }}>
-        <SideBar />
-        <Box sx={{ p: 3, width: "100%" }}>{props.children}</Box>
+    <Box sx={{ minHeight: "100vh", bgcolor: "#98DFD6" }}>
+      <TopBar />
+      <Box sx={{ display: "flex", position: "relative", zIndex: 5, flex: 1 }}>
+        {data && <SideBar />}
+        <Box sx={{ p: 3, width: "100%", height: "100%" }}>{props.children}</Box>
       </Box>
     </Box>
   );

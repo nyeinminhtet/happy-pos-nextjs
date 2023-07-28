@@ -2,15 +2,15 @@ import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { getLocationId } from "@/utils";
-import Layout from "@/Components/BackofficeLayout";
 import ItemCart from "@/Components/ItemCart";
 import TableBarIcon from "@mui/icons-material/TableBar";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import CreateTable from "./CreateTable";
+import Loading from "@/Components/Loading";
 
 const Tables = () => {
-  const { tables } = useAppSelector(appData);
+  const { tables, isLoading } = useAppSelector(appData);
   const [open, setOpen] = useState(false);
   const selectedLocationId = getLocationId();
 
@@ -18,8 +18,10 @@ const Tables = () => {
     (item) => item.location_id === Number(selectedLocationId)
   );
 
+  if (isLoading) return <Loading />;
+
   return (
-    <Layout title="Tables">
+    <Box>
       <Box>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
@@ -27,14 +29,8 @@ const Tables = () => {
             variant="contained"
             startIcon={<AddIcon />}
             sx={{
-              backgroundColor: "#4C4C6D",
               width: "fit-content",
-              color: "#E8F6EF",
               mb: 2,
-              ":hover": {
-                bgcolor: "#1B9C85",
-                color: "white",
-              },
             }}
           >
             New table
@@ -52,7 +48,7 @@ const Tables = () => {
         </Box>
       </Box>
       <CreateTable open={open} setOpen={setOpen} />
-    </Layout>
+    </Box>
   );
 };
 

@@ -9,12 +9,13 @@ import DeleteDialog from "@/Components/DeleteDialog";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { removeLocation, updateLocation } from "@/store/slices/LocationsSlice";
+import Loading from "@/Components/Loading";
 
 const EditLocation = () => {
   const router = useRouter();
   const locationId = router.query.id as string;
   const [open, setOpen] = useState(false);
-  const { locations } = useAppSelector(appData);
+  const { locations, isLoading } = useAppSelector(appData);
   const [location, setLocation] = useState<Location>();
   const dispatch = useAppDispatch();
 
@@ -53,10 +54,11 @@ const EditLocation = () => {
     router.back();
   };
 
-  console.log(location, "######");
+  if (isLoading) return <Loading />;
   if (!location) return null;
+
   return (
-    <Layout title="Edit Location">
+    <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
         <Button
           color="error"
@@ -101,7 +103,7 @@ const EditLocation = () => {
         title="Location"
         deleteFun={deleteLocation}
       />
-    </Layout>
+    </Box>
   );
 };
 

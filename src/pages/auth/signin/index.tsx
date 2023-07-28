@@ -1,5 +1,5 @@
 import TopBar from "@/Components/TopBar";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 
 const SignIn = () => {
@@ -8,11 +8,13 @@ const SignIn = () => {
       <Box sx={{ position: "relative", zIndex: 999 }}>
         <TopBar />
       </Box>
+
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          flexDirection: "column",
           backgroundColor: "#E8F6EF",
           left: 0,
           right: 0,
@@ -22,8 +24,12 @@ const SignIn = () => {
           zIndex: 1,
         }}
       >
+        <Typography sx={{ mb: 10, fontFamily: "monospace" }} variant="h4">
+          Please Signin to enter Backoffice app.
+        </Typography>
         <Button
           variant="contained"
+          sx={{ bgcolor: "#E21818", ":hover": { bgcolor: "#E21818" } }}
           onClick={() => signIn("google", { callbackUrl: "/backoffice" })}
         >
           Sign in with Google

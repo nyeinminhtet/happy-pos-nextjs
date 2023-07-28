@@ -1,6 +1,7 @@
 import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
 import Link from "next/link";
 import { menus as Menu } from "@prisma/client";
+import PaidIcon from "@mui/icons-material/Paid";
 
 interface Props {
   menu: Menu;
@@ -23,6 +24,7 @@ const MenuCard = ({ menu, href }: Props) => {
           width: 250,
           height: 250,
           py: 2,
+          pb: 2,
         }}
       >
         {menu.acess_url && (
@@ -42,13 +44,27 @@ const MenuCard = ({ menu, href }: Props) => {
         >
           <Typography
             gutterBottom
-            variant="subtitle1"
-            sx={{ textAlign: "center" }}
-            component="div"
+            variant="h6"
+            sx={{ textAlign: "center", mb: 0 }}
           >
             {menu.name}
           </Typography>
-          <Typography sx={{ color: "blue" }}>{menu.price} kyat</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <PaidIcon color="success" />
+            <Typography
+              gutterBottom
+              variant="subtitle1"
+              sx={{ mt: 0.8, ml: 0.8 }}
+            >
+              {menu.price} Kyat
+            </Typography>
+          </Box>
         </CardContent>
       </Card>
     </Link>
