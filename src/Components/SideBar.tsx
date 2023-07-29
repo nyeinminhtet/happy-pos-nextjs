@@ -16,8 +16,12 @@ import {
   Divider,
 } from "@mui/material";
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
+import { useRouter } from "next/router";
 
 const SideBar = () => {
+  const router = useRouter();
+  const activeLink = `bgcolor:#4E6C50,borderRadius:10,p:4`;
+
   return (
     <Box sx={{ display: "flex", height: "100vh", position: "sticky", top: 0 }}>
       <Box
@@ -36,7 +40,14 @@ const SideBar = () => {
             >
               <ListItem
                 disablePadding
-                sx={{ ":hover": { background: "#4E6C50" } }}
+                sx={{
+                  ":hover": {
+                    background: "#4E6C50",
+                  },
+                  bgcolor: router.pathname.includes(item.route)
+                    ? "#4E6C50"
+                    : "",
+                }}
               >
                 <ListItemButton>
                   <ListItemIcon sx={{ color: "white" }}>

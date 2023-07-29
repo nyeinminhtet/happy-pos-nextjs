@@ -5,14 +5,12 @@ import AddIcon from "@mui/icons-material/Add";
 import {
   getLocationId,
   getMenuCategoryIdByLocationId,
-  getMenusByLocationId,
   getMenusByMenuCategoryId,
 } from "@/utils";
-import Layout from "@/Components/BackofficeLayout";
 import NewMenu from "./NewMenu";
 import MenuCard from "@/Components/MenuCard";
 import { useAppSelector } from "@/store/hooks";
-import { appData } from "@/store/slices/appSlice";
+import { appData, selectMenuCategories } from "@/store/slices/appSlice";
 import Loading from "@/Components/Loading";
 
 const Menus = () => {
@@ -39,10 +37,9 @@ const Menus = () => {
     if (validCategory.length) {
       setSelectedMenuCategory(validCategory[0].id);
     }
-  }, [menuCategories, validCategory]);
+  }, [menuCategories]);
 
   if (isLoading) return <Loading />;
-  if (!validCategory) return null;
 
   return (
     <Box>
