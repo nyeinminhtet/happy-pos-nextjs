@@ -8,6 +8,8 @@ import { Session } from "next-auth";
 import { theme } from "@/utils/theme";
 import Layout from "@/Components/Layout";
 import Head from "next/head";
+import "react-toastify/dist/ReactToastify.min.css";
+import { ToastContainer } from "react-toastify";
 
 type CustomeAppProps = AppProps & { session: Session };
 
@@ -24,6 +26,7 @@ export default function App({
       <SessionProvider session={pageProps.session}>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
+            <ToastContainer position="top-center" autoClose={2000} />
             <Layout>
               <Component {...pageProps} />
             </Layout>

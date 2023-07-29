@@ -20,6 +20,7 @@ import { appData } from "@/store/slices/appSlice";
 import { removeMenu, updateMenu } from "@/store/slices/menusSlice";
 import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";
 import Loading from "@/Components/Loading";
+import { toast } from "react-toastify";
 
 const MenuDetails = () => {
   const { menus, addonCategories, menuAddons, isLoading } =
@@ -73,7 +74,7 @@ const MenuDetails = () => {
     dispatch(updateMenu(updatedMenu));
     dispatch(fetchMenusMenuCategoriesLocations(selectedLocationId));
     router.back();
-    //  fetchData();
+    toast.success("Menu has been updated!");
   };
 
   //delete menu || archive
@@ -87,6 +88,7 @@ const MenuDetails = () => {
 
     setOpen(false);
     router.back();
+    toast.success("Menu has been deleted!");
   };
 
   if (isLoading) return <Loading />;

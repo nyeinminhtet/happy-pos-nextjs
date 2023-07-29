@@ -20,6 +20,7 @@ import { appData } from "@/store/slices/appSlice";
 import { addMenuCategory } from "@/store/slices/menuCategoriesSlice";
 import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";
 import { getLocationId } from "@/utils";
+import { toast } from "react-toastify";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -66,9 +67,11 @@ const CreateMenuCategory = ({ open, setOpen }: Props) => {
       setLoading(false);
       setOpen(false);
       setNewMenuCat({ category: "", locationIds: [] });
+      toast.success("New MenuCategory has been created!");
     } catch (error) {
       console.log(error);
       setNewMenuCat({ category: "", locationIds: [] });
+      toast.error("Something went wrong!");
     }
   };
   return (
@@ -137,9 +140,7 @@ const CreateMenuCategory = ({ open, setOpen }: Props) => {
           sx={{
             width: "fit-content",
             alignSelf: "flex-end",
-            // bgcolor: "#820000",
             color: "white",
-            // ":hover": { bgcolor: "#820000" },
           }}
         >
           Create

@@ -23,6 +23,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { addMenu } from "@/store/slices/menusSlice";
 import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";
+import { toast } from "react-toastify";
 
 interface Props {
   open: boolean;
@@ -76,16 +77,15 @@ const NewMenu = ({ open, setOpen }: Props) => {
         body: JSON.stringify(menu),
       });
       setIsLoading(false);
-      if (response.ok) {
-        // fetchData();
-        const createdMenu = await response.json();
-        dispatch(addMenu(createdMenu));
-        dispatch(fetchMenusMenuCategoriesLocations(selectedLocationId));
-        setOpen(false);
-      }
+      const createdMenu = await response.json();
+      dispatch(addMenu(createdMenu));
+      dispatch(fetchMenusMenuCategoriesLocations(selectedLocationId));
+      setOpen(false);
+      toast.success("New Menu has been created!");
     } catch (err) {
       setIsLoading(false);
       console.error(err);
+      toast.error("Something went wrong");
     }
   };
 
@@ -184,9 +184,6 @@ const NewMenu = ({ open, setOpen }: Props) => {
                 sx={{
                   mt: 2,
                   width: "fit-content",
-                  // bgcolor: "#820000",
-                  // color: "white",
-                  // ":hover": { bgcolor: "#820000" },
                 }}
               >
                 Create Menu

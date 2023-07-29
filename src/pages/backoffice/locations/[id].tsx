@@ -10,6 +10,7 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { removeLocation, updateLocation } from "@/store/slices/LocationsSlice";
 import Loading from "@/Components/Loading";
+import { toast } from "react-toastify";
 
 const EditLocation = () => {
   const router = useRouter();
@@ -37,10 +38,14 @@ const EditLocation = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(location),
     });
-    // fetchData();
-    const locationUpdate = await response.json();
-    dispatch(updateLocation(locationUpdate));
-    router.back();
+    if (response.ok) {
+      const locationUpdate = await response.json();
+      dispatch(updateLocation(locationUpdate));
+      router.back();
+      toast.success("Location has been successfully updated!");
+    } else {
+      toast.error("Something went wrong!");
+    }
   };
 
   //delete location
@@ -48,10 +53,10 @@ const EditLocation = () => {
     await fetch(`${config.apiBaseUrl}/locations?id=${locationId}`, {
       method: "DELETE",
     });
-    // fetchData();
     dispatch(removeLocation(validLocation));
     setOpen(false);
     router.back();
+    toast.success("Loaction has been successfully deleted!");
   };
 
   if (isLoading) return <Loading />;

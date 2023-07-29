@@ -27,6 +27,7 @@ import { appData, fetchAppData } from "@/store/slices/appSlice";
 import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";
 import { removeMenuCategory } from "@/store/slices/menuCategoriesSlice";
 import Loading from "@/Components/Loading";
+import { toast } from "react-toastify";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -87,7 +88,7 @@ const EditMenuCategories = () => {
     });
     dispatch(fetchMenusMenuCategoriesLocations(selectedlocation));
     route.back();
-    //  fetchData();
+    toast.success("MenuCategory has been Updated!");
   };
 
   //remove menu from menucategory
@@ -109,6 +110,7 @@ const EditMenuCategories = () => {
     // fetchData();
     dispatch(fetchMenusMenuCategoriesLocations(selectedlocation));
     setSelectedMenu(undefined);
+    toast.success("Menu has been added!");
   };
 
   //delete || archive for menucategory
@@ -121,6 +123,7 @@ const EditMenuCategories = () => {
     dispatch(fetchMenusMenuCategoriesLocations(selectedlocation));
     setDeleteOpne(false);
     route.back();
+    toast.success("MenuCategory has been successfully deleted!");
   };
 
   if (isLoading) return <Loading />;

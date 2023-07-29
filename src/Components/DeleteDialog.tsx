@@ -18,9 +18,9 @@ const DeleteDialog = ({ open, setOpen, title, deleteFun }: Props) => {
         <Button onClick={() => setOpen(false)}>Cancle</Button>
         <Button
           onClick={deleteFun}
-          // sx={{
-          //   ":hover": { bgcolor: "main", color: "white" },
-          // }}
+          sx={{
+            ":hover": { bgcolor: "#E21818", color: "white" },
+          }}
         >
           Confirm
         </Button>

@@ -33,6 +33,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { updateOrderlineStatus } from "@/store/slices/orderlinesSlice";
 import Loading from "@/Components/Loading";
+import { toast } from "react-toastify";
 
 interface Props {
   menus: Menu[];
@@ -103,7 +104,6 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
     });
 
     //update orderline status
-
     const handleUpdateOrderStatus = async (
       cartId: string,
       evt: SelectChangeEvent<"PENDING" | "PREPARING" | "COMPLETE" | "REJECTED">
@@ -114,6 +114,7 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
           status: evt.target.value as OrderStatus,
         })
       );
+      toast.success("Order Status has been changed!");
     };
 
     return orderlineMenus.map((item, index) => (

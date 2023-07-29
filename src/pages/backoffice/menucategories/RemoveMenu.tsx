@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { menus as Menu } from "@prisma/client";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 interface Props {
   menu?: Menu;
@@ -36,9 +37,9 @@ const RemoveMenuFromMenuCategory = ({ menu, open, setOpen }: Props) => {
         menuCategoryId: menuCategoryId,
       }),
     });
-    // fetchData();
     dispatch(fetchMenusMenuCategoriesLocations(selectedlocation));
     setOpen(false);
+    toast.success("Menu has been removed!");
   };
 
   if (!menu) return null;

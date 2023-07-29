@@ -15,6 +15,7 @@ import {
   Button,
 } from "@mui/material";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 interface Props {
   open: boolean;
@@ -53,9 +54,13 @@ const NewAddon = ({ open, setOpen }: Props) => {
       body: JSON.stringify(newAddon),
     });
     setNewAddon({ name: "", price: 0, addonCategoryId: "" });
-    const createAddon = await response.json();
-    //fetchData();
-    dispatch(addAddon(createAddon));
+    if (response.ok) {
+      const createAddon = await response.json();
+      dispatch(addAddon(createAddon));
+      toast.success("Addon has been created!");
+    } else {
+      toast.error("Something went wrong!");
+    }
   };
 
   return (
@@ -111,11 +116,6 @@ const NewAddon = ({ open, setOpen }: Props) => {
           sx={{
             width: "fit-content",
             alignSelf: "flex-end",
-            // bgcolor: "#820000",
-            // color: "white",
-            // ":hover": {
-            //   bgcolor: "#820000",
-            // },
           }}
         >
           Create

@@ -64,7 +64,7 @@ const AddonCategories = () => {
               mb: 2,
             }}
           >
-            New Addon_Category
+            New Addon-Category
           </Button>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>

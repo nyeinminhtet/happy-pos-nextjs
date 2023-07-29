@@ -10,6 +10,7 @@ import {
   Button,
 } from "@mui/material";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 interface Props {
   open: boolean;
@@ -35,11 +36,11 @@ const CreateTable = ({ open, setOpen }: Props) => {
       },
       body: JSON.stringify(newTable),
     });
-    // fetchData();
     const data = await response.json();
     dispatch(addTable(data));
     setNewTable({ name: "", locationId: selectedLocationId });
     setOpen(false);
+    toast.success("New Table has been created!");
   };
 
   return (
@@ -70,8 +71,6 @@ const CreateTable = ({ open, setOpen }: Props) => {
             width: "fit-content",
             alignSelf: "flex-end",
             mt: 2,
-            // bgcolor: "#820000",
-            // ":hover": { bgcolor: "#820000" },
           }}
         >
           Create

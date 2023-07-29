@@ -1,3 +1,4 @@
+import RequireSwitch from "@/Components/Switch";
 import { config } from "@/config/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addAddonCategory } from "@/store/slices/addonCategoriesSlice";
@@ -19,6 +20,7 @@ import {
   Button,
 } from "@mui/material";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 interface Props {
   open: boolean;
@@ -38,6 +40,7 @@ const MenuProps = {
 
 const NewAddonCategory = ({ open, setOpen }: Props) => {
   const { menusMenuCategoriesLocations, menus } = useAppSelector(appData);
+  const [required, setRequired] = useState(true);
 
   const [newAddonCategory, setNewAddonCategory] = useState({
     name: "",
@@ -46,8 +49,6 @@ const NewAddonCategory = ({ open, setOpen }: Props) => {
 
   const dispatch = useAppDispatch();
 
-  const disableButton =
-    !newAddonCategory.name && !newAddonCategory.menuIds.length;
   const selectedLocationId = getLocationId() as string;
 
   //get menus from locations
@@ -59,18 +60,23 @@ const NewAddonCategory = ({ open, setOpen }: Props) => {
   //create category
   const createAddonCategory = async () => {
     if (!newAddonCategory?.name || !newAddonCategory.menuIds.length)
-      return alert("Please fill completely Form for new!");
+      return toast.info("Please Fill Fully Form!");
     const response = await fetch(`${config.apiBaseUrl}/addoncategories`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newAddonCategory),
+      body: JSON.stringify({ ...newAddonCategory, required }),
     });
-    // fetchData();
     setOpen(false);
-    const AddonCategoryCreate = await response.json();
-    dispatch(addAddonCategory(AddonCategoryCreate));
-    dispatch(fetchMenusAddonCategories(validMenuIds));
+    if (response.ok) {
+      const AddonCategoryCreate = await response.json();
+      dispatch(addAddonCategory(AddonCategoryCreate));
+      dispatch(fetchMenusAddonCategories(validMenuIds));
+      toast.success("AddonCategory has been created!");
+    }
   };
+
+  const disable =
+    !newAddonCategory.name.length && !newAddonCategory.menuIds.length;
 
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
@@ -131,10 +137,11 @@ const NewAddonCategory = ({ open, setOpen }: Props) => {
               </MenuItem>
             ))}
           </Select>
+          <RequireSwitch setRequired={setRequired} />
         </FormControl>
         <Button
           variant="contained"
-          disabled={disableButton}
+          disabled={disable}
           onClick={createAddonCategory}
           sx={{
             width: "fit-content",

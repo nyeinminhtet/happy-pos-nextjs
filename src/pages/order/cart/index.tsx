@@ -10,6 +10,7 @@ import { getCartTotalPrice } from "@/utils";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { removeFromCart, selectCart } from "@/store/slices/cartSlice";
 import { addOrder } from "@/store/slices/ordersSlice";
+import { toast } from "react-toastify";
 
 const Review = () => {
   const { items, isLoading } = useAppSelector(selectCart);
@@ -73,7 +74,9 @@ const Review = () => {
       pathname: `/order/activeCart/${orderCreated.id}`,
       query,
     });
+    toast.success("Your order is start now!");
   };
+
   if (!items.length) return null;
 
   return (

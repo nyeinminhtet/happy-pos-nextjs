@@ -10,6 +10,7 @@ import {
   DialogContent,
 } from "@mui/material";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 interface Props {
   open: boolean;
@@ -38,13 +39,14 @@ const NewLocation: React.FC<Props> = ({ open, setOpen }) => {
         },
         body: JSON.stringify(newLocation),
       });
-      //  fetchData();
       const locationCreate = await response.json();
       dispatch(addLocation(locationCreate));
       setOpen(false);
       setNewLocation({ name: "", address: "", companyId: company?.id });
+      toast.success("New location has been created!");
     } catch (err) {
       console.log(err);
+      toast.error("Something went wrong!");
     }
   };
   return (

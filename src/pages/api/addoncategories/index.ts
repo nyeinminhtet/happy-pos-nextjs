@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { name, menuIds } = req.body;
+    const { name, menuIds, required } = req.body;
     const isValid = name && menuIds;
     if (!isValid)
       return res
@@ -16,6 +16,7 @@ export default async function handler(
     const newAddonCategory = await prisma.addon_categories.create({
       data: {
         name,
+        is_require: required,
       },
     });
 

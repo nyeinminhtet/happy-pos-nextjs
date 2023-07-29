@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 interface Props {
   color?: "primary" | "secondary" | "error" | "success";
@@ -6,8 +6,16 @@ interface Props {
 
 const Loading = ({ color = "primary" }: Props) => {
   return (
-    <Box sx={{ display: "flex", justifyContent: "center" }}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
       <CircularProgress color={color} />
+      <Typography sx={{ fontFamily: "cursive", mt: 2 }}>Loading...</Typography>
     </Box>
   );
 };

@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { updateCompany } from "@/store/slices/companySlice";
 import Loading from "@/Components/Loading";
+import { toast } from "react-toastify";
 
 const Setting = () => {
   const { locations, company, isLoading } = useAppSelector(appData);
@@ -75,8 +76,10 @@ const Setting = () => {
       });
       const data = await response.json();
       dispatch(updateCompany(data));
+      toast.success("Company has been changed!");
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong!");
     }
   };
 

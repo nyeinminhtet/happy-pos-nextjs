@@ -1,5 +1,6 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
+  Alert,
   Autocomplete,
   Box,
   Button,
@@ -23,6 +24,7 @@ import {
 } from "@/store/slices/addonCategoriesSlice";
 import { addon_categories as AddonCategory } from "@prisma/client";
 import Loading from "@/Components/Loading";
+import { toast, ToastContainer } from "react-toastify";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -77,10 +79,15 @@ const EditAddonCategories = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newAddonCategory),
     });
-    //  fetchData();
-    const data = await response.json();
-    dispatch(updateAddonCategory(data));
-    route.back();
+
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(updateAddonCategory(data));
+      route.back();
+      toast.success("AddonCategory has been successfully updated!");
+    } else {
+      toast.error("Something went wrong!");
+    }
   };
 
   //delete || archive
@@ -88,10 +95,10 @@ const EditAddonCategories = () => {
     await fetch(`${config.apiBaseUrl}/addoncategories?id=${addonCategoryId}`, {
       method: "DELETE",
     });
-    // fetchData();
     setOpen(false);
     addonCategory && dispatch(removeAddonCategory(addonCategory));
     route.back();
+    toast.success("AddonCategory has been successfully deleted!");
   };
 
   if (isLoading) return <Loading />;

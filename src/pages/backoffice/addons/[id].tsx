@@ -19,6 +19,7 @@ import { appData } from "@/store/slices/appSlice";
 import { removeAddon, updateAddon } from "@/store/slices/addonsSlice";
 import { addons as Addon } from "@prisma/client";
 import Loading from "@/Components/Loading";
+import { toast } from "react-toastify";
 
 const EditAddon = () => {
   const router = useRouter();
@@ -82,10 +83,15 @@ const EditAddon = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newAddon),
       });
-      //  fetchData();
-      const addonnew = await response.json();
-      dispatch(updateAddon(addonnew));
-      router.back();
+
+      if (response.ok) {
+        const addonnew = await response.json();
+        dispatch(updateAddon(addonnew));
+        router.back();
+        toast.success("Addon has been successfully updated!");
+      } else {
+        toast.error("Something went wrong!");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -100,6 +106,7 @@ const EditAddon = () => {
     dispatch(removeAddon(addon));
     setOpen(false);
     router.back();
+    toast.success("Addon has been successfully deleted!");
   };
 
   if (isLoading) return <Loading />;

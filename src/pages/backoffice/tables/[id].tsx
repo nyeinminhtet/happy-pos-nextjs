@@ -8,6 +8,7 @@ import { getLocationId } from "@/utils";
 import { Box, Button, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const EditTable = () => {
   const router = useRouter();
@@ -28,6 +29,7 @@ const EditTable = () => {
     const tableUpdated = await response.json();
     dispatch(updateTable(tableUpdated));
     router.back();
+    toast.success("Table has been updated!");
   };
 
   if (isLoading) return <Loading />;
