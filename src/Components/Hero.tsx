@@ -1,15 +1,17 @@
 import { Box, Button, Slide, Typography } from "@mui/material";
-import Panda from "../assets/panda-cooking.png";
+import Panda from "../assets/panda-cooking-chicken.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const Hero = () => {
   return (
     <Box
       sx={{
-        mt: 16,
         textAlign: "center",
         display: "flex",
         alignItems: "center",
+        justifyContent: "center",
+        mt: { sm: 5 },
       }}
     >
       <Slide
@@ -19,7 +21,7 @@ const Hero = () => {
         unmountOnExit
         timeout={1000}
       >
-        <Box sx={{ ml: 10 }}>
+        <Box>
           <Typography
             sx={{
               maxWidth: 700,
@@ -28,8 +30,8 @@ const Hero = () => {
             }}
             variant="h2"
           >
-            Manage your menu catelog easily with
-            <Typography fontSize={50} color="#00235B">
+            Manage your Menus Catelog easily with
+            <Typography sx={{ fontSize: { xs: 30, sm: 50 } }} color="#00235B">
               Sarr Mal
             </Typography>
             and entice your customers with QR code ordering system.
@@ -42,29 +44,30 @@ const Hero = () => {
               position: "relative",
             }}
           >
-            <Button
-              variant="contained"
-              sx={{
-                fontSize: { xs: "16px", md: "20px" },
-                mr: 2,
-                width: "fit-content",
-                // backgroundColor: "#4C4C6D",
-                // ":hover": { bgcolor: "#00235B" },
-              }}
-            >
-              Order App
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                fontSize: { xs: "16px", md: "20px" },
-                width: "fit-content",
-                // backgroundColor: "#4C4C6D",
-                // ":hover": { bgcolor: "#00235B" },
-              }}
-            >
-              Backoffice App
-            </Button>
+            <Link href={"/order?locationId=1&tableId=1"}>
+              <Button
+                variant="contained"
+                sx={{
+                  fontSize: { xs: "13px", md: "20px" },
+                  mr: 2,
+                  width: "fit-content",
+                }}
+              >
+                Order
+              </Button>
+            </Link>
+
+            <Link href={"/backoffice"}>
+              <Button
+                variant="contained"
+                sx={{
+                  fontSize: { xs: "13px", md: "20px" },
+                  width: "fit-content",
+                }}
+              >
+                Backoffice
+              </Button>
+            </Link>
           </Box>
         </Box>
       </Slide>
@@ -77,12 +80,24 @@ const Hero = () => {
       >
         <Box
           sx={{
-            width: { xs: "80%", md: "40%", lg: "30%" },
             display: { xs: "none", md: "block" },
             ml: 5,
           }}
         >
           <Image src={Panda} width={450} alt="header-image" />
+        </Box>
+      </Slide>
+      <Slide
+        direction="left"
+        in={true}
+        mountOnEnter
+        unmountOnExit
+        timeout={1000}
+      >
+        <Box
+          sx={{ display: { xs: "none", sm: "block", md: "none" }, mr: "-10%" }}
+        >
+          <Image src={Panda} width={300} alt="header-image" />
         </Box>
       </Slide>
     </Box>

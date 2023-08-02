@@ -23,7 +23,7 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        position: "fixed",
+        position: "absolute",
         zIndex: 5,
       }}
     >
@@ -66,6 +66,7 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
 
       <Image
         src={OrderAppHeaderImg}
+        height={250}
         style={{
           width: "100%",
           padding: 0,
@@ -75,12 +76,12 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
         alt="header-image"
       />
       {isHome && (
-        <Box sx={{}}>
+        <Box>
           <Box
             sx={{
               position: "absolute",
               left: 30,
-              top: 0,
+              top: 10,
               textAlign: "center",
               color: "white",
             }}
@@ -90,13 +91,16 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
               sx={{
                 fontWeight: "bold",
                 color: "white",
+                fontSize: { xs: "24px", sm: "30px" },
               }}
             >
-              Sarr Mell
+              Sarr Mall
             </Typography>
-            <Typography variant="body2" sx={{ color: "lightGray" }}>
-              Ywar Lal Lan,103th street
-              <br /> ChanmyaTharzi, Mandalay
+            <Typography
+              variant="body2"
+              sx={{ color: "lightGray", fontSize: { xs: "10px", sm: "13px" } }}
+            >
+              ChanmyaTharzi, Mandalay
             </Typography>
           </Box>
         </Box>

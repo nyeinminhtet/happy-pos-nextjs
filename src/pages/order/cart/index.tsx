@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { removeFromCart, selectCart } from "@/store/slices/cartSlice";
 import { addOrder } from "@/store/slices/ordersSlice";
 import { toast } from "react-toastify";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 const Review = () => {
   const { items, isLoading } = useAppSelector(selectCart);
@@ -91,6 +92,11 @@ const Review = () => {
           mx: 3,
         }}
       >
+        <AiOutlineArrowLeft
+          size={30}
+          cursor="pointer"
+          onClick={() => router.back()}
+        />
         <Box
           sx={{
             width: { xs: "100%", md: "500px" },
@@ -99,7 +105,7 @@ const Review = () => {
           <Typography
             variant="h5"
             color="primary"
-            sx={{ textAlign: "center", mb: 3 }}
+            sx={{ textAlign: "center", mb: 3, fontSize: { xs: "20px" } }}
           >
             Review your order
           </Typography>
@@ -107,7 +113,12 @@ const Review = () => {
             const { menu, addons, quantity } = cartItem;
             return (
               <Box key={index}>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
                   <Avatar
                     sx={{
                       width: 30,

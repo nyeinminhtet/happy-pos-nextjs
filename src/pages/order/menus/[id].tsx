@@ -13,6 +13,7 @@ import { appData } from "@/store/slices/appSlice";
 import { CartItem } from "@/Types/Types";
 import { addToCart } from "@/store/slices/cartSlice";
 import Image from "next/image";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 const DetailMenu = () => {
   const router = useRouter();
@@ -126,6 +127,9 @@ const DetailMenu = () => {
         bgcolor: "#98DFD6",
       }}
     >
+      <Box sx={{ cursor: "pointer", mb: 2 }}>
+        <AiOutlineArrowLeft size={30} onClick={() => router.back()} />
+      </Box>
       <Box
         sx={{
           position: "sticky",
@@ -147,13 +151,20 @@ const DetailMenu = () => {
             borderRadius: "50%",
           }}
         />
-        <Typography variant="h4" sx={{ textAlign: "center" }} gutterBottom>
+        <Typography
+          variant="h4"
+          sx={{
+            textAlign: "center",
+            fontSize: { xs: "15px", sm: "20px", md: "25px" },
+          }}
+          gutterBottom
+        >
           {menu?.name}
         </Typography>
       </Box>
       <Box
         sx={{
-          mt: 5,
+          mt: 2,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

@@ -252,7 +252,9 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ display: "flex" }}>{renderMenusAndAddonForOrder()}</Box>
+            <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+              {renderMenusAndAddonForOrder()}
+            </Box>
           </Collapse>
         </TableCell>
       </TableRow>

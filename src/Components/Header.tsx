@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import headerImg from "../assets/wave.svg";
+import foods from "@/assets/food.png";
 
 const Header = () => {
   return (
@@ -10,11 +11,10 @@ const Header = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        position: "fixed",
         height: 100,
-        top: 0,
         zIndex: 5,
         marginTop: 0,
+        position: "relative",
       }}
     >
       <Image
@@ -34,7 +34,9 @@ const Header = () => {
           position: "absolute",
           fontWeight: "bold",
           color: "white",
-          mt: 4,
+          fontSize: { xs: "1.3rem", sm: "2rem", md: "3.5rem" },
+          mt: { xs: 2, sm: 3, md: 4 },
+          ml: { xs: 5, sm: 4, md: 2 },
         }}
       >
         Sarr Mal

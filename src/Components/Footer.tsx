@@ -4,8 +4,8 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        height: 150,
-        bgcolor: "#4E6C50",
+        height: { xs: 250, sm: 200, md: 150 },
+        bgcolor: "#98DFD6",
         px: "12px",
       }}
     >
@@ -28,23 +28,17 @@ const Footer = () => {
           }}
         >
           <Box>
-            <Typography sx={{ color: "#E8F6EF", fontStyle: "italic" }}>
+            <Typography variant="body1" sx={{ fontStyle: "italic" }}>
               Ywar Lal street, <br />
               ChanMyaTharZi, Mandalay <br />
-              contact@happypos.com
+              <span style={{ color: "#E21818" }}> contact@sarrmal.com</span>
               <br />
-              +95 123 456 79
+              <span style={{ color: "#00235B" }}>+95 123 456 79</span>
             </Typography>
           </Box>
           <Box sx={{ width: "350px", position: "relative", mt: 2 }}>
             <Typography variant="h3" color="#00235B" fontWeight="bold">
               Sarr Mal
-            </Typography>
-          </Box>
-          <Box>
-            <Typography sx={{ color: "#E8F6EF", fontStyle: "italic" }}>
-              Order app
-              <br /> Backoffice app
             </Typography>
           </Box>
         </Box>

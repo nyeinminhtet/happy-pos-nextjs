@@ -60,7 +60,10 @@ const OrderApp = () => {
           sx={{
             display: "flex",
             justifyContent: "space-evenly",
-            w: "100%",
+            position: "sticky",
+            top: 0,
+            width: { xs: "100%" },
+            bgcolor: "#98DFD6",
           }}
           onChange={(e, v) => setValue(v)}
         >
@@ -69,9 +72,8 @@ const OrderApp = () => {
               <Tab
                 key={index}
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-evenly",
-                  w: "100%",
+                  fontSize: { xs: "10px", sm: "14px" },
+                  whiteSpace: 0,
                 }}
                 label={item.category}
                 onClick={() => setSelectedMenuCategory(item)}
@@ -79,9 +81,17 @@ const OrderApp = () => {
             );
           })}
         </Tabs>
-      </Box>
-      <Box sx={{ display: "flex", alignItems: "center", mt: 3 }}>
-        {renderMenu()}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            mt: 3,
+            flexWrap: "wrap",
+            justifyContent: { xs: "center", md: "start" },
+          }}
+        >
+          {renderMenu()}
+        </Box>
       </Box>
     </Box>
   );

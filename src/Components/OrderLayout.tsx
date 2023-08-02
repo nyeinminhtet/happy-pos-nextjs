@@ -1,11 +1,12 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { Box } from "@mui/material";
-
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { appData, fetchAppData } from "@/store/slices/appSlice";
 import { useEffect } from "react";
 import { selectCart } from "@/store/slices/cartSlice";
 import OrderAppHeader from "./OrderAppHeader";
+import waiter from "@/assets/waiter-holding-tray-in-restaurant.svg";
 
 interface Props {
   children: string | JSX.Element | JSX.Element[];
@@ -28,8 +29,19 @@ const OrderLayout = (props: Props) => {
   return (
     <Box>
       <OrderAppHeader cartItemCount={items.length} />
-      <Box sx={{ position: "relative", zIndex: 5, top: isHome ? 100 : 0 }}>
-        <Box sx={{ width: { xs: "100%", md: "80%", lg: "55%" }, m: "0 auto" }}>
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 5,
+          top: isHome ? { xs: 90, md: 100 } : 0,
+        }}
+      >
+        <Box
+          sx={{
+            width: { xs: "100%", md: "70%" },
+            m: "0 auto",
+          }}
+        >
           {props.children}
         </Box>
       </Box>

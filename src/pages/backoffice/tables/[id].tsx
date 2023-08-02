@@ -35,7 +35,7 @@ const EditTable = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <Layout title="Edit Table">
+    <Box>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <TextField
           defaultValue={tableName}
@@ -50,7 +50,7 @@ const EditTable = () => {
           Update
         </Button>
       </Box>
-    </Layout>
+    </Box>
   );
 };
 

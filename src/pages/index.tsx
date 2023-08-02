@@ -15,13 +15,14 @@ const HappyPos = () => {
         minHeight: "100vh",
         overflowY: "auto",
         flexDirection: "column",
+        m: 0,
       }}
     >
       <Header />
       <Box
         sx={{
           maxWidth: { md: "100%", lg: "1280px" },
-          m: "0 auto",
+          m: 0,
           px: { xs: "10px", md: "15px" },
         }}
       >
