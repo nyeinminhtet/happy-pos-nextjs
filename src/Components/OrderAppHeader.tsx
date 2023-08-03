@@ -47,15 +47,16 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
           />
           {cartItemCount > 0 && (
             <Typography
+              variant="subtitle1"
               sx={{
-                textAlign: "right",
                 color: "#E8F6EF",
                 position: "absolute",
                 top: -10,
-                right: 2,
+                right: 3,
                 borderRadius: "50%",
                 bgcolor: "red",
-                fontSize: 17,
+                fontFamily: "monospace",
+                py: 0,
               }}
             >
               {cartItemCount}
@@ -63,7 +64,6 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
           )}
         </Box>
       )}
-
       <Image
         src={OrderAppHeaderImg}
         height={250}
@@ -75,36 +75,35 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
         }}
         alt="header-image"
       />
-      {isHome && (
-        <Box>
-          <Box
+
+      <Box>
+        <Box
+          sx={{
+            position: "absolute",
+            left: 30,
+            top: 10,
+            textAlign: "center",
+            color: "white",
+          }}
+        >
+          <Typography
+            variant="h4"
             sx={{
-              position: "absolute",
-              left: 30,
-              top: 10,
-              textAlign: "center",
+              fontWeight: "bold",
               color: "white",
+              fontSize: { xs: "24px", sm: "30px" },
             }}
           >
-            <Typography
-              variant="h4"
-              sx={{
-                fontWeight: "bold",
-                color: "white",
-                fontSize: { xs: "24px", sm: "30px" },
-              }}
-            >
-              Sarr Mall
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: "lightGray", fontSize: { xs: "10px", sm: "13px" } }}
-            >
-              ChanmyaTharzi, Mandalay
-            </Typography>
-          </Box>
+            Sarr Mall
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{ color: "lightGray", fontSize: { xs: "10px", sm: "13px" } }}
+          >
+            ChanmyaTharzi, Mandalay
+          </Typography>
         </Box>
-      )}
+      </Box>
     </Box>
   );
 };

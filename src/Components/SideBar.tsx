@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useState } from "react";
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ClassIcon from "@mui/icons-material/Class";
@@ -20,13 +21,19 @@ import { useRouter } from "next/router";
 
 const SideBar = () => {
   const router = useRouter();
-  const activeLink = `bgcolor:#4E6C50,borderRadius:10,p:4`;
 
   return (
-    <Box sx={{ display: "flex", height: "100vh", position: "sticky", top: 0 }}>
+    <Box
+      sx={{
+        display: "flex",
+        height: "100vh",
+        position: "sticky",
+        top: 0,
+      }}
+    >
       <Box
         sx={{
-          minWidth: 250,
+          minWidth: { xs: 150, sm: 200, md: 250 },
           background: "#00235B",
           border: "1px solid white",
         }}
@@ -50,10 +57,20 @@ const SideBar = () => {
                 }}
               >
                 <ListItemButton>
-                  <ListItemIcon sx={{ color: "white" }}>
+                  <ListItemIcon
+                    sx={{
+                      color: "white",
+                      mr: { xs: -3, md: 0 },
+                    }}
+                  >
                     {item.icon}
                   </ListItemIcon>
-                  <ListItemText primary={item.label} sx={{ color: "white" }} />
+                  <ListItemText
+                    primary={item.label}
+                    sx={{
+                      color: "white",
+                    }}
+                  />
                 </ListItemButton>
               </ListItem>
             </Link>
@@ -72,10 +89,22 @@ const SideBar = () => {
             >
               <ListItem
                 disablePadding
-                sx={{ ":hover": { background: "#4E6C50" } }}
+                sx={{
+                  ":hover": {
+                    background: "#4E6C50",
+                    bgcolor: router.pathname.includes(item.route)
+                      ? "#4E6C50"
+                      : "",
+                  },
+                }}
               >
                 <ListItemButton>
-                  <ListItemIcon sx={{ color: "white" }}>
+                  <ListItemIcon
+                    sx={{
+                      color: "white",
+                      mr: { xs: -3, md: 0 },
+                    }}
+                  >
                     {item.icon}
                   </ListItemIcon>
                   <ListItemText primary={item.label} sx={{ color: "white" }} />

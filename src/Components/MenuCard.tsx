@@ -21,16 +21,17 @@ const MenuCard = ({ menu, href }: Props) => {
     >
       <Card
         sx={{
-          width: { xs: 130, sm: 250 },
-          height: { xs: 120, sm: 250 },
+          width: { xs: 130, sm: 180, md: 230 },
+          height: { xs: 120, sm: 180, md: 230 },
           py: 2,
           pb: 2,
+          borderRadius: 6,
         }}
       >
         {menu.acess_url && (
           <CardMedia
             sx={{
-              height: { xs: 80, sm: 180 },
+              height: { xs: 80, sm: 120, md: 150 },
               backgroundSize: "contain",
             }}
             image={menu.acess_url || ""}

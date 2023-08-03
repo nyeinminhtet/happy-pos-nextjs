@@ -45,36 +45,35 @@ const Menus = () => {
     <Box>
       <Box
         sx={{
-          width: "100%",
           mb: 2,
+          w: { xs: "60%", md: "100%" },
         }}
       >
-        <Box
+        <Tabs
+          value={value}
           sx={{
-            borderBottom: 1,
-            borderColor: "divider",
             display: "flex",
-            flexDirection: "row",
             justifyContent: "space-evenly",
-            w: "100%",
           }}
+          variant="scrollable"
+          orientation="horizontal"
+          onChange={(e, v) => setValue(v)}
         >
-          {validCategory.map((item, index) => (
-            <Tabs
-              value={value}
-              key={item.id}
-              textColor="inherit"
-              TabIndicatorProps={{ style: { background: "#820000" } }}
-              onChange={(e, v) => setValue(v)}
-            >
+          {validCategory.map((item, index) => {
+            return (
               <Tab
+                wrapped={true}
+                key={index}
+                sx={{
+                  fontSize: { xs: "10px", sm: "14px" },
+                  px: { xs: 1, sm: 1, md: 5 },
+                }}
                 label={item.category}
-                value={index}
                 onClick={() => setSelectedMenuCategory(item.id)}
               />
-            </Tabs>
-          ))}
-        </Box>
+            );
+          })}
+        </Tabs>
       </Box>
       <Box
         sx={{
@@ -104,7 +103,13 @@ const Menus = () => {
             New menu
           </Button>
         </Box>
-        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            w: { xs: "50%", sm: "80%" },
+          }}
+        >
           {validMenus.map((menu) => (
             <MenuCard
               key={menu.id}

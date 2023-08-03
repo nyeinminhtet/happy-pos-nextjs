@@ -33,7 +33,7 @@ const OrderLayout = (props: Props) => {
         sx={{
           position: "relative",
           zIndex: 5,
-          top: isHome ? { xs: 90, md: 100 } : 0,
+          top: isHome ? { xs: 90, md: 100 } : 100,
         }}
       >
         <Box

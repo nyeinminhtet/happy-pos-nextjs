@@ -98,12 +98,17 @@ const Setting = () => {
           mt: 1,
         }}
       >
-        <Typography variant="h4">Choose Your Info</Typography>
+        <Typography
+          variant="h4"
+          sx={{ fontSize: { xs: "20px", sm: "25px", md: "30px" } }}
+        >
+          Create Your Company
+        </Typography>
         <TextField
           label="Name"
           variant="outlined"
           value={companyInfo.name}
-          sx={{ mb: 2, minWidth: 400, mt: 2 }}
+          sx={{ mb: 2, minWidth: { xs: 140, sm: 200, md: 400 }, mt: 2 }}
           onChange={(evt) => {
             const name = evt.target.value;
             setCompanyInfo({ ...companyInfo, name });
@@ -113,13 +118,13 @@ const Setting = () => {
           label="Address"
           variant="outlined"
           value={companyInfo.address}
-          sx={{ mb: 2, minWidth: 400 }}
+          sx={{ mb: 2, minWidth: { xs: 140, sm: 200, md: 400 } }}
           onChange={(evt) => {
             const address = evt.target.value;
             setCompanyInfo({ ...companyInfo, address });
           }}
         />
-        <FormControl fullWidth>
+        <FormControl sx={{ minWidth: { xs: 220, md: 400 } }}>
           <InputLabel id="demo-simple-select-label">Locations</InputLabel>
           <Select
             labelId="demo-simple-select-label"

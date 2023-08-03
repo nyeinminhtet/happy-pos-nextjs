@@ -23,7 +23,14 @@ const Tables = () => {
   return (
     <Box>
       <Box>
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            mr: { xs: 2, md: 0 },
+            mt: { xs: -2, md: 0 },
+          }}
+        >
           <Button
             onClick={() => setOpen(true)}
             variant="contained"
@@ -31,6 +38,7 @@ const Tables = () => {
             sx={{
               width: "fit-content",
               mb: 2,
+              fontSize: { xs: "13px", sm: "15px" },
             }}
           >
             New table

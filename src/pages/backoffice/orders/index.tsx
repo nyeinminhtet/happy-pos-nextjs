@@ -122,9 +122,10 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
         <Paper
           elevation={3}
           sx={{
-            width: 250,
-            height: 350,
+            width: { sm: 150, md: 200 },
+            height: { sm: 230, md: 300 },
             p: 2,
+            my: 3,
           }}
         >
           <Box
@@ -138,18 +139,24 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
           >
             <Box>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography variant="h6">{item.menu.name}</Typography>
+                <Typography
+                  variant="h6"
+                  sx={{ fontSize: { sm: "15px", md: "20px" } }}
+                >
+                  {item.menu.name}
+                </Typography>
                 <Typography
                   variant="h6"
                   sx={{
                     backgroundColor: "#4E6C50",
                     borderRadius: "50%",
-                    width: 30,
-                    height: 30,
+                    width: { sm: 20, md: 30 },
+                    height: { sm: 20, md: 30 },
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     color: "white",
+                    fontSize: { sm: "14px", md: "18px" },
                   }}
                 >
                   {item.quantity}
@@ -158,8 +165,8 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
               <Divider sx={{ my: 1 }} />
               <Box
                 sx={{
-                  minHeight: "180px",
-                  overflow: "scroll",
+                  maxHeight: { sm: "130px", md: "180px" },
+                  overflowY: "scroll",
                 }}
               >
                 {Object.keys(item.addonsWithCategory).map((addonCategoryId) => {
@@ -170,8 +177,13 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
                     Number(addonCategoryId)
                   ] as Addon[];
                   return (
-                    <Box sx={{ mb: 1.5 }} key={addonCategoryId}>
-                      <Typography sx={{ fontWeight: "bold" }}>
+                    <Box sx={{ mb: 1 }} key={addonCategoryId}>
+                      <Typography
+                        sx={{
+                          fontWeight: "bold",
+                          fontSize: { sm: "12px", md: "15px" },
+                        }}
+                      >
                         {addonCategory.name}
                       </Typography>
                       <Box sx={{ pl: 2 }}>
@@ -179,10 +191,10 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
                           return (
                             <Box key={item.id}>
                               <Typography
-                                variant="body1"
-                                sx={{ fontStyle: "italic" }}
+                                variant="subtitle2"
+                                sx={{ fontSize: { sm: "12px", md: "14px" } }}
                               >
-                                {item.name}
+                                - {item.name}
                               </Typography>
                             </Box>
                           );
@@ -206,21 +218,37 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
                   <InputLabel>Status</InputLabel>
                   <Select
                     value={item.status}
+                    sx={{
+                      width: { sm: 120, md: 150 },
+                      fontSize: { sm: "10px", md: "15px" },
+                    }}
                     label="Status"
                     onChange={(evt) =>
                       handleUpdateOrderStatus(item.cartId, evt)
                     }
                   >
-                    <MenuItem value={OrderStatus.PENDING}>
+                    <MenuItem
+                      sx={{ fontSize: { sm: "10px", md: "15px" } }}
+                      value={OrderStatus.PENDING}
+                    >
                       {OrderStatus.PENDING}
                     </MenuItem>
-                    <MenuItem value={OrderStatus.PREPARING}>
+                    <MenuItem
+                      sx={{ fontSize: { sm: "10px", md: "15px" } }}
+                      value={OrderStatus.PREPARING}
+                    >
                       {OrderStatus.PREPARING}
                     </MenuItem>
-                    <MenuItem value={OrderStatus.COMPLETE}>
+                    <MenuItem
+                      sx={{ fontSize: { sm: "10px", md: "15px" } }}
+                      value={OrderStatus.COMPLETE}
+                    >
                       {OrderStatus.COMPLETE}
                     </MenuItem>
-                    <MenuItem value={OrderStatus.REJECTED}>
+                    <MenuItem
+                      sx={{ fontSize: { sm: "10px", md: "15px" } }}
+                      value={OrderStatus.REJECTED}
+                    >
                       {OrderStatus.REJECTED}
                     </MenuItem>
                   </Select>
@@ -278,15 +306,35 @@ const Orders = () => {
   return (
     <Box>
       <TableContainer component={Paper} sx={{ height: "100%" }}>
-        <Table sx={{ minWidth: 650 }} stickyHeader>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell>Order-IDs</TableCell>
-              <TableCell>Quantity of Menus</TableCell>
-              <TableCell>Table-Ids</TableCell>
-              <TableCell>Paid</TableCell>
-              <TableCell>Price</TableCell>
+              <TableCell
+                sx={{ fontSize: { xs: "10px", sm: "13px", md: "15px" } }}
+              >
+                Order-IDs
+              </TableCell>
+              <TableCell
+                sx={{ fontSize: { xs: "10px", sm: "13px", md: "15px" } }}
+              >
+                Quantity of Menus
+              </TableCell>
+              <TableCell
+                sx={{ fontSize: { xs: "10px", sm: "13px", md: "15px" } }}
+              >
+                Table-Ids
+              </TableCell>
+              <TableCell
+                sx={{ fontSize: { xs: "10px", sm: "13px", md: "15px" } }}
+              >
+                Paid
+              </TableCell>
+              <TableCell
+                sx={{ fontSize: { xs: "10px", sm: "13px", md: "15px" } }}
+              >
+                Price
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

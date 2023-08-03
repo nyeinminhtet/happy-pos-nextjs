@@ -23,11 +23,21 @@ const BackofficeLayout = (props: Props) => {
   }, [init, dispatch]);
 
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "#98DFD6" }}>
+    <Box sx={{ minHeight: "100vh", bgcolor: "#98DFD6", minWidth: "100%" }}>
       <TopBar />
       <Box sx={{ display: "flex", position: "relative", zIndex: 5, flex: 1 }}>
         {data && <SideBar />}
-        <Box sx={{ p: 3, width: "100%", height: "100%" }}>{props.children}</Box>
+        <Box
+          sx={{
+            p: { xs: 0, sm: 1, md: 3 },
+            pt: { xs: 5, sm: 5 },
+            width: { xs: "60%", sm: "65%", md: "100%" },
+            height: "100%",
+            ml: { xs: 2, sm: 0 },
+          }}
+        >
+          {props.children}
+        </Box>
       </Box>
     </Box>
   );

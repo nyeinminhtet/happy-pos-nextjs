@@ -16,8 +16,8 @@ const ItemCart = ({ icon, title, subTitle, href }: Props) => {
         <Paper
           elevation={2}
           sx={{
-            width: 170,
-            height: 170,
+            width: { xs: 100, sm: 140, md: 170 },
+            height: { xs: 100, sm: 140, md: 170 },
             mr: 4,
             mb: 5,
             display: "flex",

@@ -2,6 +2,7 @@ import { Box, Button, Slide, Typography } from "@mui/material";
 import Panda from "../assets/panda-cooking-chicken.png";
 import Image from "next/image";
 import Link from "next/link";
+import landing from "@/assets/sarr mal.jpg";
 
 const Hero = () => {
   return (
@@ -53,7 +54,7 @@ const Hero = () => {
                   width: "fit-content",
                 }}
               >
-                Order
+                Order Now
               </Button>
             </Link>
 

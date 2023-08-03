@@ -39,7 +39,8 @@ const EditTable = () => {
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <TextField
           defaultValue={tableName}
-          sx={{ mb: 2 }}
+          label="Table Name"
+          sx={{ mb: 2, minWidth: { xs: 100, sm: 130, md: 150 } }}
           onChange={(evt) => setTableName(evt.target.value)}
         />
         <Button

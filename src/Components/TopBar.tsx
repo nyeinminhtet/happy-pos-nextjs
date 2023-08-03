@@ -63,11 +63,15 @@ const TopBar = ({ title = "" }: Props) => {
                   textAlign: "center",
                 }}
               >
-                <Typography sx={{ fontSize: "1.5rem", mb: 0 }}>
+                <Typography
+                  sx={{ fontSize: { xs: "1.2rem", md: "1.5rem" }, mb: 0 }}
+                >
                   Sarr-Mal
                 </Typography>
 
-                <Typography sx={{ color: "gray" }}>
+                <Typography
+                  sx={{ color: "gray", fontSize: { xs: "10px", md: "13px" } }}
+                >
                   {selectedLocation ? selectedLocation.name : ""}
                 </Typography>
               </Box>
@@ -75,7 +79,11 @@ const TopBar = ({ title = "" }: Props) => {
                 <Typography
                   variant="h6"
                   component="div"
-                  sx={{ flexGrow: 1, textAlign: "center" }}
+                  sx={{
+                    flexGrow: 1,
+                    textAlign: "center",
+                    fontSize: { xs: "1.2rem", md: "1.4rem" },
+                  }}
                 >
                   {getTitle()}
                 </Typography>
@@ -83,7 +91,7 @@ const TopBar = ({ title = "" }: Props) => {
               <Button
                 variant="text"
                 onClick={() => signOut()}
-                sx={{ color: "white" }}
+                sx={{ color: "white", fontSize: { sm: "14px", md: "18px" } }}
               >
                 Sign out
               </Button>

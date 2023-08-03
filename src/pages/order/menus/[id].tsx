@@ -124,72 +124,77 @@ const DetailMenu = () => {
         flexDirection: "column",
         p: 4,
         position: "relative",
-        bgcolor: "#98DFD6",
+        bgcolor: "white",
       }}
     >
       <Box sx={{ cursor: "pointer", mb: 2 }}>
         <AiOutlineArrowLeft size={30} onClick={() => router.back()} />
       </Box>
-      <Box
-        sx={{
-          position: "sticky",
-          top: 0,
-          bgcolor: "white",
-          zIndex: 100,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-evenly",
-          borderRadius: 5,
-        }}
-      >
-        <Image
-          src={menu?.acess_url || ""}
-          alt="menu-image"
-          width={150}
-          height={150}
-          style={{
-            borderRadius: "50%",
-          }}
-        />
-        <Typography
-          variant="h4"
+      <Box sx={{ bgcolor: "lightblue", borderRadius: 10 }}>
+        <Box
           sx={{
-            textAlign: "center",
-            fontSize: { xs: "15px", sm: "20px", md: "25px" },
+            position: "sticky",
+            top: 0,
+            bgcolor: "#00235B",
+            zIndex: 100,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            mt: -2,
           }}
-          gutterBottom
         >
-          {menu?.name}
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          mt: 2,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <AddonCategories
-          validAddonCategories={validAddonCategories}
-          validAddons={validAddons}
-          selectedAddons={selectedAddons}
-          onChange={(checked, item) => handleAddonSelect(checked, item)}
-        />
-        <Quantity
-          value={quantity}
-          decrease={handleQuantityOnDecrease}
-          increase={handleQuantityOnIncrease}
-        />
+          <Image
+            src={menu?.acess_url || ""}
+            alt="menu-image"
+            width={150}
+            height={150}
+            style={{
+              borderRadius: "50%",
+            }}
+          />
+          <Typography
+            variant="h4"
+            sx={{
+              textAlign: "center",
+              fontSize: { xs: "15px", sm: "20px", md: "25px" },
+              color: "white",
+            }}
+            gutterBottom
+          >
+            {menu?.name}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            mt: 2,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <AddonCategories
+            validAddonCategories={validAddonCategories}
+            validAddons={validAddons}
+            selectedAddons={selectedAddons}
+            onChange={(checked, item) => handleAddonSelect(checked, item)}
+          />
+          <Box sx={{ mb: 5, mt: -2 }}>
+            <Quantity
+              value={quantity}
+              decrease={handleQuantityOnDecrease}
+              increase={handleQuantityOnIncrease}
+            />
 
-        <Button
-          variant="contained"
-          disabled={isDisable}
-          onClick={handleAddToCart}
-          sx={{ mt: 3, width: "fit-content" }}
-        >
-          Add to Cart
-        </Button>
+            <Button
+              variant="contained"
+              disabled={isDisable}
+              onClick={handleAddToCart}
+              sx={{ mt: 3, width: "fit-content" }}
+            >
+              Add to Cart
+            </Button>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

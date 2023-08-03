@@ -65,15 +65,18 @@ const OrderApp = () => {
             width: { xs: "100%" },
             bgcolor: "#98DFD6",
           }}
+          variant="scrollable"
+          orientation="horizontal"
           onChange={(e, v) => setValue(v)}
         >
           {menuCategories.map((item, index) => {
             return (
               <Tab
+                wrapped={true}
                 key={index}
                 sx={{
                   fontSize: { xs: "10px", sm: "14px" },
-                  whiteSpace: 0,
+                  px: { xs: 0, sm: 3 },
                 }}
                 label={item.category}
                 onClick={() => setSelectedMenuCategory(item)}
