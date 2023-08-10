@@ -17,8 +17,8 @@ const ActiveOrder = () => {
   const { orders, orderlines, menus, addons } = useAppSelector(appData);
   const order = orders.find((item) => item.id === Number(orderId)) as orders;
 
-  const orderline = orderlines.filter((item) => item.order_id === order.id);
-  console.log(orderlines);
+  // const orderline = orderlines.filter((item) => item.order_id === order.id);
+  // console.log(orderlines);
 
   // const orderlineMenus = menus.find(
   //   (menu) => menu.id === orderline?.menus_id
@@ -28,9 +28,9 @@ const ActiveOrder = () => {
   //   (addon) => addon.id === orderline?.addons_id
   // )?.name;
 
-  useEffect(() => {
-    console.log(orderline);
-  }, [orderline]);
+  // useEffect(() => {
+  //   console.log(orderline);
+  // }, [orderline]);
 
   useEffect(() => {
     if (!order) {
