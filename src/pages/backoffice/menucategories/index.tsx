@@ -41,19 +41,19 @@ const Menu_Categories = () => {
             width: "100%",
             display: "flex",
             justifyContent: "flex-end",
+            mt: { xs: -3, sm: -2, md: 0 },
           }}
         >
           <Button
             onClick={() => setOpen(true)}
             variant="contained"
-            startIcon={<AddIcon />}
             sx={{
               width: "fit-content",
               color: "#E8F6EF",
               mb: 2,
             }}
           >
-            New menuCategory
+            <AddIcon />
           </Button>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>
@@ -61,7 +61,7 @@ const Menu_Categories = () => {
             <ItemCart
               key={index}
               href={`/backoffice/menucategories/${item.id}`}
-              icon={<CategoryIcon sx={{ fontSize: 40 }} />}
+              icon={<CategoryIcon sx={{ fontSize: { xs: 35, sm: 40 } }} />}
               title={item.category}
               subTitle={`${getMenuCount(item.id)} menus`}
             />

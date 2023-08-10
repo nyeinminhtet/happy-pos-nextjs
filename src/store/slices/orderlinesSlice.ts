@@ -49,9 +49,13 @@ export const orderlinesSlice = createSlice({
         return item;
       });
     },
+    addOrderline: (state, action: PayloadAction<Orderline>) => {
+      state.items = [...state.items, action.payload];
+    },
   },
 });
 
-export const { setOrderlines, updateOrderline } = orderlinesSlice.actions;
+export const { setOrderlines, updateOrderline, addOrderline } =
+  orderlinesSlice.actions;
 
 export default orderlinesSlice.reducer;

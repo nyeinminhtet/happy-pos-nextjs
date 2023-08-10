@@ -37,6 +37,7 @@ const Testimonials = () => {
         my: 5,
         minHeight: 350,
         flexWrap: "wrap",
+        position: "relative",
       }}
     >
       {testimonials.map((item) => {
@@ -45,7 +46,7 @@ const Testimonials = () => {
             <Paper
               sx={{
                 width: 300,
-                height: 180,
+                height: 200,
                 p: 2,
                 mb: 3,
                 borderRadius: 3,

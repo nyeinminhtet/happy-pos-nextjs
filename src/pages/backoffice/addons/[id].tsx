@@ -114,11 +114,19 @@ const EditAddon = () => {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          mt: { xs: -3, sm: -2, md: 0 },
+          mb: { xs: 2, md: 0 },
+        }}
+      >
         <Button
           onClick={() => setOpen(true)}
           variant="contained"
           startIcon={<DeleteIcon />}
+          sx={{ backgroundColor: "#E21818" }}
         >
           Delete
         </Button>
@@ -128,7 +136,7 @@ const EditAddon = () => {
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <TextField
               label="Name"
-              sx={{ width: 350, mb: 2 }}
+              sx={{ maxWidth: { xs: 250, md: 350 }, mb: 2 }}
               defaultValue={addon.name}
               onChange={(e) =>
                 setNewAddon({ ...newAddon, name: e.target.value })
@@ -137,13 +145,16 @@ const EditAddon = () => {
             <TextField
               label="price"
               type="number"
-              sx={{ width: 350 }}
+              sx={{ maxWidth: { xs: 250, md: 350 } }}
               defaultValue={addon.price}
               onChange={(e) =>
                 setNewAddon({ ...newAddon, price: Number(e.target.value) })
               }
             />
-            <FormControl sx={{ mt: 2, width: 350 }} size="medium">
+            <FormControl
+              sx={{ mt: 2, maxWidth: { xs: 250, md: 350 } }}
+              size="medium"
+            >
               <InputLabel id="demo-select-small-label">
                 AddonCategory
               </InputLabel>

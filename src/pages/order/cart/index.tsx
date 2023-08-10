@@ -125,6 +125,7 @@ const Review = () => {
                       height: 30,
                       mr: 1,
                       backgroundColor: "#1B9C85",
+                      fontSize: { xs: "15px", sm: "18px" },
                     }}
                   >
                     {quantity}x
@@ -136,15 +137,29 @@ const Review = () => {
                       width: "100%",
                     }}
                   >
-                    <Typography variant="h6" color="black">
+                    <Typography
+                      variant="h6"
+                      color="black"
+                      sx={{ fontSize: { xs: "18px", sm: "20px" } }}
+                    >
                       {menu.name}
                     </Typography>
-                    <Typography variant="h6" color="primary">
+                    <Typography
+                      variant="h6"
+                      color="primary"
+                      sx={{ fontSize: { xs: "15px", sm: "18px" } }}
+                    >
                       {menu.price}
                     </Typography>
                   </Box>
                 </Box>
-                <Box sx={{ pl: 6 }}>{addons && renderAddons(addons)}</Box>
+                <Box
+                  sx={{
+                    pl: 6,
+                  }}
+                >
+                  {addons && renderAddons(addons)}
+                </Box>
                 <Box
                   sx={{
                     display: "flex",
@@ -154,11 +169,15 @@ const Review = () => {
                   }}
                 >
                   <DeleteIcon
-                    sx={{ mr: 2, cursor: "pointer" }}
+                    sx={{
+                      mr: 2,
+                      cursor: "pointer",
+                      fontSize: { xs: 20, sm: 25 },
+                    }}
                     onClick={() => removeCartItems(cartItem)}
                   />
                   <EditIcon
-                    sx={{ cursor: "pointer" }}
+                    sx={{ cursor: "pointer", fontSize: { xs: 20, sm: 25 } }}
                     onClick={() =>
                       router.push({
                         pathname: `menuUpdate/${cartItem.id}`,
@@ -172,12 +191,20 @@ const Review = () => {
           })}
           <Divider />
           <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-            <Typography variant="h4" color="primary">
+            <Typography
+              variant="h4"
+              color="primary"
+              sx={{ fontSize: { xs: 20, sm: 30 } }}
+            >
               Total: {getCartTotalPrice(items)}
             </Typography>
           </Box>
           <Box sx={{ mt: 3, textAlign: "center" }}>
-            <Button variant="contained" onClick={conformOrder}>
+            <Button
+              variant="contained"
+              sx={{ fontSize: { xs: 13, sm: 15 } }}
+              onClick={conformOrder}
+            >
               Confirm order
             </Button>
           </Box>

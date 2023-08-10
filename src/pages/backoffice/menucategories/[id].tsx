@@ -131,20 +131,27 @@ const EditMenuCategories = () => {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          mt: { xs: -2, sm: 0 },
+        }}
+      >
         <Button
           onClick={() => setDeleteOpne(true)}
           variant="contained"
           startIcon={<DeleteIcon />}
+          sx={{ backgroundColor: "#E21818" }}
         >
           Delete
         </Button>
       </Box>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", ml: { xs: -3 } }}>
         <Box sx={{ p: 3, display: "flex", flexDirection: "column" }}>
           <TextField
             defaultValue={menuCategory.category}
-            sx={{ mb: 2 }}
+            sx={{ mb: 2, maxWidth: { xs: 250, sm: 300, md: 400 } }}
             onChange={(v) =>
               setNewMenuCategory({
                 ...newMenuCategory,
@@ -158,6 +165,7 @@ const EditMenuCategories = () => {
             options={locations}
             value={newMenuCategory.locations}
             disableCloseOnSelect
+            sx={{ maxWidth: { xs: 250, sm: 300, md: 400 } }}
             getOptionLabel={(option) => option.name}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             onChange={(e, v) =>
@@ -194,7 +202,7 @@ const EditMenuCategories = () => {
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
           <Autocomplete
-            sx={{ minWidth: 300, mr: 3 }}
+            sx={{ minWidth: { xs: 250 }, mr: 3 }}
             defaultValue={selectedMenu}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             getOptionLabel={(option) => option.name}

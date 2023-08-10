@@ -45,19 +45,19 @@ const Addons = () => {
             width: "100%",
             display: "flex",
             justifyContent: "flex-end",
+            mt: { xs: -3, sm: -2, md: 0 },
           }}
         >
           <Button
             onClick={() => setIsOpen(true)}
             variant="contained"
-            startIcon={<AddIcon />}
             sx={{
               width: "fit-content",
               color: "#E8F6EF",
               mb: 2,
             }}
           >
-            New Addon
+            <AddIcon />
           </Button>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>

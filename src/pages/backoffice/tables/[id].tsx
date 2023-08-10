@@ -40,13 +40,13 @@ const EditTable = () => {
         <TextField
           defaultValue={tableName}
           label="Table Name"
-          sx={{ mb: 2, minWidth: { xs: 100, sm: 130, md: 150 } }}
+          sx={{ mb: 2, maxWidth: { xs: 250, md: 350 } }}
           onChange={(evt) => setTableName(evt.target.value)}
         />
         <Button
           variant="contained"
           onClick={handleUpdateTable}
-          sx={{ width: "fit-content", mt: 3 }}
+          sx={{ width: "fit-content", mt: 2 }}
         >
           Update
         </Button>

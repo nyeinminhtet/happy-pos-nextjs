@@ -264,18 +264,22 @@ const Row = ({ order, orderlines, menus, addons, addonCateogries }: Props) => {
   return (
     <>
       <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-        <TableCell>
+        <TableCell sx={{ textAlign: "center" }}>
           <IconButton size="small" onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell sx={{ textAlign: "center" }} component="th" scope="row">
           {order.id}
         </TableCell>
-        <TableCell>{getQuantityByOrderId(orderlines, order.id)}</TableCell>
-        <TableCell>{order.table_id}</TableCell>
-        <TableCell>{order.is_paid ? "Yes" : "No"}</TableCell>
-        <TableCell>{order.price}</TableCell>
+        <TableCell sx={{ textAlign: "center" }}>
+          {getQuantityByOrderId(orderlines, order.id)}
+        </TableCell>
+        <TableCell sx={{ textAlign: "center" }}>{order.table_id}</TableCell>
+        <TableCell sx={{ textAlign: "center" }}>
+          {order.is_paid ? "Yes" : "No"}
+        </TableCell>
+        <TableCell sx={{ textAlign: "center" }}>{order.price}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -309,29 +313,54 @@ const Orders = () => {
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell />
+              <TableCell sx={{ px: { xs: 0, sm: 1 }, borderRight: 1 }} />
               <TableCell
-                sx={{ fontSize: { xs: "10px", sm: "13px", md: "15px" } }}
+                sx={{
+                  fontSize: { xs: "10px", sm: "13px", md: "15px" },
+                  px: { xs: 0, sm: 1 },
+                  textAlign: "center",
+                  borderRight: 1,
+                }}
               >
                 Order-IDs
               </TableCell>
               <TableCell
-                sx={{ fontSize: { xs: "10px", sm: "13px", md: "15px" } }}
+                sx={{
+                  fontSize: { xs: "10px", sm: "13px", md: "15px" },
+                  px: { xs: 0, sm: 1 },
+                  textAlign: "center",
+                  borderRight: 1,
+                }}
               >
                 Quantity of Menus
               </TableCell>
               <TableCell
-                sx={{ fontSize: { xs: "10px", sm: "13px", md: "15px" } }}
+                sx={{
+                  fontSize: { xs: "10px", sm: "13px", md: "15px" },
+                  px: { xs: 0, sm: 1 },
+                  textAlign: "center",
+                  borderRight: 1,
+                }}
               >
                 Table-Ids
               </TableCell>
               <TableCell
-                sx={{ fontSize: { xs: "10px", sm: "13px", md: "15px" } }}
+                sx={{
+                  fontSize: { xs: "10px", sm: "13px", md: "15px" },
+                  px: { xs: 0, sm: 1 },
+                  textAlign: "center",
+                  borderRight: 1,
+                }}
               >
                 Paid
               </TableCell>
               <TableCell
-                sx={{ fontSize: { xs: "10px", sm: "13px", md: "15px" } }}
+                sx={{
+                  fontSize: { xs: "10px", sm: "13px", md: "15px" },
+                  px: { xs: 0, sm: 1 },
+                  borderRight: 1,
+                  textAlign: "center",
+                }}
               >
                 Price
               </TableCell>

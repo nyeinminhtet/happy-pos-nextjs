@@ -97,23 +97,32 @@ const MenuDetails = () => {
   return (
     <Box>
       <Box sx={{ p: 3, display: "flex", flexDirection: "column" }}>
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            mt: { xs: -5, md: 0 },
+            mr: { xs: -2, sm: -5, md: 0 },
+            mb: { xs: 5, sm: 0 },
+          }}
+        >
           <Button
             onClick={() => setOpen(true)}
             variant="contained"
             startIcon={<DeleteIcon />}
+            sx={{ backgroundColor: "#E21818" }}
           >
             Delete
           </Button>
         </Box>
         <TextField
-          sx={{ mb: 2, width: "50%" }}
+          sx={{ mb: 2, width: { xs: "100%", sm: "70%" } }}
           label="Name"
           defaultValue={menu.name}
           onChange={(evt) => setNewMenu({ ...newMenu, name: evt.target.value })}
         />
         <TextField
-          sx={{ mb: 2, width: "50%" }}
+          sx={{ mb: 2, width: { xs: "100%", sm: "70%" } }}
           label="Price"
           defaultValue={menu.price}
           type="number"
@@ -131,7 +140,7 @@ const MenuDetails = () => {
             const addonCategoryIds = v.map((item) => item.id);
             setNewMenu({ ...newMenu, addonCategoryIds });
           }}
-          sx={{ width: 500, mb: 3 }}
+          sx={{ maxWidth: { xs: 300, sm: 400, md: 500 }, mb: { md: 3 } }}
           renderInput={(params) => (
             <TextField {...params} label="Addon-Categories" />
           )}

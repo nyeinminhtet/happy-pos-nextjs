@@ -64,7 +64,14 @@ const EditLocation = () => {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          mb: 2,
+          mt: { xs: -3, sm: -2, md: 0 },
+        }}
+      >
         <Button
           color="error"
           variant="contained"
@@ -82,14 +89,14 @@ const EditLocation = () => {
       >
         <TextField
           defaultValue={location?.name}
-          sx={{ mb: 2, maxWidth: 350 }}
+          sx={{ mb: 2, maxWidth: { xs: 250, md: 350 } }}
           onChange={(evt) =>
             location && setLocation({ ...location, name: evt.target.value })
           }
         />
         <TextField
           defaultValue={location?.address}
-          sx={{ mb: 2, maxWidth: 350 }}
+          sx={{ mb: 2, maxWidth: { xs: 250, md: 350 } }}
           onChange={(evt) =>
             location && setLocation({ ...location, address: evt.target.value })
           }
@@ -97,7 +104,7 @@ const EditLocation = () => {
         <Button
           variant="contained"
           onClick={uploadLocation}
-          sx={{ width: "fit-content", mt: 3 }}
+          sx={{ width: "fit-content", mt: { xs: 1, md: 3 } }}
         >
           Update
         </Button>

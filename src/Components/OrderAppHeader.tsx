@@ -11,6 +11,7 @@ interface Props {
 
 const OrderAppHeader = ({ cartItemCount }: Props) => {
   const router = useRouter();
+  const { query } = router;
   const isHome = router.pathname === "/order";
   const isCart = router.pathname === "/order/cart";
   const isActiveOrder = router.pathname.includes("/order/activeOrder");
@@ -84,7 +85,9 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
             top: 10,
             textAlign: "center",
             color: "white",
+            cursor: "pointer",
           }}
+          onClick={() => router.push({ pathname: "/order", query })}
         >
           <Typography
             variant="h4"

@@ -57,14 +57,14 @@ const AddonCategories = () => {
           <Button
             onClick={() => setOpen(true)}
             variant="contained"
-            startIcon={<AddIcon />}
             sx={{
               width: "fit-content",
               color: "#E8F6EF",
               mb: 2,
+              mt: { xs: -3, sm: -2, md: 0 },
             }}
           >
-            New Addon-Category
+            <AddIcon />
           </Button>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>

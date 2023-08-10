@@ -34,14 +34,13 @@ const Tables = () => {
           <Button
             onClick={() => setOpen(true)}
             variant="contained"
-            startIcon={<AddIcon />}
             sx={{
               width: "fit-content",
               mb: 2,
               fontSize: { xs: "13px", sm: "15px" },
             }}
           >
-            New table
+            <AddIcon />
           </Button>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>

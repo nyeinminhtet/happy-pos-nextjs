@@ -8,7 +8,7 @@ import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 const features = [
   {
     icon: <MenuBookIcon sx={{ fontSize: { xs: "60px", sm: "90px" } }} />,
-    text: "Easily manage your menus with Happy POS App",
+    text: "Easily manage your menus with Sarr Mal",
     delay: "1000ms",
   },
   {
@@ -18,7 +18,7 @@ const features = [
   },
   {
     icon: <LocationOn sx={{ fontSize: { xs: "60px", sm: "90px" } }} />,
-    text: "Happy POS App supports multiple locations for your business.",
+    text: "Sarr Mal supports multiple locations for your business.",
     delay: "1500ms",
   },
   {
@@ -35,13 +35,15 @@ const features = [
 
 const Features = () => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        mt: { xs: 7, sm: 9 },
-        flexWrap: "wrap",
-        justifyContent: "center",
-      }}
+    <div
+      // sx={{
+      //   display: "flex",
+      //   mt: { xs: 7, sm: 9 },
+      //   flexWrap: "wrap",
+      //   justifyContent: "center",
+      //   bgcolor:
+      // }}
+      className=" flex flex-wrap justify-center gap-1 md:mt-10 mt-11"
     >
       {features.map((item) => {
         return (
@@ -58,7 +60,7 @@ const Features = () => {
 
               <Typography
                 variant="h6"
-                sx={{ fontSize: { xs: "20px", sm: "25px" } }}
+                className=" text-gray-600 text-sm md:text-lg"
               >
                 {item.text}
               </Typography>
@@ -66,7 +68,7 @@ const Features = () => {
           </Zoom>
         );
       })}
-    </Box>
+    </div>
   );
 };
 

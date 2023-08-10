@@ -112,6 +112,7 @@ const EditAddonCategories = () => {
           variant="contained"
           sx={{
             backgroundColor: "#E21818",
+            mt: { xs: -3, md: 0 },
           }}
           startIcon={<DeleteIcon />}
         >
@@ -122,7 +123,7 @@ const EditAddonCategories = () => {
         <TextField
           label="Name"
           defaultValue={addonCategory.name}
-          sx={{ mb: 2, width: "50%" }}
+          sx={{ mb: 2, maxWidth: { xs: 250, sm: 350 } }}
           onChange={(v) =>
             setNewAddonCategory({
               ...newAddonCategory,
@@ -134,6 +135,7 @@ const EditAddonCategories = () => {
         <Autocomplete
           multiple
           options={locationMenus}
+          sx={{ maxWidth: { xs: 250, sm: 350 } }}
           defaultValue={connectedMenus}
           disableCloseOnSelect
           getOptionLabel={(option) => option.label}
@@ -153,11 +155,10 @@ const EditAddonCategories = () => {
               {option.label}
             </li>
           )}
-          style={{ width: 460 }}
           renderInput={(params) => <TextField {...params} label="menus" />}
         />
         <FormControlLabel
-          sx={{ my: 2 }}
+          sx={{ my: { xs: 1, md: 2 } }}
           control={
             <Switch
               defaultChecked={newAddonCategory?.isRequire ? true : false}
@@ -174,7 +175,7 @@ const EditAddonCategories = () => {
         <Button
           variant="contained"
           onClick={HandleUpdateAddonCategory}
-          sx={{ width: "fit-content", mt: 3 }}
+          sx={{ width: "fit-content", mt: { xs: 1, md: 3 } }}
         >
           Update
         </Button>

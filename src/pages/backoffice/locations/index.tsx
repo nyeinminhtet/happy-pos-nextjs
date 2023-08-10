@@ -29,14 +29,14 @@ const LocationsComp = () => {
         <Button
           onClick={() => setOpen(true)}
           variant="contained"
-          startIcon={<AddIcon />}
           sx={{
             width: "fit-content",
             color: "#E8F6EF",
             mb: 2,
+            mt: { xs: -3, sm: -2, md: 0 },
           }}
         >
-          New menu location
+          <AddIcon />
         </Button>
       </Box>
       <Box sx={{ mt: 5, px: 5, display: "flex", flexWrap: "wrap" }}>

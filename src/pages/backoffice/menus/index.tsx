@@ -91,7 +91,6 @@ const Menus = () => {
           <Button
             onClick={() => setOpen(true)}
             variant="contained"
-            startIcon={<AddIcon />}
             sx={{
               position: "fixed",
               bottom: 0,
@@ -100,7 +99,7 @@ const Menus = () => {
               mb: 2,
             }}
           >
-            New menu
+            <AddIcon />
           </Button>
         </Box>
         <Box

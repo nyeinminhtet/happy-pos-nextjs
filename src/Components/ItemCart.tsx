@@ -34,7 +34,7 @@ const ItemCart = ({ icon, title, subTitle, href }: Props) => {
             sx={{
               color: "#4C4C6D",
               fontWeight: "700",
-              fontSize: 20,
+              fontSize: { xs: 10, sm: 20 },
               textTransform: "capitalize",
               mt: 2,
             }}
@@ -46,7 +46,7 @@ const ItemCart = ({ icon, title, subTitle, href }: Props) => {
               sx={{
                 color: "#4C4C6D",
                 fontWeight: "700",
-                fontSize: 15,
+                fontSize: { xs: 12, sm: 15 },
               }}
             >
               {subTitle}

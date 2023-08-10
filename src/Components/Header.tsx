@@ -1,46 +1,77 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Image from "next/image";
-import headerImg from "../assets/wave.svg";
-import foods from "@/assets/food.png";
+import food from "../assets/food.png";
+import Link from "next/link";
 
 const Header = () => {
   return (
     <Box
       sx={{
-        width: "100vw",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        height: 100,
-        zIndex: 5,
-        marginTop: 0,
-        position: "relative",
+        position: "fixed",
+        bgcolor: "#00235B",
+        py: 1,
+        top: 0,
+        right: 0,
+        left: 0,
+        w: "100%",
+        zIndex: 10,
       }}
     >
-      <Image
-        src={headerImg}
-        style={{
-          width: "100%",
-          padding: 0,
-          margin: 0,
-          objectFit: "cover",
-        }}
-        alt="header-image"
-      />
-
-      <Typography
-        variant="h2"
+      <Box
         sx={{
-          position: "absolute",
-          fontWeight: "bold",
-          color: "white",
-          fontSize: { xs: "1.3rem", sm: "2rem", md: "3.5rem" },
-          mt: { xs: 2, sm: 3, md: 4 },
-          ml: { xs: 5, sm: 4, md: 2 },
+          position: "static",
+          top: 0,
+          display: "flex",
+          justifyContent: "space-evenly",
+          textAlign: "center",
         }}
       >
-        Sarr Mal
-      </Typography>
+        <Typography
+          variant="h2"
+          // sx={{
+          //   fontWeight: "bold",
+          //   color: "white",
+          //   fontSize: { xs: "2rem", md: "2.5rem" },
+          //   mt: 0,
+          //   display: "flex",
+          // }}
+          className=" text-sm md:text-3xl text-white flex items-center font-bold"
+        >
+          Sarr Mal
+          <Image src={food} alt="food" className=" w-5 sm:w-10" />
+        </Typography>
+        <Box sx={{ ml: { xs: 5, sm: 0 } }}>
+          <Link href="/order?locationId=1&tableId=4">
+            <Button
+              // sx={{
+              //   color: "white",
+              //   bgcolor: "#98DFD6",
+              //   textTransform: "capitalize",
+              //   fontWeight: "bold",
+              //   fontSize: { xs: 10, sm: 12, md: 14 },
+              // }}
+              className=" text-white bg-cyan-400 font-bold text-xs capitalize w-fit sm:text-sm"
+            >
+              Order now
+            </Button>
+          </Link>
+          <Link href="/backoffice">
+            <Button
+              // sx={{
+              //   color: "white",
+              //   textTransform: "capitalize",
+              //   fontWeight: "bold",
+              //   fontSize: { xs: 10, sm: 12, md: 14 },
+              //   ml: { xs: 1, md: 3 },
+              //   ":hover": { bgcolor: "#98DFD6" },
+              // }}
+              className=" text-white ml-3 font-semibold sm:inline-block text-xs capitalize hidden w-fit sm:text-sm  hover:underline"
+            >
+              Join us
+            </Button>
+          </Link>
+        </Box>
+      </Box>
     </Box>
   );
 };

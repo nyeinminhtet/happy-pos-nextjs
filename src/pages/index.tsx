@@ -7,31 +7,34 @@ import { Box } from "@mui/material";
 
 const HappyPos = () => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        width: "100%",
-        height: "100%",
-        minHeight: "100vh",
-        overflowY: "auto",
-        flexDirection: "column",
-        m: 0,
-      }}
+    <div
+      // sx={{
+      //   display: "flex",
+      //   width: "100%",
+      //   height: "100%",
+      //   minHeight: "100vh",
+      //   overflowY: "auto",
+      //   flexDirection: "column",
+      //   m: 0,
+      //   position: "relative",
+      // }}
+      className=" flex w-full h-full min-h-screen overflow-y-auto flex-col relative bg-cyan-50"
     >
       <Header />
       <Box
         sx={{
-          maxWidth: { md: "100%", lg: "1280px" },
+          // maxWidth: { md: "100%", lg: "1280px" },
           m: 0,
-          px: { xs: "10px", md: "15px" },
         }}
       >
         <Hero />
         <Features />
-        <Testimonials />
+        <Box sx={{ mx: 1 }}>
+          <Testimonials />
+        </Box>
       </Box>
       <Footer />
-    </Box>
+    </div>
   );
 };
 
