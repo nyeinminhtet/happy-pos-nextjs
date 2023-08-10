@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 import OrderAppHeaderImg from "../assets/orderwave.svg";
+import { useAppSelector } from "@/store/hooks";
+import { appData } from "@/store/slices/appSlice";
 
 interface Props {
   cartItemCount: number;
@@ -15,6 +17,7 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
   const isHome = router.pathname === "/order";
   const isCart = router.pathname === "/order/cart";
   const isActiveOrder = router.pathname.includes("/order/activeOrder");
+  const { company } = useAppSelector(appData);
   const showCartIcon = !isCart && !isActiveOrder;
 
   return (
@@ -42,13 +45,12 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
         >
           <ShoppingCartCheckoutIcon
             sx={{
-              fontSize: "40px",
+              fontSize: { xs: "30px", sm: "40px" },
               color: "#FFE194",
             }}
           />
           {cartItemCount > 0 && (
             <Typography
-              variant="subtitle1"
               sx={{
                 color: "#E8F6EF",
                 position: "absolute",
@@ -65,48 +67,30 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
           )}
         </Box>
       )}
-      <Image
-        src={OrderAppHeaderImg}
-        height={250}
-        style={{
-          width: "100%",
-          padding: 0,
-          margin: 0,
-          objectFit: "cover",
-        }}
-        alt="header-image"
-      />
-
-      <Box>
-        <Box
-          sx={{
-            position: "absolute",
-            left: 30,
-            top: 10,
-            textAlign: "center",
-            color: "white",
-            cursor: "pointer",
-          }}
-          onClick={() => router.push({ pathname: "/order", query })}
-        >
-          <Typography
-            variant="h4"
+      <div className=" w-full h-fit p-3 bg-blue-950 flex justify-between">
+        <Box>
+          <Box
             sx={{
-              fontWeight: "bold",
               color: "white",
-              fontSize: { xs: "24px", sm: "30px" },
+              cursor: "pointer",
             }}
+            onClick={() => router.push({ pathname: "/order", query })}
           >
-            Sarr Mall
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{ color: "lightGray", fontSize: { xs: "10px", sm: "13px" } }}
-          >
-            ChanmyaTharzi, Mandalay
-          </Typography>
+            <Typography
+              variant="h4"
+              className=" text-sm font-semibold md:text-2xl"
+            >
+              {company?.name}
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ color: "lightGray", fontSize: { xs: "10px", sm: "13px" } }}
+            >
+              {company?.address}
+            </Typography>
+          </Box>
         </Box>
-      </Box>
+      </div>
     </Box>
   );
 };

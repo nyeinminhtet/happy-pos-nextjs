@@ -123,13 +123,13 @@ const DetailMenu = () => {
         justifyContent: "center",
         flexDirection: "column",
         p: 4,
-        position: "relative",
         bgcolor: "white",
       }}
     >
-      <Box sx={{ cursor: "pointer", mb: 2 }}>
+      <div className=" mb-4">
         <AiOutlineArrowLeft size={30} onClick={() => router.back()} />
-      </Box>
+      </div>
+
       <Box sx={{ bgcolor: "lightblue", borderRadius: 10 }}>
         <Box
           sx={{
@@ -146,11 +146,9 @@ const DetailMenu = () => {
           <Image
             src={menu?.acess_url || ""}
             alt="menu-image"
-            width={150}
-            height={150}
-            style={{
-              borderRadius: "50%",
-            }}
+            width={130}
+            height={130}
+            className=" rounded-full w-auto"
           />
           <Typography
             variant="h4"
@@ -190,6 +188,7 @@ const DetailMenu = () => {
               disabled={isDisable}
               onClick={handleAddToCart}
               sx={{ mt: 3, width: "fit-content" }}
+              className=" bg-blue-950"
             >
               Add to Cart
             </Button>

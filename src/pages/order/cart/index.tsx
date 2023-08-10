@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { addons as Addon } from "@prisma/client";
+import { addons as Addon, orderlines } from "@prisma/client";
 import { CartItem } from "@/Types/Types";
 import { config } from "@/config/config";
 import { getCartTotalPrice } from "@/utils";
@@ -12,6 +12,7 @@ import { removeFromCart, selectCart } from "@/store/slices/cartSlice";
 import { addOrder } from "@/store/slices/ordersSlice";
 import { toast } from "react-toastify";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { addOrderline, refetchOrderline } from "@/store/slices/orderlinesSlice";
 
 const Review = () => {
   const { items, isLoading } = useAppSelector(selectCart);
@@ -39,10 +40,16 @@ const Review = () => {
             alignItems: "center",
           }}
         >
-          <Typography color={"primary"} sx={{ fontStyle: "italic" }}>
-            {addon.name}
+          <Typography
+            color={"primary"}
+            className=" text-gray-700 text-sm sm:text-md"
+          >
+            - {addon.name}
           </Typography>
-          <Typography color={"primary"} sx={{ fontStyle: "italic" }}>
+          <Typography
+            color={"primary"}
+            className=" text-gray-700 text-sm sm:text-md"
+          >
             {addon.price}
           </Typography>
         </Box>
@@ -59,7 +66,7 @@ const Review = () => {
   const conformOrder = async () => {
     const { locationId, tableId } = query;
     const isValid = locationId && tableId && items.length;
-    if (!isValid) return alert("Something is Wrong!");
+    if (!isValid) return toast.error("Something went wrong!");
 
     const data = await fetch(
       `${config.apiBaseUrl}/order?locationId=${locationId}&tableId=${tableId}`,
@@ -71,6 +78,12 @@ const Review = () => {
     );
     const orderCreated = await data.json();
     dispatch(addOrder(orderCreated));
+    // dispatch(refetchOrderline(orderCreated.id));
+    // const ol = await fetch(
+    //   `${config.apiBaseUrl}/orderlines?orderId=${orderCreated.id}`
+    // );
+    // const olData = await ol.json();
+    // olData.map((item: orderlines) => dispatch(addOrderline(item)));
     router.push({
       pathname: `/order/activeCart/${orderCreated.id}`,
       query,
@@ -81,21 +94,22 @@ const Review = () => {
   if (!items.length) return null;
 
   return (
-    <Box>
+    <div className="  bg-zinc-100 rounded-lg relative">
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           p: 3,
-          bgcolor: "#98DFD6",
-          borderRadius: 15,
+          borderRadius: 10,
           mx: 3,
+          mt: 3,
         }}
       >
         <AiOutlineArrowLeft
           size={30}
           cursor="pointer"
           onClick={() => router.back()}
+          className=" -ml-2 mr-1 absolute left-4 top-5"
         />
         <Box
           sx={{
@@ -121,11 +135,11 @@ const Review = () => {
                 >
                   <Avatar
                     sx={{
-                      width: 30,
-                      height: 30,
+                      width: { xs: 20, sm: 30 },
+                      height: { xs: 20, sm: 30 },
                       mr: 1,
                       backgroundColor: "#1B9C85",
-                      fontSize: { xs: "15px", sm: "18px" },
+                      fontSize: { xs: "13px", sm: "18px" },
                     }}
                   >
                     {quantity}x
@@ -140,14 +154,14 @@ const Review = () => {
                     <Typography
                       variant="h6"
                       color="black"
-                      sx={{ fontSize: { xs: "18px", sm: "20px" } }}
+                      sx={{ fontSize: { xs: "15px", sm: "20px" } }}
                     >
                       {menu.name}
                     </Typography>
                     <Typography
                       variant="h6"
                       color="primary"
-                      sx={{ fontSize: { xs: "15px", sm: "18px" } }}
+                      sx={{ fontSize: { xs: "13px", sm: "18px" } }}
                     >
                       {menu.price}
                     </Typography>
@@ -172,12 +186,15 @@ const Review = () => {
                     sx={{
                       mr: 2,
                       cursor: "pointer",
-                      fontSize: { xs: 20, sm: 25 },
+                      fontSize: { xs: 15, sm: 20, md: 25 },
                     }}
                     onClick={() => removeCartItems(cartItem)}
                   />
                   <EditIcon
-                    sx={{ cursor: "pointer", fontSize: { xs: 20, sm: 25 } }}
+                    sx={{
+                      cursor: "pointer",
+                      fontSize: { xs: 15, sm: 20, md: 25 },
+                    }}
                     onClick={() =>
                       router.push({
                         pathname: `menuUpdate/${cartItem.id}`,
@@ -186,6 +203,7 @@ const Review = () => {
                     }
                   />
                 </Box>
+                <hr className=" border-b border-gray-500 mb-3" />
               </Box>
             );
           })}
@@ -204,13 +222,14 @@ const Review = () => {
               variant="contained"
               sx={{ fontSize: { xs: 13, sm: 15 } }}
               onClick={conformOrder}
+              className=" bg-blue-950"
             >
               Confirm order
             </Button>
           </Box>
         </Box>
       </Box>
-    </Box>
+    </div>
   );
 };
 

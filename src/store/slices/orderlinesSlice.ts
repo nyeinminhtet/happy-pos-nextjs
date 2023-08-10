@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { OrderStatus, orderlines as Orderline } from "@prisma/client";
 import { config } from "@/config/config";
+import { useAppDispatch } from "../hooks";
 
 interface OrderlinesState {
   isLoading: boolean;
@@ -28,6 +29,19 @@ export const updateOrderlineStatus = createAsyncThunk(
       body: JSON.stringify(payload),
     });
     thunkAPI.dispatch(updateOrderline(payload));
+  }
+);
+
+export const refetchOrderline = createAsyncThunk(
+  "orderlines/refetch",
+  async (orderId: number, thunkAPI) => {
+    const response = await fetch(
+      `${config.apiBaseUrl}/orderlines?orderId=${orderId}`
+    );
+    const newOrderline = await response.json();
+    newOrderline.map((item: Orderline) =>
+      thunkAPI.dispatch(addOrderline(item))
+    );
   }
 );
 

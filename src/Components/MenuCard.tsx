@@ -21,17 +21,16 @@ const MenuCard = ({ menu, href }: Props) => {
     >
       <Card
         sx={{
-          width: { xs: 130, sm: 180, md: 230 },
-          height: { xs: 120, sm: 180, md: 230 },
+          width: { xs: 180, sm: 180, md: 230 },
+          height: { xs: 180, sm: 180, md: 230 },
           py: 2,
-          pb: 2,
           borderRadius: 6,
         }}
       >
         {menu.acess_url && (
           <CardMedia
             sx={{
-              height: { xs: 80, sm: 120, md: 150 },
+              height: { xs: 110, sm: 120, md: 150 },
               backgroundSize: "contain",
             }}
             image={menu.acess_url || ""}
@@ -47,7 +46,6 @@ const MenuCard = ({ menu, href }: Props) => {
           }}
         >
           <Typography
-            gutterBottom
             variant="h6"
             sx={{
               textAlign: "center",
@@ -62,7 +60,7 @@ const MenuCard = ({ menu, href }: Props) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              mt: { xs: -1 },
+              mt: -1,
             }}
           >
             <PaidIcon
@@ -73,7 +71,6 @@ const MenuCard = ({ menu, href }: Props) => {
               gutterBottom
               variant="subtitle1"
               sx={{
-                mt: 0.8,
                 ml: 0.8,
                 fontSize: { xs: "14px", md: "16px" },
               }}

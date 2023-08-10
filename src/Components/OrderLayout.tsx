@@ -6,7 +6,6 @@ import { appData, fetchAppData } from "@/store/slices/appSlice";
 import { useEffect } from "react";
 import { selectCart } from "@/store/slices/cartSlice";
 import OrderAppHeader from "./OrderAppHeader";
-import waiter from "@/assets/waiter-holding-tray-in-restaurant.svg";
 
 interface Props {
   children: string | JSX.Element | JSX.Element[];
@@ -33,13 +32,15 @@ const OrderLayout = (props: Props) => {
         sx={{
           position: "relative",
           zIndex: 5,
-          top: isHome ? { xs: 90, md: 100 } : 100,
+          top: isHome ? { xs: 90, md: 100 } : { xs: 50, sm: 90 },
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Box
           sx={{
             width: { xs: "100%", md: "70%" },
-            m: "0 auto",
           }}
         >
           {props.children}
