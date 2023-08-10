@@ -6,7 +6,7 @@ import { store } from "@/store";
 import { ThemeProvider } from "@mui/material";
 import { Session } from "next-auth";
 import { theme } from "@/utils/theme";
-import Layout from "@/Components/Layout";
+import Layout from "@/components/Layout";
 import Head from "next/head";
 import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer } from "react-toastify";

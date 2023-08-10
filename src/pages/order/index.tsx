@@ -1,7 +1,7 @@
-import Loading from "@/Components/Loading";
-import MenuCard from "@/Components/MenuCard";
-import OrderLayout from "@/Components/OrderLayout";
-import ViewCartBar from "@/Components/ViewCartBar";
+import Loading from "@/components/Loading";
+import MenuCard from "@/components/MenuCard";
+import OrderLayout from "@/components/OrderLayout";
+import ViewCartBar from "@/components/ViewCartBar";
 import { useAppSelector } from "@/store/hooks";
 import { appData, selectLocations } from "@/store/slices/appSlice";
 import { getMenusByMenuCategoryId } from "@/utils";

@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Box, Button } from "@mui/material";
-import Layout from "@/Components/BackofficeLayout";
+import Layout from "@/components/BackofficeLayout";
 import AddIcon from "@mui/icons-material/Add";
 import { getAddonCategoryByLocation, getLocationId } from "@/utils";
-import ItemCart from "@/Components/ItemCart";
+import ItemCart from "@/components/ItemCart";
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import NewAddon from "./NewAddon";
-import Loading from "@/Components/Loading";
+import Loading from "@/components/Loading";
 
 const Addons = () => {
   const { addons, isLoading, menuAddons, menusMenuCategoriesLocations } =

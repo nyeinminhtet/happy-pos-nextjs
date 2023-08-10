@@ -2,12 +2,12 @@ import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { getLocationId } from "@/utils";
-import ItemCart from "@/Components/ItemCart";
+import ItemCart from "@/components/ItemCart";
 import TableBarIcon from "@mui/icons-material/TableBar";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import CreateTable from "./CreateTable";
-import Loading from "@/Components/Loading";
+import Loading from "@/components/Loading";
 
 const Tables = () => {
   const { tables, isLoading } = useAppSelector(appData);

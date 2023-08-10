@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import Layout from "@/Components/BackofficeLayout";
+import Layout from "@/components/BackofficeLayout";
 import { getLocationId, getMenuCategoryIdByLocationId } from "@/utils";
 import CreateMenuCategory from "./CreateMenuCategory";
 import CategoryIcon from "@mui/icons-material/Category";
-import ItemCart from "@/Components/ItemCart";
+import ItemCart from "@/components/ItemCart";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
-import Loading from "@/Components/Loading";
+import Loading from "@/components/Loading";
 
 const Menu_Categories = () => {
   const [open, setOpen] = useState(false);

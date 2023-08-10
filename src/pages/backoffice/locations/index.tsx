@@ -3,12 +3,12 @@ import AddIcon from "@mui/icons-material/Add";
 import { Box, Button } from "@mui/material";
 import { locations as Locations } from "@prisma/client";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
-import Layout from "@/Components/BackofficeLayout";
+import Layout from "@/components/BackofficeLayout";
 import NewLocation from "./NewLocation";
-import ItemCart from "@/Components/ItemCart";
+import ItemCart from "@/components/ItemCart";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
-import Loading from "@/Components/Loading";
+import Loading from "@/components/Loading";
 
 const LocationsComp = () => {
   const { locations, isLoading } = useAppSelector(appData);

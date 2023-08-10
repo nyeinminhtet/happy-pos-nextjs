@@ -12,12 +12,12 @@ import {
 import { useEffect, useState } from "react";
 import { companies as Company, locations as Locations } from "@prisma/client";
 import { config } from "@/config/config";
-import Layout from "@/Components/BackofficeLayout";
+import Layout from "@/components/BackofficeLayout";
 import { getLocationId } from "@/utils";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { updateCompany } from "@/store/slices/companySlice";
-import Loading from "@/Components/Loading";
+import Loading from "@/components/Loading";
 import { toast } from "react-toastify";
 
 const Setting = () => {

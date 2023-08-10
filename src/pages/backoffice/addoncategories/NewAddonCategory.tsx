@@ -1,4 +1,4 @@
-import RequireSwitch from "@/Components/Switch";
+import RequireSwitch from "@/components/Switch";
 import { config } from "@/config/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addAddonCategory } from "@/store/slices/addonCategoriesSlice";

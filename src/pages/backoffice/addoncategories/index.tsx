@@ -2,13 +2,13 @@ import { useState } from "react";
 import ClassIcon from "@mui/icons-material/Class";
 import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import Layout from "@/Components/BackofficeLayout";
+import Layout from "@/components/BackofficeLayout";
 import { getLocationId } from "@/utils";
-import ItemCart from "@/Components/ItemCart";
+import ItemCart from "@/components/ItemCart";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import NewAddonCategory from "./NewAddonCategory";
-import Loading from "@/Components/Loading";
+import Loading from "@/components/Loading";
 
 const AddonCategories = () => {
   const {
