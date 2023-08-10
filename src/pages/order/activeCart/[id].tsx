@@ -20,8 +20,6 @@ const ActiveOrder = () => {
   const order = orders.find((item) => item.id === Number(orderId)) as orders;
   const { items } = useAppSelector(selectCart);
 
-  console.log("orders", orders);
-
   useEffect(() => {
     if (!order) {
       router.push({ pathname: "/order", query });
@@ -32,9 +30,13 @@ const ActiveOrder = () => {
   //   dispatch(emptyCart());
   // }, []);
 
-  // setTimeout(() => {
-  //   order && dispatch(refetchOrderline(order.id));
-  // }, 5000);
+  useEffect(() => {
+    console.log("orderlines", orderlines);
+  }, [orderlines]);
+
+  setTimeout(() => {
+    // order && dispatch(refetchOrderline(order.id));
+  }, 1000 * 60);
 
   return (
     <Box
