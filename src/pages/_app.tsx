@@ -6,10 +6,10 @@ import { store } from "@/store";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material";
 import { Session } from "next-auth";
 import { theme } from "@/utils/theme";
-import Layout from "@/components/Layout";
 import Head from "next/head";
 import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer } from "react-toastify";
+import Layout from "@/components/Layout";
 
 type CustomeAppProps = AppProps & { session: Session };
 
