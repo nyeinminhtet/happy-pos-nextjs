@@ -1,4 +1,4 @@
-import TopBar from "@/components/TopBar";
+import TopBar from "@/Components/TopBar";
 import { Box, Button, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";

@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Layout from "@/components/BackofficeLayout";
+import Layout from "@/Components/BackofficeLayout";
 import { getLocationId, getQuantityByOrderId } from "@/utils";
 import {
   orders as Order,
@@ -32,7 +32,7 @@ import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { updateOrderlineStatus } from "@/store/slices/orderlinesSlice";
-import Loading from "@/components/Loading";
+import Loading from "@/Components/Loading";
 import { toast } from "react-toastify";
 
 interface Props {

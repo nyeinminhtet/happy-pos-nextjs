@@ -2,14 +2,14 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { locations as Location } from "@prisma/client";
 import { config } from "@/config/config";
-import Layout from "@/components/BackofficeLayout";
+import Layout from "@/Components/BackofficeLayout";
 import { Box, Button, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import DeleteDialog from "@/components/DeleteDialog";
+import DeleteDialog from "@/Components/DeleteDialog";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { removeLocation, updateLocation } from "@/store/slices/LocationsSlice";
-import Loading from "@/components/Loading";
+import Loading from "@/Components/Loading";
 import { toast } from "react-toastify";
 
 const EditLocation = () => {

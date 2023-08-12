@@ -9,7 +9,7 @@ import { theme } from "@/utils/theme";
 import Head from "next/head";
 import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer } from "react-toastify";
-import Layout from "@/components/Layout";
+import Layout from "@/Components/Layout";
 
 type CustomeAppProps = AppProps & { session: Session };
 

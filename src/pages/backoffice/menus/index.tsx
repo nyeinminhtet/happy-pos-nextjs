@@ -8,10 +8,10 @@ import {
   getMenusByMenuCategoryId,
 } from "@/utils";
 import NewMenu from "./NewMenu";
-import MenuCard from "@/components/MenuCard";
+import MenuCard from "@/Components/MenuCard";
 import { useAppSelector } from "@/store/hooks";
 import { appData, selectMenuCategories } from "@/store/slices/appSlice";
-import Loading from "@/components/Loading";
+import Loading from "@/Components/Loading";
 
 const Menus = () => {
   const { menus, menusMenuCategoriesLocations, menuCategories, isLoading } =

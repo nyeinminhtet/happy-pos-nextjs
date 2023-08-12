@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import cooking from "@/assets/cooking.gif";
 import Image from "next/image";
 import { orderlines, orders } from "@prisma/client";
-import Loading from "@/components/Loading";
+import Loading from "@/Components/Loading";
 import { config } from "@/config/config";
 import { refetchOrderline } from "@/store/slices/orderlinesSlice";
 

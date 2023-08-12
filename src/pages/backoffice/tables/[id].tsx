@@ -1,5 +1,5 @@
-import Layout from "@/components/BackofficeLayout";
-import Loading from "@/components/Loading";
+import Layout from "@/Components/BackofficeLayout";
+import Loading from "@/Components/Loading";
 import { config } from "@/config/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
