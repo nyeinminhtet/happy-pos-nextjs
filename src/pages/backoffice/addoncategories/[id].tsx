@@ -15,7 +15,7 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { config } from "@/config/config";
 import { getLocationId, getMenusByLocationId } from "@/utils";
-import DeleteDialog from "@/components/DeleteDialog";
+import DeleteDialog from "@/Components/DeleteDialog";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import {
@@ -23,7 +23,7 @@ import {
   updateAddonCategory,
 } from "@/store/slices/addonCategoriesSlice";
 import { addon_categories as AddonCategory } from "@prisma/client";
-import Loading from "@/components/Loading";
+import Loading from "@/Components/Loading";
 import { toast, ToastContainer } from "react-toastify";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;

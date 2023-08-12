@@ -1,4 +1,4 @@
-import Layout from "@/components/BackofficeLayout";
+import Layout from "@/Components/BackofficeLayout";
 import {
   Autocomplete,
   Box,
@@ -19,14 +19,14 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { config } from "@/config/config";
 import { getLocationByMenuCategoryId, getLocationId } from "@/utils";
-import MenuCard from "@/components/MenuCard";
+import MenuCard from "@/Components/MenuCard";
 import RemoveMenuFromMenuCategory from "./RemoveMenu";
-import DeleteDialog from "@/components/DeleteDialog";
+import DeleteDialog from "@/Components/DeleteDialog";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { appData, fetchAppData } from "@/store/slices/appSlice";
 import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";
 import { removeMenuCategory } from "@/store/slices/menuCategoriesSlice";
-import Loading from "@/components/Loading";
+import Loading from "@/Components/Loading";
 import { toast } from "react-toastify";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
