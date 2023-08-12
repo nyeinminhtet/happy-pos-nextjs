@@ -68,14 +68,6 @@ const Review = () => {
     const isValid = locationId && tableId && items.length;
     if (!isValid) return toast.error("Something went wrong!");
 
-    // const data = await fetch(
-    //   `${config.apiBaseUrl}/order?locationId=${locationId}&tableId=${tableId}`,
-    //   {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ items }),
-    //   }
-    // );
     const data = await fetch(
       `/api/order?locationId=${locationId}&tableId=${tableId}`,
       {
@@ -87,6 +79,7 @@ const Review = () => {
 
     const orderCreated = await data.json();
     dispatch(addOrder(orderCreated));
+    refetchOrderline(orderCreated.id);
 
     router.push({
       pathname: `/order/activeCart/${orderCreated.id}`,

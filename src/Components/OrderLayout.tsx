@@ -6,6 +6,7 @@ import { appData, fetchAppData } from "@/store/slices/appSlice";
 import { useEffect } from "react";
 import { selectCart } from "@/store/slices/cartSlice";
 import OrderAppHeader from "./OrderAppHeader";
+import OrderHero from "./OrderHero";
 
 interface Props {
   children: string | JSX.Element | JSX.Element[];
@@ -32,15 +33,17 @@ const OrderLayout = (props: Props) => {
         sx={{
           position: "relative",
           zIndex: 5,
-          top: isHome ? { xs: 90, md: 100 } : { xs: 50, sm: 90 },
+          top: isHome ? { xs: 55, sm: 60, md: 70 } : { xs: 50, sm: 90 },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          flexDirection: "column",
         }}
       >
         <Box
           sx={{
-            width: { xs: "100%", md: "70%" },
+            width: { xs: "100%", md: "90%" },
+            grid: { xs: 2, sm: 4, md: 5 },
           }}
         >
           {props.children}

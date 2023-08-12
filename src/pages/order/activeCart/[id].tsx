@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import cooking from "@/assets/cooking.gif";
 import Image from "next/image";
-import { orderlines, orders } from "@prisma/client";
+import { OrderStatus, orderlines as Orderline, orders } from "@prisma/client";
 import Loading from "@/Components/Loading";
 import { config } from "@/config/config";
 
@@ -19,6 +19,10 @@ const ActiveOrder = () => {
   const order = orders.find((item) => item.id === Number(orderId)) as orders;
   const { items } = useAppSelector(selectCart);
 
+  console.log(orderId);
+  let reCheck: Orderline[];
+  let status: OrderStatus;
+
   useEffect(() => {
     if (!order) {
       router.push({ pathname: "/order", query });
@@ -29,18 +33,18 @@ const ActiveOrder = () => {
   //   dispatch(emptyCart());
   // }, []);
 
-  useEffect(() => {
-    console.log("orderlines", orderlines);
-  }, [orderlines]);
+  // setInterval(async () => {
+  //   const response = await fetch(`/api/orderlines?orderId=${orderId}`);
+  //   const data = await response.json();
 
-  setTimeout(async () => {
-    const response = await fetch(
-      `${config.apiBaseUrl}/orderlines?orderId=${orderId}`
-    );
-    const data = await response.json();
-
-    console.log("refetch", data);
-  }, 1000 * 60);
+  //   console.log("data", data);
+  //   reCheck = data;
+  //   console.log("recheck", reCheck);
+  //   if (reCheck.length) {
+  //     status = reCheck.map((item) => item.status);
+  //   }
+  //   console.log(status);
+  // }, 1000 * 20);
 
   return (
     <Box
@@ -78,6 +82,8 @@ const ActiveOrder = () => {
                 <Typography variant="h5">menu: {item.menu.name}</Typography>
                 <Typography variant="h5">quantity: {item.quantity}</Typography>
                 <Typography variant="h5">TotalPrice:{order.price}</Typography>
+                <Typography>{status ? status[1] : "Pending"}</Typography>
+                <Typography></Typography>
               </Paper>
             ))
           : null}

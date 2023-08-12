@@ -8,10 +8,10 @@ import {
   getMenusByMenuCategoryId,
 } from "@/utils";
 import NewMenu from "./NewMenu";
-import MenuCard from "@/components/MenuCard";
+import MenuCard from "@/Components/MenuCard";
 import { useAppSelector } from "@/store/hooks";
 import { appData, selectMenuCategories } from "@/store/slices/appSlice";
-import Loading from "@/components/Loading";
+import Loading from "@/Components/Loading";
 
 const Menus = () => {
   const { menus, menusMenuCategoriesLocations, menuCategories, isLoading } =
@@ -66,7 +66,7 @@ const Menus = () => {
                 key={index}
                 sx={{
                   fontSize: { xs: "10px", sm: "14px" },
-                  px: { xs: 1, sm: 1, md: 5 },
+                  px: { xs: 1, sm: 1, md: 3 },
                 }}
                 label={item.category}
                 onClick={() => setSelectedMenuCategory(item.id)}
