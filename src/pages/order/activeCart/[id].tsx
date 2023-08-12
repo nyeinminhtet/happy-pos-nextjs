@@ -7,9 +7,8 @@ import { useEffect } from "react";
 import cooking from "@/assets/cooking.gif";
 import Image from "next/image";
 import { orderlines, orders } from "@prisma/client";
-import Loading from "@/components/Loading";
+import Loading from "@/Components/Loading";
 import { config } from "@/config/config";
-import { refetchOrderline } from "@/store/slices/orderlinesSlice";
 
 const ActiveOrder = () => {
   const router = useRouter();
@@ -34,8 +33,13 @@ const ActiveOrder = () => {
     console.log("orderlines", orderlines);
   }, [orderlines]);
 
-  setTimeout(() => {
-    // order && dispatch(refetchOrderline(order.id));
+  setTimeout(async () => {
+    const response = await fetch(
+      `${config.apiBaseUrl}/orderlines?orderId=${orderId}`
+    );
+    const data = await response.json();
+
+    console.log("refetch", data);
   }, 1000 * 60);
 
   return (

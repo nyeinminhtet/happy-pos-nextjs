@@ -17,7 +17,6 @@ import { setOrders } from "./ordersSlice";
 import { setOrderlines } from "./orderlinesSlice";
 import { setMenusMenuCategoriesLocations } from "./menusMenuCategoriesLocationsSlice";
 import { RootState } from "..";
-import { getLocationId } from "@/utils";
 
 interface AppState {
   isloading: boolean;
