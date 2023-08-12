@@ -7,24 +7,24 @@ import { Box } from "@mui/material";
 
 const HappyPos = () => {
   return (
-    <div
-      // sx={{
-      //   display: "flex",
-      //   width: "100%",
-      //   height: "100%",
-      //   minHeight: "100vh",
-      //   overflowY: "auto",
-      //   flexDirection: "column",
-      //   m: 0,
-      //   position: "relative",
-      // }}
-      className=" flex w-full h-full min-h-screen overflow-y-auto flex-col relative bg-cyan-50"
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        height: "100%",
+        minHeight: "100vh",
+        overflowY: "auto",
+        flexDirection: "column",
+        m: 0,
+        position: "relative",
+        bgcolor: "#F1F0E8",
+      }}
     >
       <Header />
       <Box
         sx={{
-          // maxWidth: { md: "100%", lg: "1280px" },
-          m: 0,
+          maxWidth: { md: "100%", lg: "1280px" },
+          mt: { xs: 5, sm: 0 },
         }}
       >
         <Hero />
@@ -34,7 +34,7 @@ const HappyPos = () => {
         </Box>
       </Box>
       <Footer />
-    </div>
+    </Box>
   );
 };
 

@@ -16,56 +16,56 @@ const Header = () => {
         w: "100%",
         zIndex: 10,
       }}
+      // className=" fixed py-1 top-0 inset-x-0 w-full z-10 bg-[#00235B]"
     >
       <Box
         sx={{
-          position: "static",
-          top: 0,
           display: "flex",
           justifyContent: "space-evenly",
           textAlign: "center",
         }}
       >
-        <Typography
-          variant="h2"
-          // sx={{
-          //   fontWeight: "bold",
-          //   color: "white",
-          //   fontSize: { xs: "2rem", md: "2.5rem" },
-          //   mt: 0,
-          //   display: "flex",
-          // }}
-          className=" text-sm md:text-3xl text-white flex items-center font-bold"
-        >
-          Sarr Mal
-          <Image src={food} alt="food" className=" w-5 sm:w-10" />
-        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Typography
+            variant="h2"
+            sx={{
+              fontWeight: "bold",
+              color: "white",
+              fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" },
+              mt: 0,
+              display: "flex",
+            }}
+            // className=" text-sm md:text-3xl text-white flex items-center font-bold"
+          >
+            Sarr Mal
+          </Typography>
+          <Image src={food} alt="food" style={{ width: 30, height: 30 }} />
+        </Box>
         <Box sx={{ ml: { xs: 5, sm: 0 } }}>
           <Link href="/order?locationId=1&tableId=4">
             <Button
-              // sx={{
-              //   color: "white",
-              //   bgcolor: "#98DFD6",
-              //   textTransform: "capitalize",
-              //   fontWeight: "bold",
-              //   fontSize: { xs: 10, sm: 12, md: 14 },
-              // }}
-              className=" text-white bg-cyan-400 font-bold text-xs capitalize w-fit sm:text-sm"
+              sx={{
+                color: "white",
+                bgcolor: "#98DFD6",
+                textTransform: "capitalize",
+                fontWeight: "bold",
+                fontSize: { xs: 10, sm: 12, md: 14 },
+              }}
             >
               Order now
             </Button>
           </Link>
           <Link href="/backoffice">
             <Button
-              // sx={{
-              //   color: "white",
-              //   textTransform: "capitalize",
-              //   fontWeight: "bold",
-              //   fontSize: { xs: 10, sm: 12, md: 14 },
-              //   ml: { xs: 1, md: 3 },
-              //   ":hover": { bgcolor: "#98DFD6" },
-              // }}
-              className=" text-white ml-3 font-semibold sm:inline-block text-xs capitalize hidden w-fit sm:text-sm  hover:underline"
+              sx={{
+                color: "white",
+                textTransform: "capitalize",
+                fontWeight: "bold",
+                fontSize: { xs: 10, sm: 12, md: 14 },
+                ml: { xs: 1, md: 3 },
+                ":hover": { textDecoration: "underline" },
+                display: { xs: "none", sm: "inline-block" },
+              }}
             >
               Join us
             </Button>

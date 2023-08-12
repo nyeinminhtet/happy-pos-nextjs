@@ -35,15 +35,13 @@ const features = [
 
 const Features = () => {
   return (
-    <div
-      // sx={{
-      //   display: "flex",
-      //   mt: { xs: 7, sm: 9 },
-      //   flexWrap: "wrap",
-      //   justifyContent: "center",
-      //   bgcolor:
-      // }}
-      className=" flex flex-wrap justify-center gap-1 md:mt-10 mt-11"
+    <Box
+      sx={{
+        display: "flex",
+        mt: { xs: 7, sm: 9 },
+        flexWrap: "wrap",
+        justifyContent: "center",
+      }}
     >
       {features.map((item) => {
         return (
@@ -68,7 +66,7 @@ const Features = () => {
           </Zoom>
         );
       })}
-    </div>
+    </Box>
   );
 };
 

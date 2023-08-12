@@ -21,7 +21,7 @@ const MenuUpdate = () => {
   const { items } = useAppSelector(selectCart);
 
   const cartItemId = query.id as string;
-  const cartItem = items.find((item) => item.id === cartItemId);
+  const cartItem = items.find((item) => item.id === cartItemId); //
 
   const [selectedAddons, setSelectedAddons] = useState<Addon[]>([]);
   const [quantity, setQuantity] = useState(1);
@@ -35,6 +35,7 @@ const MenuUpdate = () => {
       )
     : [];
   const validAddonCategoryIds = validAddonCategories.map((item) => item.id);
+
   const validAddons = addons.filter((item) =>
     validAddonCategoryIds.includes(item.addon_category_id)
   );

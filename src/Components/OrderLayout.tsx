@@ -40,7 +40,7 @@ const OrderLayout = (props: Props) => {
       >
         <Box
           sx={{
-            width: { xs: "100%", md: "70%" },
+            width: { xs: "100%", md: "80%" },
           }}
         >
           {props.children}

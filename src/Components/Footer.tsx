@@ -28,7 +28,7 @@ const Footer = () => {
           }}
         >
           <Box>
-            <Typography variant="body1" sx={{ fontStyle: "italic" }}>
+            <Typography variant="body1" sx={{ fontFamily: "monospace" }}>
               Ywar Lal street, <br />
               ChanMyaTharZi, Mandalay <br />
               <span style={{ color: "#E21818" }}> contact@sarrmal.com</span>

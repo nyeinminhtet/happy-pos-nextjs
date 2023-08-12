@@ -13,6 +13,7 @@
     "@aws-sdk/client-s3": "^3.335.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mui/base": "^5.0.0-beta.10",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.130",
     "@mui/material": "^5.13.1",
@@ -45,7 +46,6 @@
     "@types/pg": "^8.6.6",
     "@types/qrcode": "^1.5.0",
     "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.27",
-    "tailwindcss": "^3.3.3"
+    "postcss": "^8.4.27"
   }
 }

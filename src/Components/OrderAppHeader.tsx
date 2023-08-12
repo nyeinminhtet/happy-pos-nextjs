@@ -17,57 +17,27 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
   const isHome = router.pathname === "/order";
   const isCart = router.pathname === "/order/cart";
   const isActiveOrder = router.pathname.includes("/order/activeOrder");
-  const { company } = useAppSelector(appData);
   const showCartIcon = !isCart && !isActiveOrder;
 
   return (
     <Box
       sx={{
-        width: "100vw",
+        width: "100vh",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        position: "absolute",
-        zIndex: 5,
+        position: "fixed",
+        top: 0,
       }}
     >
-      {showCartIcon && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: 10,
-            right: { xs: 40, md: 80, lg: 200 },
-            cursor: "pointer",
-          }}
-          onClick={() =>
-            router.push({ pathname: "/order/cart", query: router.query })
-          }
-        >
-          <ShoppingCartCheckoutIcon
-            sx={{
-              fontSize: { xs: "30px", sm: "40px" },
-              color: "#FFE194",
-            }}
-          />
-          {cartItemCount > 0 && (
-            <Typography
-              sx={{
-                color: "#E8F6EF",
-                position: "absolute",
-                top: -10,
-                right: 3,
-                borderRadius: "50%",
-                bgcolor: "red",
-                fontFamily: "monospace",
-                py: 0,
-              }}
-            >
-              {cartItemCount}
-            </Typography>
-          )}
-        </Box>
-      )}
-      <div className=" w-full h-fit p-3 bg-blue-950 flex justify-between">
+      <Box
+        sx={{
+          p: 1.5,
+          display: "flex",
+          justifyContent: "space-between",
+          bgcolor: "#00235B",
+          width: "100vw",
+        }}
+      >
         <Box>
           <Box
             sx={{
@@ -80,17 +50,45 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
               variant="h4"
               className=" text-sm font-semibold md:text-2xl"
             >
-              {company?.name}
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: "lightGray", fontSize: { xs: "10px", sm: "13px" } }}
-            >
-              {company?.address}
+              SarrMal
             </Typography>
           </Box>
         </Box>
-      </div>
+        {showCartIcon && (
+          <Box
+            sx={{
+              position: "absolute",
+              top: 10,
+              right: { xs: 40, md: 80, lg: 200 },
+              cursor: "pointer",
+            }}
+            onClick={() =>
+              router.push({ pathname: "/order/cart", query: router.query })
+            }
+          >
+            <ShoppingCartCheckoutIcon
+              sx={{
+                fontSize: { xs: "30px", sm: "40px" },
+                color: "#FFE194",
+              }}
+            />
+            {cartItemCount > 0 && (
+              <Typography
+                sx={{
+                  color: "#E8F6EF",
+
+                  borderRadius: "50%",
+                  bgcolor: "red",
+                  fontFamily: "monospace",
+                  py: 0,
+                }}
+              >
+                {cartItemCount}
+              </Typography>
+            )}
+          </Box>
+        )}
+      </Box>
     </Box>
   );
 };

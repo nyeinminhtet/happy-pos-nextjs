@@ -51,7 +51,6 @@ const Testimonials = () => {
                 mb: 3,
                 borderRadius: 3,
                 position: "relative",
-                bgcolor: "#FFDD83",
               }}
             >
               <Box

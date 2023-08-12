@@ -34,8 +34,14 @@ const ActiveOrder = () => {
     console.log("orderlines", orderlines);
   }, [orderlines]);
 
-  setTimeout(() => {
-    // order && dispatch(refetchOrderline(order.id));
+  setTimeout(async () => {
+    if (order) {
+      const response = await fetch(
+        `${config.apiBaseUrl}/orderlines?orderId=${order.id}`
+      );
+      const newdata = await response.json();
+      console.log("newdata", newdata);
+    }
   }, 1000 * 60);
 
   return (
