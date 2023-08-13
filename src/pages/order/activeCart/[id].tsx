@@ -6,11 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import cooking from "@/assets/cooking.gif";
 import Image from "next/image";
-<<<<<<< HEAD
-import { orderlines, orders } from "@prisma/client";
-=======
 import { OrderStatus, orderlines as Orderline, orders } from "@prisma/client";
->>>>>>> staging
 import Loading from "@/Components/Loading";
 import { config } from "@/config/config";
 
@@ -41,17 +37,15 @@ const ActiveOrder = () => {
   //   const response = await fetch(`/api/orderlines?orderId=${orderId}`);
   //   const data = await response.json();
 
-<<<<<<< HEAD
-  setTimeout(async () => {
-    if (order) {
-      const response = await fetch(
-        `${config.apiBaseUrl}/orderlines?orderId=${order.id}`
-      );
-      const newdata = await response.json();
-      console.log("newdata", newdata);
-    }
-  }, 1000 * 60);
-=======
+  // setTimeout(async () => {
+  //   if (order) {
+  //     const response = await fetch(
+  //       `${config.apiBaseUrl}/orderlines?orderId=${order.id}`
+  //     );
+  //     const newdata = await response.json();
+  //     console.log("newdata", newdata);
+  //   }
+  // }, 1000 * 60);
   //   console.log("data", data);
   //   reCheck = data;
   //   console.log("recheck", reCheck);
@@ -60,7 +54,6 @@ const ActiveOrder = () => {
   //   }
   //   console.log(status);
   // }, 1000 * 20);
->>>>>>> staging
 
   return (
     <Box
