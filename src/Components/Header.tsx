@@ -28,44 +28,41 @@ const Header = () => {
       >
         <Typography
           variant="h2"
-          // sx={{
-          //   fontWeight: "bold",
-          //   color: "white",
-          //   fontSize: { xs: "2rem", md: "2.5rem" },
-          //   mt: 0,
-          //   display: "flex",
-          // }}
-          className=" text-sm md:text-3xl text-white flex items-center font-bold"
+          sx={{
+            fontWeight: "bold",
+            color: "white",
+            fontSize: { xs: "2rem", md: "2.5rem" },
+            mt: 0,
+            display: "flex",
+          }}
         >
           Sarr Mal
-          <Image src={food} alt="food" className=" w-5 sm:w-10" />
+          <Image src={food} alt="food" width={40} height={40} />
         </Typography>
         <Box sx={{ ml: { xs: 5, sm: 0 } }}>
           <Link href="/order?locationId=1&tableId=4">
             <Button
-              // sx={{
-              //   color: "white",
-              //   bgcolor: "#98DFD6",
-              //   textTransform: "capitalize",
-              //   fontWeight: "bold",
-              //   fontSize: { xs: 10, sm: 12, md: 14 },
-              // }}
-              className=" text-white bg-cyan-400 font-bold text-xs capitalize w-fit sm:text-sm"
+              sx={{
+                color: "white",
+                bgcolor: "#98DFD6",
+                textTransform: "capitalize",
+                fontWeight: "bold",
+                fontSize: { xs: 10, sm: 12, md: 14 },
+              }}
             >
               Order now
             </Button>
           </Link>
           <Link href="/backoffice">
             <Button
-              // sx={{
-              //   color: "white",
-              //   textTransform: "capitalize",
-              //   fontWeight: "bold",
-              //   fontSize: { xs: 10, sm: 12, md: 14 },
-              //   ml: { xs: 1, md: 3 },
-              //   ":hover": { bgcolor: "#98DFD6" },
-              // }}
-              className=" text-white ml-3 font-semibold sm:inline-block text-xs capitalize hidden w-fit sm:text-sm  hover:underline"
+              sx={{
+                color: "white",
+                textTransform: "capitalize",
+                fontWeight: "bold",
+                fontSize: { xs: 10, sm: 12, md: 14 },
+                ml: { xs: 1, md: 3 },
+                ":hover": { textDecoration: "underline" },
+              }}
             >
               Join us
             </Button>
