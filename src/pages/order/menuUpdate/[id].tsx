@@ -5,13 +5,20 @@ import {
   addon_categories as AddonCategory,
 } from "@prisma/client";
 import { getAddonCategoryByMenuId } from "@/utils";
-import { Box, Button, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import AddonCategories from "@/Components/AddonCategories";
 import Quantity from "@/Components/Quantity";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { selectCart, updateCart } from "@/store/slices/cartSlice";
 import Image from "next/image";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import AspectRatio from "@mui/joy/AspectRatio";
+import Button from "@mui/joy/Button";
+import Card from "@mui/joy/Card";
+import CardContent from "@mui/joy/CardContent";
+import CardOverflow from "@mui/joy/CardOverflow";
+import Typography from "@mui/joy/Typography";
 
 const MenuUpdate = () => {
   const router = useRouter();
@@ -109,52 +116,71 @@ const MenuUpdate = () => {
       sx={{
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
         flexDirection: "column",
-        p: 4,
       }}
     >
-      <Image
-        src={cartItem?.menu.acess_url || ""}
-        alt="image"
-        width={150}
-        height={150}
-        style={{
-          borderRadius: "50%",
-          margin: "0 auto",
-        }}
-      />
-      <Typography variant="h3" sx={{ mb: 2 }}>
-        {cartItem?.menu.name}
-      </Typography>
+      <Box>
+        <AiOutlineArrowLeft
+          size={30}
+          onClick={() => router.back()}
+          cursor="pointer"
+        />
 
-      <Box
-        sx={{
-          mt: 5,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <AddonCategories
-          validAddonCategories={validAddonCategories}
-          validAddons={validAddons}
-          selectedAddons={selectedAddons}
-          onChange={(checked, item) => handleAddonSelect(checked, item)}
-        />
-        <Quantity
-          value={quantity}
-          decrease={handleQuantityOnDecrease}
-          increase={handleQuantityOnIncrease}
-        />
-        <Button
-          variant="contained"
-          disabled={isDisable}
-          color="primary"
-          onClick={handleUpdateCart}
-          sx={{ mt: 3, width: "fit-content" }}
+        <Card
+          sx={{
+            width: 320,
+            maxWidth: "100%",
+            boxShadow: "lg",
+          }}
         >
-          Update
-        </Button>
+          <CardOverflow
+            sx={{
+              position: "sticky",
+              top: 0,
+              zIndex: 100,
+            }}
+          >
+            <AspectRatio sx={{ minWidth: 200 }}>
+              <Image
+                src={cartItem?.menu?.acess_url || ""}
+                width={140}
+                height={140}
+                loading="lazy"
+                alt=""
+              />
+            </AspectRatio>
+          </CardOverflow>
+          <CardContent>
+            <Typography level="body-lg" fontSize={{ xs: 20, sm: 25 }}>
+              {cartItem?.menu?.name}
+            </Typography>
+            <Box>
+              <AddonCategories
+                validAddonCategories={validAddonCategories}
+                validAddons={validAddons}
+                selectedAddons={selectedAddons}
+                onChange={(checked, item) => handleAddonSelect(checked, item)}
+              />
+              <Quantity
+                value={quantity}
+                decrease={handleQuantityOnDecrease}
+                increase={handleQuantityOnIncrease}
+              />
+            </Box>
+          </CardContent>
+          <CardOverflow>
+            <Button
+              variant="solid"
+              size="lg"
+              onClick={handleUpdateCart}
+              disabled={isDisable}
+              sx={{ bgcolor: "#00235B" }}
+            >
+              Update
+            </Button>
+          </CardOverflow>
+        </Card>
       </Box>
     </Box>
   );

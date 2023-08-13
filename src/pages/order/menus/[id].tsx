@@ -20,10 +20,7 @@ import Button from "@mui/joy/Button";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import CardOverflow from "@mui/joy/CardOverflow";
-import Chip from "@mui/joy/Chip";
-import Link from "@mui/joy/Link";
 import Typography from "@mui/joy/Typography";
-import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 
 const DetailMenu = () => {
   const router = useRouter();
@@ -187,9 +184,10 @@ const DetailMenu = () => {
           <CardOverflow>
             <Button
               variant="solid"
-              color="primary"
+              sx={{ bgcolor: "#00235B" }}
               size="lg"
               onClick={handleAddToCart}
+              disabled={isDisable}
             >
               Add to cart
             </Button>

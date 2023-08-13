@@ -69,6 +69,7 @@ const OrderApp = () => {
             width: { xs: "100%" },
             bgcolor: "#00235B",
             border: "1px solid white",
+            zIndex: 10,
           }}
           indicatorColor="secondary"
           textColor="inherit"

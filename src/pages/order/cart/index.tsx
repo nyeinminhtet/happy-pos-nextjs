@@ -13,6 +13,8 @@ import { addOrder } from "@/store/slices/ordersSlice";
 import { toast } from "react-toastify";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { addOrderline, refetchOrderline } from "@/store/slices/orderlinesSlice";
+import { Card } from "@mui/joy";
+import Image from "next/image";
 
 const Review = () => {
   const { items, isLoading } = useAppSelector(selectCart);
@@ -41,16 +43,16 @@ const Review = () => {
           }}
         >
           <Typography
-            color={"primary"}
+            color="primary"
             className=" text-gray-700 text-sm sm:text-md"
           >
             - {addon.name}
           </Typography>
           <Typography
-            color={"primary"}
+            color="primary"
             className=" text-gray-700 text-sm sm:text-md"
           >
-            {addon.price}
+            {addon.price}k
           </Typography>
         </Box>
       );
@@ -91,142 +93,149 @@ const Review = () => {
   if (!items.length) return null;
 
   return (
-    <div className="  bg-zinc-100 rounded-lg relative">
+    <Card
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        p: 3,
+        mx: 3,
+        mt: 3,
+      }}
+    >
+      <AiOutlineArrowLeft
+        size={30}
+        cursor="pointer"
+        onClick={() => router.back()}
+        className=" -ml-2 mr-1 absolute left-4 top-5"
+      />
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          p: 3,
-          borderRadius: 10,
-          mx: 3,
-          mt: 3,
+          width: { xs: "100%", md: "500px" },
         }}
       >
-        <AiOutlineArrowLeft
-          size={30}
-          cursor="pointer"
-          onClick={() => router.back()}
-          className=" -ml-2 mr-1 absolute left-4 top-5"
-        />
-        <Box
+        <Typography
+          variant="h5"
+          color="primary"
           sx={{
-            width: { xs: "100%", md: "500px" },
+            textAlign: "center",
+            mb: 3,
+            fontSize: { xs: "20px", sm: "30px" },
           }}
         >
-          <Typography
-            variant="h5"
-            color="primary"
-            sx={{ textAlign: "center", mb: 3, fontSize: { xs: "20px" } }}
-          >
-            Review your order
-          </Typography>
-          {items.map((cartItem, index) => {
-            const { menu, addons, quantity } = cartItem;
-            return (
-              <Box key={index}>
+          Review your order
+        </Typography>
+        {items.map((cartItem, index) => {
+          const { menu, addons, quantity } = cartItem;
+          return (
+            <Box key={index}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  mt: 2,
+                }}
+              >
                 <Box
                   sx={{
                     display: "flex",
-                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "100%",
                   }}
                 >
-                  <Avatar
-                    sx={{
-                      width: { xs: 20, sm: 30 },
-                      height: { xs: 20, sm: 30 },
-                      mr: 1,
-                      backgroundColor: "#1B9C85",
-                      fontSize: { xs: "13px", sm: "18px" },
-                    }}
-                  >
-                    {quantity}x
-                  </Avatar>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      width: "100%",
-                    }}
-                  >
+                  <Box sx={{ display: "flex" }}>
+                    <Image
+                      src={menu.acess_url || ""}
+                      width={80}
+                      height={80}
+                      alt=""
+                    />
                     <Typography
                       variant="h6"
-                      color="black"
-                      sx={{ fontSize: { xs: "15px", sm: "20px" } }}
+                      sx={{
+                        fontSize: { xs: "15px", sm: "20px" },
+                        fontWeight: "bold",
+                        mx: 2,
+                      }}
                     >
                       {menu.name}
                     </Typography>
-                    <Typography
-                      variant="h6"
-                      color="primary"
-                      sx={{ fontSize: { xs: "13px", sm: "18px" } }}
+                    <Avatar
+                      sx={{
+                        width: { xs: 20, sm: 30 },
+                        height: { xs: 20, sm: 30 },
+                        mr: 1,
+                        backgroundColor: "#1B9C85",
+                        fontSize: { xs: "13px", sm: "18px" },
+                      }}
                     >
-                      {menu.price}
-                    </Typography>
+                      {quantity}x
+                    </Avatar>
                   </Box>
+                  <Typography
+                    variant="h6"
+                    color="primary"
+                    sx={{ fontSize: { xs: "13px", sm: "18px" } }}
+                  >
+                    {menu.price}k
+                  </Typography>
                 </Box>
-                <Box
-                  sx={{
-                    pl: 6,
-                  }}
-                >
-                  {addons && renderAddons(addons)}
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    mb: 3,
-                    mt: 1,
-                  }}
-                >
-                  <DeleteIcon
-                    sx={{
-                      mr: 2,
-                      cursor: "pointer",
-                      fontSize: { xs: 15, sm: 20, md: 25 },
-                    }}
-                    onClick={() => removeCartItems(cartItem)}
-                  />
-                  <EditIcon
-                    sx={{
-                      cursor: "pointer",
-                      fontSize: { xs: 15, sm: 20, md: 25 },
-                    }}
-                    onClick={() =>
-                      router.push({
-                        pathname: `menuUpdate/${cartItem.id}`,
-                        query: router.query,
-                      })
-                    }
-                  />
-                </Box>
-                <hr className=" border-b border-gray-500 mb-3" />
               </Box>
-            );
-          })}
-          <Divider />
-          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-            <Typography
-              variant="h4"
-              color="primary"
-              sx={{ fontSize: { xs: 20, sm: 30 } }}
-            >
-              Total: {getCartTotalPrice(items)}
-            </Typography>
-          </Box>
-          <Box sx={{ mt: 3, textAlign: "center" }}>
-            <Button
-              variant="contained"
-              sx={{ fontSize: { xs: 13, sm: 15 } }}
-              onClick={conformOrder}
-              className=" bg-blue-950"
-            >
-              Confirm order
-            </Button>
-          </Box>
+              <Box sx={{}}>{addons && renderAddons(addons)}</Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  mb: 3,
+                  mt: 1,
+                }}
+              >
+                <DeleteIcon
+                  sx={{
+                    mr: 2,
+                    cursor: "pointer",
+                    fontSize: { xs: 15, sm: 20, md: 25 },
+                  }}
+                  onClick={() => removeCartItems(cartItem)}
+                />
+                <EditIcon
+                  sx={{
+                    cursor: "pointer",
+                    fontSize: { xs: 15, sm: 20, md: 25 },
+                  }}
+                  onClick={() =>
+                    router.push({
+                      pathname: `menuUpdate/${cartItem.id}`,
+                      query: router.query,
+                    })
+                  }
+                />
+              </Box>
+              <hr className=" border-b border-gray-500 mb-3" />
+            </Box>
+          );
+        })}
+        <Divider />
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+          <Typography
+            variant="h4"
+            color="primary"
+            sx={{ fontSize: { xs: 20, sm: 30 } }}
+          >
+            Total: {getCartTotalPrice(items)}
+          </Typography>
+        </Box>
+        <Box sx={{ mt: 3, textAlign: "center" }}>
+          <Button
+            variant="contained"
+            sx={{ fontSize: { xs: 13, sm: 15 } }}
+            onClick={conformOrder}
+            className=" bg-blue-950"
+          >
+            Order now
+          </Button>
         </Box>
       </Box>
-    </div>
+    </Card>
   );
 };
 

@@ -14,9 +14,10 @@ const Quantity = ({ value, decrease, increase }: Props) => {
     <Box
       sx={{
         display: "flex",
-        justifyContent: "space-between",
         alignItems: "center",
         maxWidth: "100px",
+        justifyContent: "center",
+        m: "0 auto",
       }}
     >
       <IconButton

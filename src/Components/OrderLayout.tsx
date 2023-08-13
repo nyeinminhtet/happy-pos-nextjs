@@ -33,7 +33,7 @@ const OrderLayout = (props: Props) => {
         sx={{
           position: "relative",
           zIndex: 5,
-          top: isHome ? { xs: 10, sm: 25, md: 30 } : { xs: 30 },
+          top: isHome ? { xs: 10, sm: 25, md: 30 } : { xs: 10 },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

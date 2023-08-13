@@ -14,7 +14,7 @@ import {
 } from "@mui/material/styles";
 import { CssVarsProvider as JoyCssVarsProvider } from "@mui/joy/styles";
 
-const materialTheme = materialExtendTheme();
+const materialTheme = materialExtendTheme(theme);
 
 import Head from "next/head";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -37,12 +37,10 @@ export default function App({
             theme={{ [MATERIAL_THEME_ID]: materialTheme }}
           >
             <JoyCssVarsProvider>
-              <ThemeProvider theme={theme}>
-                <ToastContainer position="top-center" autoClose={2000} />
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </ThemeProvider>
+              <ToastContainer position="top-center" autoClose={2000} />
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
             </JoyCssVarsProvider>
           </MaterialCssVarsProvider>
         </Provider>

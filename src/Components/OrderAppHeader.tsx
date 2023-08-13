@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import OrderAppHeaderImg from "../assets/orderwave.svg";
 import { useAppSelector } from "@/store/hooks";
-import { appData } from "@/store/slices/appSlice";
+import { appData, fetchAppData } from "@/store/slices/appSlice";
 
 interface Props {
   cartItemCount: number;
@@ -18,6 +18,7 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
   const isCart = router.pathname === "/order/cart";
   const isActiveOrder = router.pathname.includes("/order/activeOrder");
   const showCartIcon = !isCart && !isActiveOrder;
+  const { company } = useAppSelector(appData);
 
   return (
     <Box
@@ -45,9 +46,19 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
           >
             <Typography
               variant="h4"
-              className=" text-sm font-semibold md:text-2xl"
+              sx={{ fontSize: { xs: 20, sm: 25 }, fontFamily: "monospace" }}
             >
-              SarrMal
+              {company?.name}
+            </Typography>
+            <Typography
+              variant="h4"
+              sx={{
+                fontSize: { xs: 13, sm: 14 },
+                fontFamily: "sans-serif",
+                color: "GrayText",
+              }}
+            >
+              {company?.address}
             </Typography>
           </Box>
         </Box>
@@ -55,7 +66,7 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
           <Box
             sx={{
               position: "absolute",
-              top: 10,
+              top: 11,
               right: { xs: 40, md: 80, lg: 200 },
               cursor: "pointer",
             }}
