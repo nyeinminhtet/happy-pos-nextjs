@@ -69,21 +69,18 @@ const Review = () => {
     if (!isValid) return toast.error("Something went wrong!");
 
     const data = await fetch(
-      `${config.apiBaseUrl}/order?locationId=${locationId}&tableId=${tableId}`,
+      `/api/order?locationId=${locationId}&tableId=${tableId}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items }),
       }
     );
+
     const orderCreated = await data.json();
     dispatch(addOrder(orderCreated));
-    // dispatch(refetchOrderline(orderCreated.id));
-    // const ol = await fetch(
-    //   `${config.apiBaseUrl}/orderlines?orderId=${orderCreated.id}`
-    // );
-    // const olData = await ol.json();
-    // olData.map((item: orderlines) => dispatch(addOrderline(item)));
+    refetchOrderline(orderCreated.id);
+
     router.push({
       pathname: `/order/activeCart/${orderCreated.id}`,
       query,

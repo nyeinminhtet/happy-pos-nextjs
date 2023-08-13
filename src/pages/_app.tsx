@@ -6,6 +6,10 @@ import { store } from "@/store";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material";
 import { Session } from "next-auth";
 import { theme } from "@/utils/theme";
+<<<<<<< HEAD
+=======
+import Layout from "@/Components/Layout";
+>>>>>>> staging
 import Head from "next/head";
 import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer } from "react-toastify";

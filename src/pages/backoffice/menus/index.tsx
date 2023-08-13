@@ -66,7 +66,7 @@ const Menus = () => {
                 key={index}
                 sx={{
                   fontSize: { xs: "10px", sm: "14px" },
-                  px: { xs: 1, sm: 1, md: 5 },
+                  px: { xs: 1, sm: 1, md: 3 },
                 }}
                 label={item.category}
                 onClick={() => setSelectedMenuCategory(item.id)}

@@ -21,10 +21,8 @@ const MenuCard = ({ menu, href }: Props) => {
     >
       <Card
         sx={{
-          width: { xs: 180, sm: 180, md: 230 },
+          width: { xs: 150, sm: 180, md: 230 },
           height: { xs: 180, sm: 180, md: 230 },
-          py: 2,
-          borderRadius: 6,
         }}
       >
         {menu.acess_url && (
@@ -36,7 +34,6 @@ const MenuCard = ({ menu, href }: Props) => {
             image={menu.acess_url || ""}
           />
         )}
-
         <CardContent
           sx={{
             display: "flex",

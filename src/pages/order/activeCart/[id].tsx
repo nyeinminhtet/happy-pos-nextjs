@@ -6,10 +6,13 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import cooking from "@/assets/cooking.gif";
 import Image from "next/image";
+<<<<<<< HEAD
 import { orderlines, orders } from "@prisma/client";
+=======
+import { OrderStatus, orderlines as Orderline, orders } from "@prisma/client";
+>>>>>>> staging
 import Loading from "@/Components/Loading";
 import { config } from "@/config/config";
-import { refetchOrderline } from "@/store/slices/orderlinesSlice";
 
 const ActiveOrder = () => {
   const router = useRouter();
@@ -19,6 +22,10 @@ const ActiveOrder = () => {
   const { orders, menus, addons, orderlines } = useAppSelector(appData);
   const order = orders.find((item) => item.id === Number(orderId)) as orders;
   const { items } = useAppSelector(selectCart);
+
+  console.log(orderId);
+  let reCheck: Orderline[];
+  let status: OrderStatus;
 
   useEffect(() => {
     if (!order) {
@@ -30,10 +37,11 @@ const ActiveOrder = () => {
   //   dispatch(emptyCart());
   // }, []);
 
-  useEffect(() => {
-    console.log("orderlines", orderlines);
-  }, [orderlines]);
+  // setInterval(async () => {
+  //   const response = await fetch(`/api/orderlines?orderId=${orderId}`);
+  //   const data = await response.json();
 
+<<<<<<< HEAD
   setTimeout(async () => {
     if (order) {
       const response = await fetch(
@@ -43,6 +51,16 @@ const ActiveOrder = () => {
       console.log("newdata", newdata);
     }
   }, 1000 * 60);
+=======
+  //   console.log("data", data);
+  //   reCheck = data;
+  //   console.log("recheck", reCheck);
+  //   if (reCheck.length) {
+  //     status = reCheck.map((item) => item.status);
+  //   }
+  //   console.log(status);
+  // }, 1000 * 20);
+>>>>>>> staging
 
   return (
     <Box
@@ -80,6 +98,8 @@ const ActiveOrder = () => {
                 <Typography variant="h5">menu: {item.menu.name}</Typography>
                 <Typography variant="h5">quantity: {item.quantity}</Typography>
                 <Typography variant="h5">TotalPrice:{order.price}</Typography>
+                <Typography>{status ? status[1] : "Pending"}</Typography>
+                <Typography></Typography>
               </Paper>
             ))
           : null}

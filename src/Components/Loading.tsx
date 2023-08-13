@@ -6,16 +6,38 @@ interface Props {
 
 const Loading = ({ color = "primary" }: Props) => {
   return (
+    // <Box
+    //   sx={{
+    //     display: "flex",
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    //     flexDirection: "column",
+    //   }}
+    // >
+    //   <CircularProgress color={color} />
+    //   <Typography sx={{ fontFamily: "cursive", mt: 2 }}>Loading...</Typography>
+    // </Box>
     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
         flexDirection: "column",
+        alignItems: "center",
       }}
     >
-      <CircularProgress color={color} />
-      <Typography sx={{ fontFamily: "cursive", mt: 2 }}>Loading...</Typography>
+      <div className="main-item">
+        <div className="static-background">
+          <div className="background-masker btn-divide-left"></div>
+        </div>
+
+        <div className="animated-background">
+          <div className="background-masker btn-divide-left"></div>
+        </div>
+        <Box sx={{ display: "flex", m: 1 }}>
+          <div className="css-dom" />
+          <div className="css-dom" />
+        </Box>
+      </div>
     </Box>
   );
 };

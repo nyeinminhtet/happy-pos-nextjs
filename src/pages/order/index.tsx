@@ -1,5 +1,9 @@
 import Loading from "@/Components/Loading";
 import MenuCard from "@/Components/MenuCard";
+<<<<<<< HEAD
+=======
+import OrderHero from "@/Components/OrderHero";
+>>>>>>> staging
 import OrderLayout from "@/Components/OrderLayout";
 import ViewCartBar from "@/Components/ViewCartBar";
 import { useAppSelector } from "@/store/hooks";
@@ -55,6 +59,9 @@ const OrderApp = () => {
   return (
     <Box>
       <Box>
+        <OrderHero />
+      </Box>
+      <Box>
         <Tabs
           value={value}
           sx={{
@@ -63,10 +70,14 @@ const OrderApp = () => {
             position: "sticky",
             top: 0,
             width: { xs: "100%" },
-            bgcolor: "#98DFD6",
+            bgcolor: "#00235B",
+            border: "1px solid white",
           }}
+          indicatorColor="secondary"
+          textColor="inherit"
           variant="scrollable"
           orientation="horizontal"
+          allowScrollButtonsMobile
           onChange={(e, v) => setValue(v)}
         >
           {menuCategories.map((item, index) => {
@@ -76,7 +87,8 @@ const OrderApp = () => {
                 key={index}
                 sx={{
                   fontSize: { xs: "10px", sm: "14px" },
-                  px: { xs: 0, sm: 3 },
+                  px: { xs: 1, sm: 3 },
+                  color: "white",
                 }}
                 label={item.category}
                 onClick={() => setSelectedMenuCategory(item)}
