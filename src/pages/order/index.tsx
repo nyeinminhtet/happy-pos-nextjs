@@ -1,9 +1,6 @@
 import Loading from "@/Components/Loading";
 import MenuCard from "@/Components/MenuCard";
-<<<<<<< HEAD
-=======
 import OrderHero from "@/Components/OrderHero";
->>>>>>> staging
 import OrderLayout from "@/Components/OrderLayout";
 import ViewCartBar from "@/Components/ViewCartBar";
 import { useAppSelector } from "@/store/hooks";

@@ -40,12 +40,12 @@ const AddonCategories = ({
             <Typography
               sx={{
                 userSelect: "none",
-                fontStyle: "inherit",
+                fontSize: 17,
                 fontWeight: "bold",
               }}
               variant="h6"
             >
-              {item.name}{" "}
+              {item.name}
             </Typography>
             <Chip
               label={item.is_require ? "Required" : "Option"}

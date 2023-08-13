@@ -33,7 +33,7 @@ const OrderLayout = (props: Props) => {
         sx={{
           position: "relative",
           zIndex: 5,
-          top: isHome ? { xs: 55, sm: 60, md: 70 } : { xs: 50, sm: 90 },
+          top: isHome ? { xs: 10, sm: 25, md: 30 } : { xs: 30 },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -42,12 +42,8 @@ const OrderLayout = (props: Props) => {
       >
         <Box
           sx={{
-<<<<<<< HEAD
             width: { xs: "100%", md: "80%" },
-=======
-            width: { xs: "100%", md: "90%" },
             grid: { xs: 2, sm: 4, md: 5 },
->>>>>>> staging
           }}
         >
           {props.children}

@@ -6,15 +6,19 @@ import { store } from "@/store";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material";
 import { Session } from "next-auth";
 import { theme } from "@/utils/theme";
-<<<<<<< HEAD
-=======
 import Layout from "@/Components/Layout";
->>>>>>> staging
+import {
+  experimental_extendTheme as materialExtendTheme,
+  Experimental_CssVarsProvider as MaterialCssVarsProvider,
+  THEME_ID as MATERIAL_THEME_ID,
+} from "@mui/material/styles";
+import { CssVarsProvider as JoyCssVarsProvider } from "@mui/joy/styles";
+
+const materialTheme = materialExtendTheme();
+
 import Head from "next/head";
 import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer } from "react-toastify";
-import Layout from "@/Components/Layout";
-
 type CustomeAppProps = AppProps & { session: Session };
 
 export default function App({
@@ -29,12 +33,18 @@ export default function App({
       </Head>
       <SessionProvider session={pageProps.session}>
         <Provider store={store}>
-          <ThemeProvider theme={theme}>
-            <ToastContainer position="top-center" autoClose={2000} />
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </ThemeProvider>
+          <MaterialCssVarsProvider
+            theme={{ [MATERIAL_THEME_ID]: materialTheme }}
+          >
+            <JoyCssVarsProvider>
+              <ThemeProvider theme={theme}>
+                <ToastContainer position="top-center" autoClose={2000} />
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </ThemeProvider>
+            </JoyCssVarsProvider>
+          </MaterialCssVarsProvider>
         </Provider>
       </SessionProvider>
     </>

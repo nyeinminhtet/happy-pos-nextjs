@@ -1,5 +1,5 @@
 import { generateRandomId, getAddonCategoryByMenuId } from "@/utils";
-import { Box, Button, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
@@ -14,6 +14,16 @@ import { CartItem } from "@/Types/Types";
 import { addToCart } from "@/store/slices/cartSlice";
 import Image from "next/image";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+
+import AspectRatio from "@mui/joy/AspectRatio";
+import Button from "@mui/joy/Button";
+import Card from "@mui/joy/Card";
+import CardContent from "@mui/joy/CardContent";
+import CardOverflow from "@mui/joy/CardOverflow";
+import Chip from "@mui/joy/Chip";
+import Link from "@mui/joy/Link";
+import Typography from "@mui/joy/Typography";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 
 const DetailMenu = () => {
   const router = useRouter();
@@ -121,79 +131,70 @@ const DetailMenu = () => {
       sx={{
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
         flexDirection: "column",
-        p: 4,
-        bgcolor: "white",
       }}
     >
-      <div className=" mb-4">
-        <AiOutlineArrowLeft size={30} onClick={() => router.back()} />
-      </div>
+      <Box>
+        <AiOutlineArrowLeft
+          size={30}
+          onClick={() => router.back()}
+          cursor="pointer"
+        />
 
-      <Box sx={{ bgcolor: "lightblue", borderRadius: 10 }}>
-        <Box
+        <Card
           sx={{
-            position: "sticky",
-            top: 0,
-            bgcolor: "#00235B",
-            zIndex: 100,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-evenly",
-            mt: -2,
+            width: 320,
+            maxWidth: "100%",
+            boxShadow: "lg",
           }}
         >
-          <Image
-            src={menu?.acess_url || ""}
-            alt="menu-image"
-            width={130}
-            height={130}
-            className=" rounded-full w-auto"
-          />
-          <Typography
-            variant="h4"
+          <CardOverflow
             sx={{
-              textAlign: "center",
-              fontSize: { xs: "15px", sm: "20px", md: "25px" },
-              color: "white",
+              position: "sticky",
+              top: 0,
+              zIndex: 100,
             }}
-            gutterBottom
           >
-            {menu?.name}
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            mt: 2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <AddonCategories
-            validAddonCategories={validAddonCategories}
-            validAddons={validAddons}
-            selectedAddons={selectedAddons}
-            onChange={(checked, item) => handleAddonSelect(checked, item)}
-          />
-          <Box sx={{ mb: 5, mt: -2 }}>
-            <Quantity
-              value={quantity}
-              decrease={handleQuantityOnDecrease}
-              increase={handleQuantityOnIncrease}
-            />
-
+            <AspectRatio sx={{ minWidth: 200 }}>
+              <Image
+                src={menu?.acess_url || ""}
+                width={240}
+                height={240}
+                loading="lazy"
+                alt=""
+              />
+            </AspectRatio>
+          </CardOverflow>
+          <CardContent>
+            <Typography level="body-lg" fontSize={{ xs: 20, sm: 25 }}>
+              {menu?.name}
+            </Typography>
+            <Box>
+              <AddonCategories
+                validAddonCategories={validAddonCategories}
+                validAddons={validAddons}
+                selectedAddons={selectedAddons}
+                onChange={(checked, item) => handleAddonSelect(checked, item)}
+              />
+              <Quantity
+                value={quantity}
+                decrease={handleQuantityOnDecrease}
+                increase={handleQuantityOnIncrease}
+              />
+            </Box>
+          </CardContent>
+          <CardOverflow>
             <Button
-              variant="contained"
-              disabled={isDisable}
+              variant="solid"
+              color="primary"
+              size="lg"
               onClick={handleAddToCart}
-              sx={{ mt: 3, width: "fit-content" }}
-              className=" bg-blue-950"
             >
-              Add to Cart
+              Add to cart
             </Button>
-          </Box>
-        </Box>
+          </CardOverflow>
+        </Card>
       </Box>
     </Box>
   );

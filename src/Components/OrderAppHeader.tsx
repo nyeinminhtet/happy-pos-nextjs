@@ -22,11 +22,9 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
   return (
     <Box
       sx={{
-        width: "100vh",
         display: "flex",
         flexDirection: "column",
-        position: "fixed",
-        top: 0,
+        position: "relative",
       }}
     >
       <Box
@@ -35,7 +33,6 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
           display: "flex",
           justifyContent: "space-between",
           bgcolor: "#00235B",
-          width: "100vw",
         }}
       >
         <Box>
@@ -76,11 +73,13 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
               <Typography
                 sx={{
                   color: "#E8F6EF",
-
                   borderRadius: "50%",
                   bgcolor: "red",
                   fontFamily: "monospace",
                   py: 0,
+                  position: "absolute",
+                  top: -10,
+                  right: 0,
                 }}
               >
                 {cartItemCount}

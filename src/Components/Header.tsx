@@ -25,7 +25,6 @@ const Header = () => {
           textAlign: "center",
         }}
       >
-<<<<<<< HEAD
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography
             variant="h2"
@@ -42,21 +41,7 @@ const Header = () => {
           </Typography>
           <Image src={food} alt="food" style={{ width: 30, height: 30 }} />
         </Box>
-=======
-        <Typography
-          variant="h2"
-          sx={{
-            fontWeight: "bold",
-            color: "white",
-            fontSize: { xs: "2rem", md: "2.5rem" },
-            mt: 0,
-            display: "flex",
-          }}
-        >
-          Sarr Mal
-          <Image src={food} alt="food" width={40} height={40} />
-        </Typography>
->>>>>>> staging
+
         <Box sx={{ ml: { xs: 5, sm: 0 } }}>
           <Link href="/order?locationId=1&tableId=4">
             <Button
@@ -80,10 +65,6 @@ const Header = () => {
                 fontSize: { xs: 10, sm: 12, md: 14 },
                 ml: { xs: 1, md: 3 },
                 ":hover": { textDecoration: "underline" },
-<<<<<<< HEAD
-                display: { xs: "none", sm: "inline-block" },
-=======
->>>>>>> staging
               }}
             >
               Join us
