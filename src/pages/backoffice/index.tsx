@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/store/hooks";
 import Orders from "./orders";
 import { appData } from "@/store/slices/appSlice";
-import Loading from "@/components/Loading";
+import Loading from "@/Components/Loading";
 
 const App = () => {
   const { isLoading } = useAppSelector(appData);
