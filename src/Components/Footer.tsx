@@ -5,7 +5,7 @@ const Footer = () => {
     <Box
       sx={{
         height: { xs: 250, sm: 200, md: 150 },
-        bgcolor: "#98DFD6",
+        bgcolor: "#00235B",
         px: "12px",
       }}
     >
@@ -28,16 +28,20 @@ const Footer = () => {
           }}
         >
           <Box>
-            <Typography variant="body1" sx={{ fontFamily: "monospace" }}>
-              Ywar Lal street, <br />
+            <Typography variant="body1" sx={{ color: "white" }}>
+              103th street,bet 52 & 53th street <br />
               ChanMyaTharZi, Mandalay <br />
-              <span style={{ color: "#E21818" }}> contact@sarrmal.com</span>
+              <span style={{ color: "#FFDD83" }}> contact@sarrmal.com</span>
               <br />
               <span style={{ color: "#00235B" }}>+95 123 456 79</span>
             </Typography>
           </Box>
           <Box sx={{ width: "350px", position: "relative", mt: 2 }}>
-            <Typography variant="h3" color="#00235B" fontWeight="bold">
+            <Typography
+              variant="h3"
+              fontWeight="bold"
+              sx={{ color: "white", fontSize: { xs: 40, sm: 45 } }}
+            >
               Sarr Mal
             </Typography>
           </Box>

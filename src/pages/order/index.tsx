@@ -84,8 +84,7 @@ const OrderApp = () => {
                 wrapped={true}
                 key={index}
                 sx={{
-                  fontSize: { xs: "10px", sm: "14px" },
-                  px: { xs: 1, sm: 3 },
+                  fontSize: { xs: "11px", sm: "14px" },
                   color: "white",
                 }}
                 label={item.category}

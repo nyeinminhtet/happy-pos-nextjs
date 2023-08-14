@@ -16,7 +16,6 @@ const Header = () => {
         w: "100%",
         zIndex: 10,
       }}
-      // className=" fixed py-1 top-0 inset-x-0 w-full z-10 bg-[#00235B]"
     >
       <Box
         sx={{
@@ -35,7 +34,6 @@ const Header = () => {
               mt: 0,
               display: "flex",
             }}
-            // className=" text-sm md:text-3xl text-white flex items-center font-bold"
           >
             Sarr Mal
           </Typography>
@@ -43,7 +41,10 @@ const Header = () => {
         </Box>
 
         <Box sx={{ ml: { xs: 5, sm: 0 } }}>
-          <Link href="/order?locationId=1&tableId=4">
+          <Link
+            href="/order?locationId=1&tableId=4"
+            style={{ textDecoration: "none" }}
+          >
             <Button
               sx={{
                 color: "white",
@@ -56,7 +57,7 @@ const Header = () => {
               Order now
             </Button>
           </Link>
-          <Link href="/backoffice">
+          <Link href="/backoffice" style={{ textDecoration: "none" }}>
             <Button
               sx={{
                 color: "white",
@@ -65,6 +66,7 @@ const Header = () => {
                 fontSize: { xs: 10, sm: 12, md: 14 },
                 ml: { xs: 1, md: 3 },
                 ":hover": { textDecoration: "underline" },
+                display: { xs: "none", md: "inline-block" },
               }}
             >
               Join us

@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { selectCart } from "@/store/slices/cartSlice";
 import OrderAppHeader from "./OrderAppHeader";
 import OrderHero from "./OrderHero";
+import Loading from "./Loading";
 
 interface Props {
   children: string | JSX.Element | JSX.Element[];
@@ -17,6 +18,7 @@ const OrderLayout = (props: Props) => {
   const dispatch = useAppDispatch();
   const { items } = useAppSelector(selectCart);
   const isHome = router.pathname === "/order";
+  const { isLoading } = useAppSelector(appData);
 
   useEffect(() => {
     if (isReady) {
@@ -27,7 +29,7 @@ const OrderLayout = (props: Props) => {
   if (!isReady) return null;
 
   return (
-    <Box>
+    <Box position="relative">
       <OrderAppHeader cartItemCount={items.length} />
       <Box
         sx={{

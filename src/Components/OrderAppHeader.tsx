@@ -48,7 +48,7 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
               variant="h4"
               sx={{ fontSize: { xs: 20, sm: 25 }, fontFamily: "monospace" }}
             >
-              {company?.name}
+              {company ? company?.name : "SarrMal"}
             </Typography>
             <Typography
               variant="h4"

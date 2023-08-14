@@ -4,7 +4,7 @@ import CardCover from "@mui/joy/CardCover";
 import CardContent from "@mui/joy/CardContent";
 import Typography from "@mui/joy/Typography";
 import Image from "next/image";
-import order from "@/assets/Special2.png";
+import order from "@/assets/pizza 2.png";
 
 export default function MediaCover() {
   return (
@@ -24,9 +24,7 @@ export default function MediaCover() {
             textColor="#E21818"
             mt={{ xs: 14, sm: 20, md: 30 }}
             fontSize={{ xs: 30 }}
-          >
-            50% off
-          </Typography>
+          ></Typography>
         </CardContent>
       </Card>
     </Box>

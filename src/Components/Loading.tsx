@@ -1,10 +1,7 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import { Metronome } from "@uiball/loaders";
 
-interface Props {
-  color?: "primary" | "secondary" | "error" | "success";
-}
-
-const Loading = ({ color = "primary" }: Props) => {
+const Loading = () => {
   return (
     <Box
       sx={{
@@ -12,12 +9,10 @@ const Loading = ({ color = "primary" }: Props) => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
+        minHeight: "70vh",
       }}
     >
-      <CircularProgress color={color} />
-      <Typography sx={{ fontFamily: "monospace", mt: 2 }}>
-        please wait...
-      </Typography>
+      <Metronome size={50} speed={1.6} color="black" />
     </Box>
   );
 };
