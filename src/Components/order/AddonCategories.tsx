@@ -29,7 +29,7 @@ const AddonCategories = ({
   return (
     <Box>
       {validAddonCategories.map((item, index) => (
-        <Box key={index} sx={{ mb: 5, maxWidth: 350 }}>
+        <Box key={index} sx={{ mb: 2, maxWidth: 350 }}>
           <Box
             sx={{
               display: "flex",
@@ -52,7 +52,7 @@ const AddonCategories = ({
               color={item.is_require ? "error" : "primary"}
             />
           </Box>
-          <Box sx={{ pl: 1, mt: 2 }}>
+          <Box sx={{ pl: 1, mt: 1 }}>
             <Addons
               addonCategory={item}
               validAddons={validAddons}

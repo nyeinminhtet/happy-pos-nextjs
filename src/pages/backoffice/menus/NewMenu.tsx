@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Box,
   TextField,
-  Button,
   Checkbox,
   FormControl,
   InputLabel,
@@ -16,7 +15,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { config } from "@/config/config";
-import FileDropZone from "../filedropzone";
+import FileDropZone from "../../../Components/filedropzone";
 import { LoadingButton } from "@mui/lab";
 import { getLocationId } from "@/utils";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";

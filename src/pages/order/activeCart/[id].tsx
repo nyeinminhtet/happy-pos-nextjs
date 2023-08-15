@@ -53,7 +53,7 @@ const ActiveOrder = () => {
             <Typography level="title-lg">
               Thank for ordering,
               <br />
-              your order is start now...
+              your order is start cooking...
             </Typography>
           </CardContent>
         </Card>

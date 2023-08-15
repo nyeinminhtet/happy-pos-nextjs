@@ -18,6 +18,7 @@ const Quantity = ({ value, decrease, increase }: Props) => {
         maxWidth: "100px",
         justifyContent: "center",
         m: "0 auto",
+        mt: -2,
       }}
     >
       <IconButton

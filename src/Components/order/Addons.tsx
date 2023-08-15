@@ -67,9 +67,7 @@ const Addons = ({
               }
               label={item.name}
             />
-            <Typography sx={{ fontFamily: "cursive", color: "info" }}>
-              {item.price} K
-            </Typography>
+            <Typography>{item.price} K</Typography>
           </Box>
         );
       })}
