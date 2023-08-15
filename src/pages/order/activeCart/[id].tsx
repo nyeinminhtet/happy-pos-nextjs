@@ -14,7 +14,8 @@ const ActiveOrder = () => {
   const { query } = router;
   const orderId = query.id as string;
   const dispatch = useAppDispatch();
-  const { orders, menus, addons, orderlines } = useAppSelector(appData);
+  const { orders } = useAppSelector(appData);
+
   const order = orders.find((item) => item.id === Number(orderId)) as orders;
 
   useEffect(() => {

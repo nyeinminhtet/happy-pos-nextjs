@@ -10,7 +10,7 @@ interface Props {
 const Layout = ({ children }: Props) => {
   const router = useRouter();
   const query = router.query;
-  const isOrderApp = router.pathname.includes("/order");
+  const isOrderApp = router.pathname === "/order" || query.locationId;
   const isBackofficeApp =
     router.pathname.includes("/backoffice") ||
     router.pathname.includes("/auth");
