@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { selectCart } from "@/store/slices/cartSlice";
 import OrderAppHeader from "./OrderAppHeader";
 import Tables from "./Tables";
+import Head from "next/head";
 
 interface Props {
   children: string | JSX.Element | JSX.Element[];
@@ -26,33 +27,38 @@ const OrderLayout = (props: Props) => {
   if (!isReady) return null;
 
   return (
-    <Box position="relative">
-      <OrderAppHeader cartItemCount={items.length} />
-      {!query.tableId ? (
-        <Tables />
-      ) : (
-        <Box
-          sx={{
-            position: "relative",
-            zIndex: 5,
-            top: isHome ? { xs: 10, sm: 25, md: 30 } : { xs: 10 },
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-          }}
-        >
+    <>
+      <Head>
+        <title>Sarr Mal | Order</title>
+      </Head>
+      <Box position="relative">
+        <OrderAppHeader cartItemCount={items.length} />
+        {!query.tableId ? (
+          <Tables />
+        ) : (
           <Box
             sx={{
-              width: { xs: "100%", md: "80%" },
-              grid: { xs: 2, sm: 4, md: 5 },
+              position: "relative",
+              zIndex: 5,
+              top: isHome ? { xs: 10, sm: 25, md: 30 } : { xs: 10 },
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
             }}
           >
-            {props.children}
+            <Box
+              sx={{
+                width: { xs: "100%", md: "80%" },
+                grid: { xs: 2, sm: 4, md: 5 },
+              }}
+            >
+              {props.children}
+            </Box>
           </Box>
-        </Box>
-      )}
-    </Box>
+        )}
+      </Box>
+    </>
   );
 };
 

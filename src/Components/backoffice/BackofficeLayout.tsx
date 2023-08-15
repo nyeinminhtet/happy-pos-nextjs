@@ -6,6 +6,7 @@ import TopBar from "./TopBar";
 import SideBar from "./SideBar";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 type Props = {
   title?: string;
@@ -27,23 +28,28 @@ const BackofficeLayout = (props: Props) => {
   }, [init, dispatch]);
 
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "#98DFD6", minWidth: "100%" }}>
-      <TopBar />
-      <Box sx={{ display: "flex", position: "relative", zIndex: 5, flex: 1 }}>
-        {data && <SideBar />}
-        <Box
-          sx={{
-            p: { xs: 0, sm: 1, md: 3 },
-            pt: { xs: 5, sm: 5 },
-            width: login ? "100%" : { xs: "60%", sm: "70%", md: "100%" },
-            height: "100%",
-            ml: { xs: 2, sm: 0 },
-          }}
-        >
-          {props.children}
+    <>
+      <Head>
+        <title>Sarr Mal | Backoffice</title>
+      </Head>
+      <Box sx={{ minHeight: "100vh", bgcolor: "#98DFD6", minWidth: "100%" }}>
+        <TopBar />
+        <Box sx={{ display: "flex", position: "relative", zIndex: 5, flex: 1 }}>
+          {data && <SideBar />}
+          <Box
+            sx={{
+              p: { xs: 0, sm: 1, md: 3 },
+              pt: { xs: 5, sm: 5 },
+              width: login ? "100%" : { xs: "60%", sm: "70%", md: "100%" },
+              height: "100%",
+              ml: { xs: 2, sm: 0 },
+            }}
+          >
+            {props.children}
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 
