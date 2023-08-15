@@ -3,7 +3,6 @@ import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { Provider } from "react-redux";
 import { store } from "@/store";
-import { ThemeProvider, StyledEngineProvider } from "@mui/material";
 import { Session } from "next-auth";
 import { theme } from "@/utils/theme";
 import Layout from "@/Components/Layout";

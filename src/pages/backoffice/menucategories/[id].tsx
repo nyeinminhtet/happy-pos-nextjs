@@ -1,4 +1,4 @@
-import Layout from "@/Components/BackofficeLayout";
+import Layout from "@/Components/backoffice/BackofficeLayout";
 import {
   Autocomplete,
   Box,
@@ -21,7 +21,7 @@ import { config } from "@/config/config";
 import { getLocationByMenuCategoryId, getLocationId } from "@/utils";
 import MenuCard from "@/Components/MenuCard";
 import RemoveMenuFromMenuCategory from "./RemoveMenu";
-import DeleteDialog from "@/Components/DeleteDialog";
+import DeleteDialog from "@/Components/backoffice/DeleteDialog";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { appData, fetchAppData } from "@/store/slices/appSlice";
 import { fetchMenusMenuCategoriesLocations } from "@/store/slices/menusMenuCategoriesLocationsSlice";

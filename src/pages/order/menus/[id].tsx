@@ -6,8 +6,8 @@ import {
   addon_categories as AddonCategory,
   addons as Addon,
 } from "@prisma/client";
-import AddonCategories from "@/Components/AddonCategories";
-import Quantity from "@/Components/Quantity";
+import AddonCategories from "@/Components/order/AddonCategories";
+import Quantity from "@/Components/order/Quantity";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { CartItem } from "@/Types/Types";

@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import TopBar from "./TopBar";
 import SideBar from "./SideBar";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 type Props = {
   title?: string;
@@ -15,6 +16,9 @@ const BackofficeLayout = (props: Props) => {
   const dispatch = useAppDispatch();
   const { data } = useSession();
   const { init } = useAppSelector((state) => state.app);
+
+  const router = useRouter();
+  const login = router.pathname === "/auth/signin";
 
   useEffect(() => {
     if (!init) {
@@ -31,7 +35,7 @@ const BackofficeLayout = (props: Props) => {
           sx={{
             p: { xs: 0, sm: 1, md: 3 },
             pt: { xs: 5, sm: 5 },
-            width: { xs: "60%", sm: "65%", md: "100%" },
+            width: login ? "100%" : { xs: "60%", sm: "70%", md: "100%" },
             height: "100%",
             ml: { xs: 2, sm: 0 },
           }}

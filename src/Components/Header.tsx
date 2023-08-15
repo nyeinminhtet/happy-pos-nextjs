@@ -41,10 +41,7 @@ const Header = () => {
         </Box>
 
         <Box sx={{ ml: { xs: 5, sm: 0 } }}>
-          <Link
-            href="/order?locationId=1&tableId=4"
-            style={{ textDecoration: "none" }}
-          >
+          <Link href="/order" style={{ textDecoration: "none" }}>
             <Button
               sx={{
                 color: "white",

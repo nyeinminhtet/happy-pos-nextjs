@@ -1,4 +1,4 @@
-import Layout from "@/Components/BackofficeLayout";
+import Layout from "@/Components/backoffice/BackofficeLayout";
 import { config } from "@/config/config";
 import { getLocationId, getMenusIdFromMenuMenuCategoryLocation } from "@/utils";
 import {
@@ -13,7 +13,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import DeleteDialog from "@/Components/DeleteDialog";
+import DeleteDialog from "@/Components/backoffice/DeleteDialog";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { removeAddon, updateAddon } from "@/store/slices/addonsSlice";

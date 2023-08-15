@@ -15,7 +15,7 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { config } from "@/config/config";
 import { getLocationId, getMenusByLocationId } from "@/utils";
-import DeleteDialog from "@/Components/DeleteDialog";
+import DeleteDialog from "@/Components/backoffice/DeleteDialog";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import {

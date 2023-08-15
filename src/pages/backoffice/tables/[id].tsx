@@ -1,4 +1,4 @@
-import Layout from "@/Components/BackofficeLayout";
+import Layout from "@/Components/backoffice/BackofficeLayout";
 import Loading from "@/Components/Loading";
 import { config } from "@/config/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";

@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { getLocationId } from "@/utils";
-import ItemCart from "@/Components/ItemCart";
+import ItemCart from "@/Components/backoffice/ItemCart";
 import TableBarIcon from "@mui/icons-material/TableBar";
 import { useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";

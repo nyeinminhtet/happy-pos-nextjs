@@ -97,6 +97,7 @@ const Menus = () => {
               right: 10,
               width: "fit-content",
               mb: 2,
+              zIndex: 10,
             }}
           >
             <AddIcon />

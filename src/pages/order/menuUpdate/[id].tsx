@@ -6,8 +6,8 @@ import {
 } from "@prisma/client";
 import { getAddonCategoryByMenuId } from "@/utils";
 import { Box } from "@mui/material";
-import AddonCategories from "@/Components/AddonCategories";
-import Quantity from "@/Components/Quantity";
+import AddonCategories from "@/Components/order/AddonCategories";
+import Quantity from "@/Components/order/Quantity";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
 import { selectCart, updateCart } from "@/store/slices/cartSlice";

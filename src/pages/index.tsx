@@ -1,4 +1,4 @@
-import Companies from "@/Components/Companies";
+import Companies from "@/Components/order/Companies";
 import Features from "@/Components/Features";
 import Footer from "@/Components/Footer";
 import Header from "@/Components/Header";

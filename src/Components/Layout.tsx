@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
-import BackofficeLayout from "./BackofficeLayout";
-import OrderLayout from "./OrderLayout";
+import BackofficeLayout from "./backoffice/BackofficeLayout";
+import OrderLayout from "./order/OrderLayout";
 
 interface Props {
   children: string | JSX.Element | JSX.Element[];
@@ -10,7 +10,7 @@ interface Props {
 const Layout = ({ children }: Props) => {
   const router = useRouter();
   const query = router.query;
-  const isOrderApp = query.locationId && query.tableId;
+  const isOrderApp = router.pathname.includes("/order");
   const isBackofficeApp =
     router.pathname.includes("/backoffice") ||
     router.pathname.includes("/auth");

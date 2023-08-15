@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Layout from "@/Components/BackofficeLayout";
+import Layout from "@/Components/backoffice/BackofficeLayout";
 import { getLocationId, getQuantityByOrderId } from "@/utils";
 import {
   orders as Order,
