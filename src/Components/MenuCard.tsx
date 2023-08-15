@@ -26,7 +26,7 @@ const MenuCard = ({ menu, href }: Props) => {
         marginBottom: "20px",
       }}
     >
-      <Card sx={{ width: { xs: 220, sm: 250, position: "static" } }}>
+      <Card sx={{ width: { xs: 120, sm: 250 }, position: "static" }}>
         <CardOverflow>
           <AspectRatio ratio="2">
             <Image

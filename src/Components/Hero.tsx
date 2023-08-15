@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Slide } from "@mui/material";
 import Image from "next/image";
 import Sarrmal from "@/assets/pizza.png";
 import { AspectRatio, Card, Typography } from "@mui/joy";
@@ -7,23 +7,6 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    // <Box
-    //   sx={{
-    //     width: "100%",
-    //     resize: "vertical",
-    //     overflow: "auto",
-    //   }}
-    // >
-    //   <AspectRatio minHeight={400} maxHeight={700} sx={{}}>
-    //     <Image
-    //       src={online}
-    //       alt=""
-    //       width={300}
-    //       height={300}
-    //       layout="responsive"
-    //     />
-    //   </AspectRatio>
-    // </Box>
     <Card
       sx={{
         display: "flex",
@@ -35,61 +18,78 @@ const Hero = () => {
         bgcolor: "#98DFD6",
       }}
     >
-      <Box
-        sx={{
-          position: "absolute",
-          left: { xs: "7%", sm: "15%", md: "30%" },
-          top: { xs: 50, sm: "16%", md: "30%" },
-        }}
+      <Slide
+        direction="right"
+        in={true}
+        timeout={1000}
+        mountOnEnter
+        unmountOnExit
       >
-        <Typography
-          level="h2"
-          maxWidth={{ xs: 200, sm: 300 }}
-          fontSize={{ xs: 20, sm: 27, md: 35 }}
-          fontWeight="bold"
-        >
-          Are you finding a solution for your restaurant ?
-        </Typography>
-        <Typography
-          level="title-lg"
-          fontSize={{ xs: 13, sm: 20 }}
-          textColor="gray"
-        >
-          let's Join with us
-        </Typography>
-        <Typography
-          fontSize={{ xs: 13, sm: 16 }}
-          textColor="black"
-          maxWidth={{ xs: 140, md: 190 }}
-          mt={{ xs: 5, sm: 2 }}
-        >
-          We will help your business.
-        </Typography>
-
-        <Button
-          variant="contained"
+        <Box
           sx={{
-            mt: 2,
-            display: { xs: "none", sm: "block" },
+            position: "absolute",
+            left: { xs: "7%", sm: "15%", md: "30%" },
+            top: { xs: 50, sm: "16%", md: "30%" },
           }}
         >
-          <Link
-            href="/backoffice"
-            style={{ textDecoration: "none", color: "white" }}
+          <Typography
+            level="h2"
+            maxWidth={{ xs: 200, sm: 300 }}
+            fontSize={{ xs: 20, sm: 27, md: 35 }}
+            fontWeight="bold"
           >
-            Join us
-          </Link>
-        </Button>
-      </Box>
-      <Box sx={{ maxWidth: 600 }}>
-        <Image
-          src={online}
-          alt=""
-          width={300}
-          height={400}
-          layout="responsive"
-        />
-      </Box>
+            Are you finding a solution for your restaurant ?
+          </Typography>
+          <Typography
+            level="title-lg"
+            fontSize={{ xs: 13, sm: 20 }}
+            textColor="gray"
+          >
+            let's Join with us
+          </Typography>
+          <Typography
+            fontSize={{ xs: 13, sm: 16 }}
+            textColor="black"
+            maxWidth={{ xs: 140, md: 190 }}
+            mt={{ xs: 5, sm: 2 }}
+          >
+            We will help your business.
+          </Typography>
+
+          <Button
+            variant="contained"
+            sx={{
+              mt: 2,
+              display: { xs: "none", sm: "block" },
+            }}
+          >
+            <Link
+              href="/backoffice"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              Join us
+            </Link>
+          </Button>
+        </Box>
+      </Slide>
+
+      <Slide
+        direction="left"
+        in={true}
+        timeout={1000}
+        mountOnEnter
+        unmountOnExit
+      >
+        <Box sx={{ maxWidth: 600 }}>
+          <Image
+            src={online}
+            alt=""
+            width={300}
+            height={400}
+            layout="responsive"
+          />
+        </Box>
+      </Slide>
     </Card>
   );
 };

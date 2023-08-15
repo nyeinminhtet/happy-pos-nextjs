@@ -11,11 +11,24 @@ export default function MediaCover() {
     <Box
       component="ul"
       color="primary"
-      sx={{ display: "flex", gap: 2, flexWrap: "wrap", p: 0, m: 0 }}
+      sx={{ display: "flex", gap: 2, flexWrap: "wrap", p: 0, m: 0, mb: 1 }}
     >
-      <Card component="li" sx={{ minWidth: { xs: 200, sm: 300 }, flexGrow: 1 }}>
+      <Card
+        component="li"
+        sx={{
+          minWidth: { xs: 200, sm: 300 },
+          flexGrow: 1,
+          minHeight: { xs: 0, sm: 400 },
+        }}
+      >
         <CardCover>
-          <Image src={order} loading="lazy" alt="ss" width={200} height={200} />
+          <Image
+            src={order}
+            loading="lazy"
+            alt="ss"
+            width={1200}
+            height={800}
+          />
         </CardCover>
         <CardContent>
           <Typography
@@ -24,7 +37,7 @@ export default function MediaCover() {
             textColor="#E21818"
             mt={{ xs: 14, sm: 20, md: 30 }}
             fontSize={{ xs: 30 }}
-          ></Typography>
+          />
         </CardContent>
       </Card>
     </Box>

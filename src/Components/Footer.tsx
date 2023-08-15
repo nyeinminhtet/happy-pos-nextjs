@@ -31,9 +31,9 @@ const Footer = () => {
             <Typography variant="body1" sx={{ color: "white" }}>
               103th street,bet 52 & 53th street <br />
               ChanMyaTharZi, Mandalay <br />
-              <span style={{ color: "#FFDD83" }}> contact@sarrmal.com</span>
-              <br />
-              <span style={{ color: "#00235B" }}>+95 123 456 79</span>
+              <span style={{ color: "#FFDD83" }}>
+                nyeinminhtet.dev@gmail.com
+              </span>
             </Typography>
           </Box>
           <Box sx={{ width: "350px", position: "relative", mt: 2 }}>

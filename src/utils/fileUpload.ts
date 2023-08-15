@@ -39,7 +39,6 @@ export const fileUpload = multer({
     bucket: "msquarefdc",
     acl: "public-read",
     key: function (request, file, cb) {
-      console.log(file);
       cb(null, `happy-pos/jey/${Date.now()}_${file.originalname}`);
     },
   }),

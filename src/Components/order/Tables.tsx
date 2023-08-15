@@ -26,8 +26,6 @@ const tableData = [
 ];
 
 const Tables = () => {
-  const { query } = useRouter();
-
   return (
     <Box
       sx={{
@@ -43,6 +41,7 @@ const Tables = () => {
       <Typography level="h2" fontSize={{ xs: 25, sm: 30 }}>
         Choose Table for order
       </Typography>
+
       <Box
         sx={{
           display: "flex",
@@ -59,15 +58,13 @@ const Tables = () => {
                 m: 3,
               }}
             >
-              <Box sx={{ position: "relative" }}>
-                <Image
-                  src={item.qrcode}
-                  loading="lazy"
-                  alt="table"
-                  width={150}
-                  height={150}
-                />
-              </Box>
+              <Image
+                src={item.qrcode}
+                loading="lazy"
+                alt="table"
+                width={150}
+                height={150}
+              />
               <Box
                 sx={{
                   display: "flex",
@@ -76,7 +73,10 @@ const Tables = () => {
                   justifyContent: "center",
                 }}
               >
-                <Typography sx={{ fontSize: "sm", fontWeight: "md" }}>
+                <Typography
+                  level="title-sm"
+                  sx={{ fontSize: "sm", fontWeight: "md" }}
+                >
                   {item.tableName}
                 </Typography>
               </Box>

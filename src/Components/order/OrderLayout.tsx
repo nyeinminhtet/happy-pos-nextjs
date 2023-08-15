@@ -17,8 +17,6 @@ const OrderLayout = (props: Props) => {
   const { items } = useAppSelector(selectCart);
   const isHome = router.pathname === "/order";
 
-  console.log("table", query.tableId);
-
   useEffect(() => {
     if (isReady) {
       dispatch(fetchAppData({ locationId: query.locationId as string }));
