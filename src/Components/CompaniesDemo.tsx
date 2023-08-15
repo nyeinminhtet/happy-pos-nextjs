@@ -36,7 +36,7 @@ const demos = [
 
 const CompaniesDemo = () => {
   return (
-    <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+    <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
       {demos.map((item, i) => (
         <Card variant="outlined" key={i} sx={{ width: 220, m: 3 }}>
           <CardOverflow>

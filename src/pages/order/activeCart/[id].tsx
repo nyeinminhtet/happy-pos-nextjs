@@ -1,15 +1,13 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appData } from "@/store/slices/appSlice";
-import { emptyCart, selectCart } from "@/store/slices/cartSlice";
-import { Box, CardContent, Paper, Typography } from "@mui/material";
+import { emptyCart } from "@/store/slices/cartSlice";
+import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import cooking from "@/assets/cooking.gif";
 import Image from "next/image";
 import { OrderStatus, orderlines as Orderline, orders } from "@prisma/client";
-import Loading from "@/Components/Loading";
-import { config } from "@/config/config";
-import { Card } from "@mui/joy";
+import { Card, CardContent, Typography } from "@mui/joy";
 
 const ActiveOrder = () => {
   const router = useRouter();
@@ -35,6 +33,7 @@ const ActiveOrder = () => {
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
+        alignItems: "center",
       }}
     >
       <Box
@@ -49,12 +48,12 @@ const ActiveOrder = () => {
         <Image src={cooking} alt="cooking" width={250} />
       </Box>
       <Box className=" flex mt-3 flex-wrap justify-center">
-        <Card>
+        <Card variant="soft" sx={{ minWidth: { xs: 100, sm: 200, md: 300 } }}>
           <CardContent>
-            <Typography>
+            <Typography level="title-lg">
               Thank for ordering,
               <br />
-              your order is comming.
+              your order is start now...
             </Typography>
           </CardContent>
         </Card>

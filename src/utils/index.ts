@@ -27,7 +27,7 @@ export const getLocationId = () => {
 };
 
 export const generateLinkForQRCode = (locationId: number, tableId: number) => {
-  return `${config.apiBaseUrl}?locationId=${locationId}&tableId=${tableId}`;
+  return `${config.orderAppUrl}?locationId=${locationId}&tableId=${tableId}`;
 };
 
 export const getQrCodeUrl = (locationId: number, tableId: number) => {

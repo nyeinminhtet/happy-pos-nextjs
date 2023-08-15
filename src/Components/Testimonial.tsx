@@ -45,10 +45,10 @@ const Testimonials = () => {
         What people say?
       </Typography>
 
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
         {testimonials.map((item) => {
           return (
-            <Slide direction="up" in key={item.description}>
+            <Slide direction="up" timeout={3000} in key={item.description}>
               <Paper
                 sx={{
                   width: 300,
