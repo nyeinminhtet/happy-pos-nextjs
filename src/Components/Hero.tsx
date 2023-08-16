@@ -51,7 +51,7 @@ const Hero = () => {
             fontSize={{ xs: 13, sm: 16 }}
             textColor="black"
             maxWidth={{ xs: 140, md: 190 }}
-            mt={{ xs: 5, sm: 2 }}
+            mt={2}
           >
             We will help your business.
           </Typography>

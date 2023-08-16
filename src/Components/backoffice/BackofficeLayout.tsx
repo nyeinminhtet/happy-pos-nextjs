@@ -19,7 +19,8 @@ const BackofficeLayout = (props: Props) => {
   const { init } = useAppSelector((state) => state.app);
 
   const router = useRouter();
-  const login = router.pathname === "/auth/signin";
+  const login =
+    router.pathname === "/auth/signin" || router.pathname === "/auth/signup";
 
   useEffect(() => {
     if (!init) {

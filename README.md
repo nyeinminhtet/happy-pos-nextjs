@@ -11,4 +11,4 @@ It aim to the restaurants where customers doesn't need to wait waiters for their
 
 ## Tech Stack
 
-- React, Nextjs, Redux-toolkit, MaterialUI, Typescript, PostgreSql, Prisma
+- React, Nextjs, Redux-toolkit, MaterialUI, NextAuth, Typescript, PostgreSql, Prisma

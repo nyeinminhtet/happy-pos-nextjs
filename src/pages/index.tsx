@@ -24,7 +24,7 @@ const HappyPos = () => {
       <Header />
       <Box
         sx={{
-          maxWidth: { md: "100%", lg: "1280px" },
+          maxWidth: "100%",
           mt: { xs: 5, sm: 0 },
         }}
       >

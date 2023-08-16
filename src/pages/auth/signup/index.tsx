@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 
-const SignIn = () => {
+const SignUp = () => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       <Card
@@ -33,7 +33,7 @@ const SignIn = () => {
               fontSize: { xs: "14px", sm: "20px", md: "25px" },
             }}
           >
-            Who are you?
+            Create new account
           </Typography>
           <Card>
             <Typography
@@ -44,7 +44,7 @@ const SignIn = () => {
                 mt: 2,
               }}
             >
-              We need your account to know who are you.
+              We need your account to create default data.
             </Typography>
             <Typography
               sx={{
@@ -54,8 +54,8 @@ const SignIn = () => {
                 mt: 2,
               }}
             >
-              Welcome back for SarrMall backoffice. Create your restaurant's
-              taste with us.
+              First, Signup with Google I will make default data for your
+              company,and then you can change what you want.
             </Typography>
           </Card>
         </Box>
@@ -65,13 +65,13 @@ const SignIn = () => {
           onClick={() => signIn("google", { callbackUrl: "/backoffice" })}
         >
           <FcGoogle size={15} style={{ marginRight: 5 }} />
-          Sign-In
+          Sign-Up
         </Button>
 
         <Typography sx={{ color: "gray" }}>
-          Create new account?{" "}
-          <Link href="/auth/signup" style={{ color: "darkblue" }}>
-            Signup
+          Already have an account?{" "}
+          <Link href="/auth/signin" style={{ color: "darkblue" }}>
+            Signin
           </Link>
         </Typography>
       </Card>
@@ -79,4 +79,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
