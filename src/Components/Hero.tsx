@@ -15,7 +15,6 @@ const Hero = () => {
         flexDirection: "row",
         alignItems: "center",
         position: "relative",
-        bgcolor: "#98DFD6",
       }}
     >
       <Slide
@@ -37,6 +36,7 @@ const Hero = () => {
             maxWidth={{ xs: 200, sm: 300 }}
             fontSize={{ xs: 20, sm: 27, md: 35 }}
             fontWeight="bold"
+            
           >
             Are you finding a solution for your restaurant ?
           </Typography>

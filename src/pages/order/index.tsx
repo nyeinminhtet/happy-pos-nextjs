@@ -1,9 +1,6 @@
 import Loading from "@/Components/Loading";
 import MenuCard from "@/Components/MenuCard";
 import OrderHero from "@/Components/order/OrderHero";
-import OrderLayout from "@/Components/order/OrderLayout";
-import Tables from "@/Components/order/Tables";
-import ViewCartBar from "@/Components/order/ViewCartBar";
 import { useAppSelector } from "@/store/hooks";
 import { appData, selectLocations } from "@/store/slices/appSlice";
 import { getMenusByMenuCategoryId } from "@/utils";
