@@ -6,7 +6,6 @@ import Typography from "@mui/joy/Typography";
 import Image from "next/image";
 import order from "@/assets/pizza 2.png";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
 
 export default function MediaCover() {
   return (
