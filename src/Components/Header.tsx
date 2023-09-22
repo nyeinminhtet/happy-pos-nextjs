@@ -44,11 +44,12 @@ const Header = () => {
           <Link href="/order" style={{ textDecoration: "none" }}>
             <Button
               sx={{
-                color: "white",
-                bgcolor: "#98DFD6",
+                color: "#00235B",
+                bgcolor: "white",
                 textTransform: "capitalize",
                 fontWeight: "bold",
                 fontSize: { xs: 10, sm: 12, md: 14 },
+                ":hover": { bgcolor: "white" },
               }}
             >
               Order now

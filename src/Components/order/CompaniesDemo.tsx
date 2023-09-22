@@ -39,7 +39,10 @@ const CompaniesDemo = () => {
     <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
       {demos.map((item, i) => (
         <Link href={item.link} key={i} style={{ textDecoration: "none" }}>
-          <Card variant="outlined" sx={{ width: 220, m: 3 }}>
+          <Card
+            variant="outlined"
+            sx={{ width: 220, m: 3, bgcolor: "#00235B" }}
+          >
             <CardOverflow>
               <AspectRatio ratio="2">
                 <Image
@@ -52,8 +55,10 @@ const CompaniesDemo = () => {
               </AspectRatio>
             </CardOverflow>
             <CardContent>
-              <Typography level="title-md">{item.Name}</Typography>
-              <Typography level="body-sm" sx={{ mt: 0.5 }}>
+              <Typography level="title-md" textColor="white" fontWeight="bold">
+                {item.Name}
+              </Typography>
+              <Typography level="body-sm" sx={{ mt: 0.5 }} textColor="gray">
                 <Typography>{item.Location}</Typography>
               </Typography>
             </CardContent>

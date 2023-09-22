@@ -33,7 +33,7 @@ const BackofficeLayout = (props: Props) => {
       <Head>
         <title>Sarr Mal | Backoffice</title>
       </Head>
-      <Box sx={{ minHeight: "100vh", bgcolor: "#98DFD6", minWidth: "100%" }}>
+      <Box sx={{ minHeight: "100vh", minWidth: "100%" }}>
         <TopBar />
         <Box sx={{ display: "flex", position: "relative", zIndex: 5, flex: 1 }}>
           {data && <SideBar />}

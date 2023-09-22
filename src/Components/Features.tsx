@@ -40,6 +40,7 @@ const Features = () => {
         sx={{ textAlign: "center", mb: 1 }}
         fontSize={{ xs: 25, sm: 30 }}
         fontWeight="bold"
+        color="#00235B"
       >
         Our Services
       </Typography>
@@ -52,6 +53,7 @@ const Features = () => {
           justifyContent: "center",
           alignItems: "center",
           minHeight: 250,
+          bgcolor: "white",
         }}
         variant="outlined"
       >
@@ -73,11 +75,16 @@ const Features = () => {
                   mr: 2,
                   alignItems: "center",
                   boxShadow: 3,
+                  bgcolor: "#00235B",
                 }}
               >
-                {item.icon}
+                <Typography color="white">{item.icon}</Typography>
 
-                <Typography variant="h6" fontSize={{ xs: 10, sm: 12 }}>
+                <Typography
+                  variant="h6"
+                  color="white"
+                  fontSize={{ xs: 10, sm: 12 }}
+                >
                   {item.text}
                 </Typography>
               </Card>

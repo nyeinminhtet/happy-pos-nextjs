@@ -18,7 +18,7 @@ const HappyPos = () => {
         flexDirection: "column",
         m: 0,
         position: "relative",
-        bgcolor: "#F1F0E8",
+        bgcolor: "white",
       }}
     >
       <Header />

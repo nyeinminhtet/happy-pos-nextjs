@@ -10,12 +10,14 @@ const Companies = () => {
         flexDirection: "column",
         mt: 3,
         alignItems: "center",
+        bgcolor: "white",
       }}
     >
       <Typography
         level="h3"
         fontWeight="bold"
         sx={{ fontSize: { xs: 20, sm: 30 } }}
+        textColor="#00235B"
       >
         Our Partnership
       </Typography>

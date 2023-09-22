@@ -1,7 +1,6 @@
 import { Box, Button, Slide } from "@mui/material";
 import Image from "next/image";
-import Sarrmal from "@/assets/pizza.png";
-import { AspectRatio, Card, Typography } from "@mui/joy";
+import { Card, Typography } from "@mui/joy";
 import online from "@/assets/Order ahead-rafiki.png";
 import Link from "next/link";
 
@@ -15,6 +14,7 @@ const Hero = () => {
         flexDirection: "row",
         alignItems: "center",
         position: "relative",
+        bgcolor: "white",
       }}
     >
       <Slide
@@ -36,20 +36,21 @@ const Hero = () => {
             maxWidth={{ xs: 200, sm: 300 }}
             fontSize={{ xs: 20, sm: 27, md: 35 }}
             fontWeight="bold"
-            
+            textColor="#00235B"
           >
             Are you finding a solution for your restaurant ?
           </Typography>
           <Typography
             level="title-lg"
             fontSize={{ xs: 13, sm: 20 }}
-            textColor="gray"
+            textColor="#00235B"
+            sx={{ opacity: 0.7 }}
           >
             let's Join with us
           </Typography>
           <Typography
             fontSize={{ xs: 13, sm: 16 }}
-            textColor="black"
+            textColor="#00235B"
             maxWidth={{ xs: 140, md: 190 }}
             mt={2}
           >
